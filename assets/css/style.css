@@ -98,7 +98,7 @@ body {
     box-shadow: none;
     border: none;
     position: absolute;
-    top: 50px;
+    /* top: 50px; */
     left: 0;
     width: 100%;
     z-index: 10;
@@ -107,6 +107,7 @@ body {
 
 .custom-navbar .container-fluid {
     align-items: flex-start !important;
+    margin-top: 50px;
 }
 
 /* Left menu container */

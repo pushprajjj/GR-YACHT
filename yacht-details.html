@@ -9,6 +9,11 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
+    <!-- IntlTelInput CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/css/intlTelInput.css"
+    />
     <!-- Custom CSS -->
     <link href="assets/css/style.css?v=5" rel="stylesheet" />
     <link rel="stylesheet" href="assets/css/yacht-details.css?v=2" />
@@ -106,15 +111,355 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero">
-      <div class="container h-100">
-        <div class="row h-100 align-items-center" style="margin-top: -40px">
-          <div class="col-12 text-center text-white">
-            <h1 class="hero-title">
-              Experience Luxury on the
-              <span class="bold-text">Waters of Dubai</span>
-            </h1>
-            <button class="btn btn-primary mt-3">BOOK A YACHT</button>
+    <section class="images">
+      <div class="col-12 imageSection">
+        <div class="row">
+          <div class="col-md-7 p-0">
+            <img
+              src="assets/images/yachtdetailsPage/yacht.png"
+              alt="Yacht Image 1"
+              class="img-fluid w-100 h-100"
+              style="
+                border-top: 0 solid rgb(255, 255, 255);
+                border-right: 3px solid rgb(255, 255, 255);
+                border-bottom: 0;
+                border-left: 0;
+              "
+            />
+          </div>
+          <div class="col-md-5 p-0">
+            <div class="row">
+              <img
+                src="assets/images/yachtdetailsPage/living.png"
+                alt="Yacht Image 2"
+                class="img-fluid w-100 h-100"
+              />
+            </div>
+            <div class="row">
+              <img
+                src="assets/images/yachtdetailsPage/living.png"
+                style="border-top: 3px solid rgb(255, 255, 255); z-index: -1"
+                alt="Yacht Image 2"
+                class="img-fluid w-100 h-100"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="DetailsSection">
+      <div class="container detailsMenu">
+        <ul>
+          <li>IMAGES</li>
+          <li class="active">OVERVIEW</li>
+          <li>HIGHLIGHTS</li>
+          <li>LOCATION</li>
+        </ul>
+      </div>
+
+      <div class="col-12 mt-5">
+        <div class="row">
+          <div class="col-md-7 detailsContent">
+            <!-- // Left Column Content -->
+            <div class="container overview">
+              <div class="heading">
+                <h2>BLACK PEARL 95</h2>
+                <h4>40 FT YACHT</h4>
+
+                <h4 class="mt-4">
+                  PRICE PER HOUR: <strong>AED 1,200</strong> | PRICE PER DAY:
+                  <strong>AED 14,400+VAT</strong>
+                </h4>
+                <div class="blueStrip mt-3">
+                  <p class="text-light">
+                    <i class="fa-solid fa-user-group"></i> Guests: 10 &nbsp;
+                    &nbsp; | &nbsp; &nbsp;
+                    <i class="fa-solid fa-bed-pulse"></i> Overnight Guests: 0
+                    &nbsp; &nbsp; | &nbsp; &nbsp;<i
+                      class="fa-solid fa-sailboat"
+                    ></i>
+                    Van Dutch &nbsp; &nbsp;| &nbsp; &nbsp;
+                    <i class="fa-regular fa-clock"></i> &nbsp; Min. Charter
+                    Length: 3 Hours
+                  </p>
+                </div>
+              </div>
+
+              <div class="description mt-4">
+                <p>
+                  Turn heads with Moonraker, our sleek and stylish 40ft VanDutch
+                  — a luxury day boat made for cruising Dubai in serious style.
+                  Refit in 2024, this modern icon of design is the ultimate
+                  choice for those who want to make a statement on the water.
+                </p>
+
+                <p>
+                  With its distinctive silhouette, open-plan deck, and spacious
+                  lounging areas, Moonraker is built for sun-soaked afternoons,
+                  champagne cruises, and unforgettable celebrations with up to
+                  10 guests. Whether you’re gliding past the Burj Al Arab or
+                  anchoring at the Palm for a swim stop, this boat brings both
+                  performance and presence.
+                </p>
+
+                <p>
+                  Inside, you’ll find a minimalist interior with air-conditioned
+                  comfort, a sleek bathroom, and a premium sound system to keep
+                  the vibes high all day long. Perfect for couples, groups, or
+                  luxury experiences that don’t need overnight stays — just
+                  sunshine, music, and the open sea.
+                </p>
+              </div>
+
+              <div class="accordion accordion-flush" id="accordionFlushExample">
+                <div class="accordion-item">
+                  <h2 class="accordion-header">
+                    <button
+                      class="accordion-button collapsed"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#flush-collapseOne"
+                      aria-expanded="false"
+                      aria-controls="flush-collapseOne"
+                    >
+                      FACILITIES
+                    </button>
+                  </h2>
+                  <div
+                    id="flush-collapseOne"
+                    class="accordion-collapse collapse"
+                    data-bs-parent="#accordionFlushExample"
+                  >
+                    <div class="accordion-body">
+                      Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                      Pariatur animi ipsam neque excepturi, magni ratione
+                      repudiandae dolore possimus quos similique, deleniti
+                      tempore iusto culpa dolores totam quaerat accusantium
+                      porro quis.
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header">
+                    <button
+                      class="accordion-button collapsed"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#flush-collapseTwo"
+                      aria-expanded="false"
+                      aria-controls="flush-collapseTwo"
+                    >
+                      EXPERIENCES
+                    </button>
+                  </h2>
+                  <div
+                    id="flush-collapseTwo"
+                    class="accordion-collapse collapse"
+                    data-bs-parent="#accordionFlushExample"
+                  >
+                    <div class="accordion-body">
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Labore quia magnam eius, ratione molestiae eos praesentium
+                      nam temporibus dignissimos minima maxime quam aliquam
+                      itaque placeat laudantium doloremque laboriosam. In, ipsa.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="accordion-item">
+                  <h2 class="accordion-header">
+                    <button
+                      class="accordion-button collapsed"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#flush-collapseThree"
+                      aria-expanded="false"
+                      aria-controls="flush-collapseThree"
+                    >
+                      WATERSPORTS
+                    </button>
+                  </h2>
+                  <div
+                    id="flush-collapseThree"
+                    class="accordion-collapse collapse"
+                    data-bs-parent="#accordionFlushExample"
+                  >
+                    <div class="accordion-body">
+                      Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                      Itaque veniam doloremque, numquam quibusdam veritatis
+                      praesentium sed ratione aliquam rerum sequi obcaecati
+                      dolorem nobis perferendis cum, quisquam maxime laborum
+                      incidunt minus?
+                    </div>
+                  </div>
+                </div>
+
+                <div class="accordion-item">
+                  <h2 class="accordion-header">
+                    <button
+                      class="accordion-button collapsed"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#flush-collapseThreee"
+                      aria-expanded="false"
+                      aria-controls="flush-collapseThreee"
+                    >
+                      CREW
+                    </button>
+                  </h2>
+                  <div
+                    id="flush-collapseThreee"
+                    class="accordion-collapse collapse"
+                    data-bs-parent="#accordionFlushExample"
+                  >
+                    <div class="accordion-body">
+                      Placeholder content for this accordion, which is intended
+                      to demonstrate the <code>.accordion-flush</code> class.
+                      This is the third item’s accordion body. Nothing more
+                      exciting happening here in terms of content, but just
+                      filling up the space to make it look, at least at first
+                      glance, a bit more representative of how this would look
+                      in a real-world application.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="location">
+                <h4 class="mt-5 mb-4">LOCATION</h4>
+                <p>Dubai Harbour</p>
+                <div class="mapouter">
+                  <div class="gmap_canvas">
+                    <iframe
+                      width="100%"
+                      height="400"
+                      id="gmap_canvas"
+                      src="https://maps.google.com/maps?q=dubai%20harbour&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                      frameborder="0"
+                      scrolling="no"
+                      marginheight="0"
+                      marginwidth="0"
+                    ></iframe>
+                    <a href="https://123movies-to.org"></a><br />
+                    <style>
+                      .mapouter {
+                        position: relative;
+                        text-align: right;
+                        height: 400px;
+                        width: 100%;
+                      }
+                    </style>
+                    <a href="https://www.embedgooglemap.net"
+                      >embedgooglemap.net</a
+                    >
+                    <style>
+                      .gmap_canvas {
+                        overflow: hidden;
+                        background: none !important;
+                        height: 400px;
+                        width: 100%;
+                      }
+                    </style>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-5">
+            <div class="container bookingSection">
+              <div class="container bookingFormHeading">
+                <h2>CHECK AVAILABILITY</h2>
+                <div class="yachtName">
+                  <h4>BLACK PEARL 95</h4>
+                </div>
+              </div>
+
+              <div class="form">
+                <form action="">
+                  <input
+                    type="text"
+                    name=""
+                    id="name"
+                    placeholder="FULL NAME"
+                  />
+                  <input
+                    type="email"
+                    name=""
+                    id="email"
+                    placeholder="EMAIL ADDRESS"
+                  />
+                  <input
+                    type="tel"
+                    name="phone"
+                    id="phone"
+                    placeholder="PHONE NUMBER"
+                  />
+                  <input
+                    type="text"
+                    name=""
+                    id="date"
+                    placeholder="PREFERRED DATE"
+                    onfocus="(this.type='date')"
+                  />
+                  <input
+                    type="text"
+                    name=""
+                    id="time"
+                    placeholder="PREFERRED TIME"
+                    onfocus="(this.type='time')"
+                  />
+                  <select name="charterLength" id="CharterLength">
+                    <option value="" disabled selected>
+                      SELECT CHARTER LENGTH
+                    </option>
+                    <option value="1 Hour">1 Hour</option>
+                    <option value="2 Hours">2 Hours</option>
+                    <option value="3 Hours">3 Hours</option>
+                    <option value="4 Hours">4 Hours</option>
+                    <option value="5 Hours">5 Hours</option>
+                    <option value="6 Hours">6 Hours</option>
+                    <option value="Full Day">Full Day</option>
+                  </select>
+                  <button type="submit" class="btn btn-primary w-100">
+                    SUBMIT
+                  </button>
+                </form>
+              </div>
+
+              <div class="member">
+                <div class="heading">
+                  <h4 class="mt-5 mb-4">
+                    <i
+                      class="fa-brands fa-whatsapp fa-lg"
+                      style="color: #63e6be"
+                    ></i
+                    >SPEAK TO OUR
+                  </h4>
+                  <h5>CHARTER TEAM MEMBER</h5>
+                </div>
+                <div class="member-info d-flex align-items-center gap-3 mt-4">
+                  <img
+                    src="assets/images/yachtdetailsPage/user.png"
+                    alt="Team member"
+                    class="rounded-circle"
+                    style="width: 80px; height: 80px"
+                  />
+                  <div>
+                    <h5 class="mb-1">Rohit Albert Roy</h5>
+                    <p class="mb-2">Yacht Charter Manager</p>
+                    <a
+                      href="https://wa.me/+971505543873"
+                      class="btn d-flex align-items-center gap-2 w-100 justify-content-center"
+                      style="background-color: #25D366; border: none; color: white;"
+                    >
+                      <i class="fa-brands fa-whatsapp"></i> WHATSAPP
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -328,6 +673,18 @@
     </footer>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- IntlTelInput JS -->
+    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/intlTelInput.min.js"></script>
+    <script>
+      const phoneInput = document.querySelector("#phone");
+      window.intlTelInput(phoneInput, {
+        initialCountry: "ae",
+        preferredCountries: ["ae", "gb", "us"],
+        separateDialCode: true,
+        utilsScript:
+          "https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js",
+      });
+    </script>
     <!-- Custom JS -->
     <script src="assets/js/main.js"></script>
   </body>

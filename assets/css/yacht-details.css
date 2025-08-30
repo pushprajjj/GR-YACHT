@@ -1,42 +1,235 @@
-.yacht-fleet::before{
+.custom-navbar {
+  background-color: rgba(10, 178, 190, 0.884);
+  position: relative;
+}
+/* .custom-navbar::before {
     content: '';
     position: absolute;
     top: 0;
-    left: -60px;
-    right: -60px;
-    bottom: 0;
-    width: calc(100% + 120px);
-    height: 100%;
-    background: linear-gradient(181deg, rgba(255, 255, 255, 0.25) 0%, rgb(57 184 193 / 0%) 100%);
+    left: 0;
+    width: 100%;   
     z-index: 1;
-    border-radius: 20px;
+    background-color: rgba(10, 178, 190, 0.884);
+} */
+
+.imageSection {
+  border: 3px solid white;
+}
+
+.DetailsSection {
+  background: linear-gradient(
+    179deg,
+    rgba(0, 225, 241, 0.116) 0%,
+    rgb(57 184 193 / 0%) 100%
+  );
+  min-height: 800px;
+}
+
+.detailsMenu {
+  /* background: #2c3e50; menu background */
+  padding: 10px 0;
+}
+
+.detailsMenu ul {
+  position: absolute;
+  left: 60px;
+  /* top: 10px; */
+  list-style: none;
+  margin: 10px 0px;
+  padding: 0;
+  display: flex;
+  gap: 40px;
+}
+
+.detailsMenu li {
+  color: #000000c4;
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+  transition: color 0.3s;
+  line-height: 2;
+  font-size: 20px;
+  font-weight: 400;
+}
+.detailsMenu .active {
+  color: #000000;
+
+  cursor: pointer;
+
+  font-weight: 600;
+}
+
+.detailsMenu li:hover {
+  color: #f1c40f; /* highlight on hover */
+}
+
+.overview {
+  margin: 50px;
+}
+.overview h2 {
+  font-weight: 800;
+}
+
+.blueStrip {
+  /* width: 50px; */
+  height: 50px;
+  background-color: #02b2be;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+.blueStrip p {
+  font-weight: 100;
+  letter-spacing: 2px;
+}
+.description {
+  font-family: Poppins, sans-serif;
+  font-size: 16px;
+  color: #000000;
+  line-height: 2;
+  letter-spacing: 2px;
+}
+
+.blueStrip p {
+  color: white;
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  padding: 15px;
+  font-weight: 600;
+}
+
+.accordion-item {
+  background: none;
+}
+.accordion {
+  --bs-accordion-bg: none;
+}
+.accordion-button:focus {
+  box-shadow: none;
+}
+.accordion-button {
+  margin: 0px -17px;
+  font-weight: 600;
+}
+.location h4 {
+  font-weight: 800;
+}
+.location p {
+  margin: 0;
+  font-family: Poppins, sans-serif;
+  font-size: 20px;
+  color: #000000;
+  line-height: 2;
+  letter-spacing: 2px;
+}
+
+.bookingSection {
+}
+
+.bookingSection {
+  background: white;
+  border-radius: 20px;
+  padding: 50px;
+  margin: 50px;
+  max-width: fit-content;
+}
+
+.yachtName {
+  background-color: rgb(247, 246, 246);
+  border-radius: 5px;
+}
+
+.yachtName h4 {
+  margin: 0;
+  font-family: Poppins, sans-serif;
+  color: #000000;
+  line-height: 2;
+  letter-spacing: 2px;
+  padding: 10px 350px 10px 10px;
+
+  font-size: 20px;
+}
+
+.bookingFormHeading h2 {
+  color: #000000c4;
+  /* font-family: "Poppins", sans-serif; */
+  font-size: 18px;
+  letter-spacing: 2px;
+  font-weight: 800;
+}
+
+.form form input,
+.form form select {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 0;
+  border-bottom: 1px solid #ccc;
+  line-height: 3;
+  font-size: 15px;
+}
+.form form input:focus,
+.form form select:focus {
+  border: 0;
+  outline: none;
+}
+
+.iti {
+  width: 100%;
+}
+
+.member .heading h4{
+    font-weight: 800;
+    margin-bottom: 20px;    
+    font-size: 15px;    
+    font-family: 'Poppins', sans-serif;
+    color: #000000c4;   
+    letter-spacing: 2px;    
+
 }
 
 
+.yacht-fleet::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -60px;
+  right: -60px;
+  bottom: 0;
+  width: calc(100% + 120px);
+  height: 100%;
+  background: linear-gradient(
+    181deg,
+    rgba(255, 255, 255, 0.25) 0%,
+    rgb(57 184 193 / 0%) 100%
+  );
+  z-index: 1;
+  border-radius: 20px;
+}
 
 .yacht-fleet h2 {
-    color: #000000;
-    font-family: 'Poppins', sans-serif;
-    font-size: 25px;
-    font-weight: 100;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 10px;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    position: relative;
-    z-index: 2;
+  color: #000000;
+  font-family: "Poppins", sans-serif;
+  font-size: 25px;
+  font-weight: 100;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: relative;
+  z-index: 2;
 }
 
 .yacht-fleet h3 {
-    color: #000000;
-    font-family: 'Gilroy', sans-serif;
-    font-size: 40px;
-    font-weight: 300;
-    margin-bottom: 40px;
-    letter-spacing: 0.5px;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    position: relative;
-    z-index: 2;
+  color: #000000;
+  font-family: "Gilroy", sans-serif;
+  font-size: 40px;
+  font-weight: 300;
+  margin-bottom: 40px;
+  letter-spacing: 0.5px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: relative;
+  z-index: 2;
 }
+
