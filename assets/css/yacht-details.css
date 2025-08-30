@@ -1,0 +1,42 @@
+.yacht-fleet::before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -60px;
+    right: -60px;
+    bottom: 0;
+    width: calc(100% + 120px);
+    height: 100%;
+    background: linear-gradient(181deg, rgba(255, 255, 255, 0.25) 0%, rgb(57 184 193 / 0%) 100%);
+    z-index: 1;
+    border-radius: 20px;
+}
+
+
+
+.yacht-fleet h2 {
+    color: #000000;
+    font-family: 'Poppins', sans-serif;
+    font-size: 25px;
+    font-weight: 100;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    position: relative;
+    z-index: 2;
+}
+
+.yacht-fleet h3 {
+    color: #000000;
+    font-family: 'Gilroy', sans-serif;
+    font-size: 40px;
+    font-weight: 300;
+    margin-bottom: 40px;
+    letter-spacing: 0.5px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    position: relative;
+    z-index: 2;
+}

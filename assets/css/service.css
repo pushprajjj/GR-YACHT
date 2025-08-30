@@ -1,0 +1,100 @@
+.hero {
+  background: url("../../assets/images/servicePage/girlsParty.png") no-repeat
+    center center;
+  background-size: cover;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.events {
+  padding: 100px 60px;
+  max-width: 100%;
+  overflow: hidden;
+  margin: 0;
+  position: relative;
+}
+
+.events::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -60px;
+  right: -60px;
+  bottom: 0;
+  width: calc(100% + 120px);
+  height: 100%;
+  background: linear-gradient(
+    181deg,
+    rgb(64 224 208 / 25%) 0%,
+    rgb(57 184 193 / 0%) 100%
+  );
+  z-index: 1;
+  border-radius: 20px;
+}
+
+.events h3 {
+  color: #39b8c1;
+}
+
+.events h2 {
+  color: #39b8c1;
+  font-weight: 700;
+  letter-spacing: 3px;
+}
+
+.event-card {
+  border: 2px solid #fffdfd;
+  background: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  position: relative;
+  transition: all 0.3s ease;
+  margin: 20px;
+  z-index: 2;
+}
+.event-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.event-overlay h3 {
+  font-family: "Poppins", sans-serif;
+  color: #ffffff;
+  font-size: 30px;
+  font-weight: 600;
+  margin: 0;
+  position: absolute;
+  bottom: 20px;
+  left: 50px;
+  z-index: 1;
+}
+
+.event-overlay .aerow {
+  position: absolute;
+  right: 50px;
+  bottom: 50px;
+}
+
+/* .event-overlay::before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:linear-gradient(to bottom, #05e0eb0a, #06d4f526);
+    z-index: 1;
+} */
+
+.event-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(#06c1f500, rgb(0, 133, 148));
+  /* z-index: -1; */
+}
