@@ -16,6 +16,230 @@
   border: 3px solid white;
 }
 
+/* Image Grid Styles */
+.yacht-image-grid {
+  position: relative;
+}
+
+.main-yacht-image, .side-yacht-image {
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.main-yacht-image:hover, .side-yacht-image:hover {
+  transform: scale(1.02);
+  filter: brightness(1.1);
+}
+
+.view-all-btn {
+  bottom: 20px;
+  left: 20px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.view-all-btn:hover {
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.more-images-overlay {
+  transition: all 0.3s ease;
+  backdrop-filter: blur(2px);
+}
+
+.more-images-overlay:hover {
+  background: rgba(0, 0, 0, 0.7) !important;
+}
+
+.side-image-wrapper {
+  overflow: hidden;
+}
+
+/* Lightbox Styles */
+.modal-xl {
+  max-width: 95vw;
+}
+
+#lightboxCarousel .carousel-item img {
+  width: 100%;
+  height: auto;
+  max-height: 80vh;
+  object-fit: contain;
+  margin: 0 auto;
+  display: block;
+}
+
+.lightbox-info {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+#yachtLightbox .modal-content {
+  border: none;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+#yachtLightbox .carousel-control-prev,
+#yachtLightbox .carousel-control-next {
+  width: 5%;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  margin: auto 10px;
+  height: 50px;
+}
+
+#yachtLightbox .carousel-indicators {
+  bottom: -50px;
+}
+
+#yachtLightbox .carousel-indicators [data-bs-target] {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin: 0 5px;
+}
+
+/* Image Grid Responsive Design */
+@media (max-width: 1367px) {
+  .main-yacht-image {
+    min-height: 550px !important;
+  }
+  
+  .side-yacht-image {
+    min-height: 274px !important;
+  }
+  
+  .view-all-btn {
+    font-size: 13px;
+    padding: 10px 18px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .main-yacht-image {
+    min-height: 500px !important;
+  }
+  
+  .side-yacht-image {
+    min-height: 249px !important;
+  }
+}
+
+@media (max-width: 992px) {
+  .main-yacht-image {
+    min-height: 400px !important;
+  }
+  
+  .side-yacht-image {
+    min-height: 199px !important;
+  }
+  
+  .view-all-btn {
+    font-size: 12px;
+    padding: 8px 15px;
+    bottom: 15px;
+    left: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .imageSection {
+    border: 2px solid white;
+  }
+  
+  .main-yacht-image {
+    min-height: 300px !important;
+  }
+  
+  .side-yacht-image {
+    min-height: 149px !important;
+  }
+  
+  .view-all-btn {
+    font-size: 11px;
+    padding: 6px 12px;
+    bottom: 10px;
+    left: 10px;
+  }
+  
+  .more-images-overlay .h5 {
+    font-size: 16px;
+  }
+  
+  .more-images-overlay .fas {
+    font-size: 2rem !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .imageSection {
+    border: 1px solid white;
+    margin: 0 -15px;
+  }
+  
+  .main-yacht-image {
+    min-height: 250px !important;
+  }
+  
+  .side-yacht-image {
+    min-height: 124px !important;
+  }
+  
+  .view-all-btn {
+    font-size: 10px;
+    padding: 5px 10px;
+    bottom: 8px;
+    left: 8px;
+    border-radius: 20px;
+  }
+  
+  .view-all-btn .me-2 {
+    margin-right: 0.25rem !important;
+  }
+  
+  .view-all-btn .ms-2 {
+    margin-left: 0.25rem !important;
+  }
+  
+  .more-images-overlay .h5 {
+    font-size: 14px;
+  }
+  
+  .more-images-overlay .fas {
+    font-size: 1.5rem !important;
+  }
+  
+  #remainingCount {
+    font-size: 12px;
+  }
+  
+  /* Stack images vertically on very small screens */
+  .yacht-image-grid .col-md-7,
+  .yacht-image-grid .col-md-5 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  
+  .yacht-image-grid .row.g-0:last-child {
+    display: flex;
+  }
+  
+  .yacht-image-grid .col-md-5 .row .col-12 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
+
 .DetailsSection {
   background: linear-gradient(
     179deg,
@@ -70,16 +294,156 @@
   font-weight: 800;
 }
 
+/* Details Section and Overview Responsive Design */
+@media (max-width: 1367px) {
+  .DetailsSection {
+    min-height: 750px;
+  }
+  
+  .blueStrip {
+    min-height: 55px;
+  }
+  
+  .blueStrip p {
+    font-size: 15px;
+    letter-spacing: 1.5px;
+    padding: 16px;
+  }
+  
+  .description {
+    font-size: 15px;
+    line-height: 1.8;
+    letter-spacing: 1.5px;
+  }
+  
+  .location h4 {
+    font-size: 22px;
+  }
+  
+  .location p {
+    font-size: 18px;
+    letter-spacing: 1.5px;
+  }
+  
+  /* Accordion adjustments for laptops */
+  .accordion-button {
+    font-size: 15px;
+    padding: 14px 18px;
+  }
+  
+  .accordion-body {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+}
+
+@media (max-width: 992px) {
+  .overview {
+    margin: 30px 20px;
+  }
+  
+  .overview h2 {
+    font-size: 28px;
+  }
+  
+  .overview h4 {
+    font-size: 18px;
+  }
+  
+  .DetailsSection .row {
+    margin: 0;
+  }
+  
+  .detailsContent {
+    padding: 0 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .DetailsSection {
+    min-height: auto;
+    padding: 20px 0;
+  }
+  
+  .overview {
+    margin: 20px 10px;
+  }
+  
+  .overview h2 {
+    font-size: 24px;
+    text-align: center;
+  }
+  
+  .overview h4 {
+    font-size: 16px;
+    text-align: center;
+    margin-top: 15px !important;
+  }
+  
+  .detailsContent {
+    padding: 0 10px;
+    margin-bottom: 30px;
+  }
+}
+
+@media (max-width: 576px) {
+  .overview {
+    margin: 15px 5px;
+  }
+  
+  .overview h2 {
+    font-size: 20px;
+    line-height: 1.3;
+  }
+  
+  .overview h4 {
+    font-size: 14px;
+    line-height: 1.4;
+  }
+  
+  .description {
+    font-size: 14px;
+    line-height: 1.6;
+    letter-spacing: 1px;
+  }
+  
+  .location h4 {
+    font-size: 18px;
+  }
+  
+  .location p {
+    font-size: 16px;
+    letter-spacing: 1px;
+  }
+  
+  .mapouter {
+    height: 250px !important;
+  }
+  
+  .gmap_canvas {
+    height: 250px !important;
+  }
+  
+  .gmap_canvas iframe {
+    height: 250px !important;
+  }
+}
+
 .blueStrip {
   /* width: 50px; */
-  height: 50px;
+  height: auto;
+  min-height: 50px;
   background-color: #02b2be;
   margin-bottom: 20px;
   border-radius: 5px;
+  display: flex;
+  align-items: center;
 }
 .blueStrip p {
   font-weight: 100;
   letter-spacing: 2px;
+  margin: 0;
+  width: 100%;
 }
 .description {
   font-family: Poppins, sans-serif;
@@ -129,6 +493,144 @@
   padding: 50px;
   margin: 50px;
   max-width: fit-content;
+}
+
+/* Booking Section Responsive Design */
+@media (max-width: 992px) {
+  .bookingSection {
+    margin: 30px 20px;
+    padding: 30px;
+    max-width: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .bookingSection {
+    margin: 20px 10px;
+    padding: 25px;
+    border-radius: 15px;
+  }
+  
+  .bookingFormHeading h2 {
+    font-size: 16px;
+    text-align: center;
+  }
+  
+  .yachtName h4 {
+    font-size: 16px;
+    text-align: center;
+    padding: 8px;
+  }
+  
+  .form form input,
+  .form form select {
+    font-size: 14px;
+    padding: 12px 8px;
+    margin: 8px 0;
+  }
+  
+  .member {
+    margin-top: 20px;
+  }
+  
+  .charter-member-card {
+    padding: 20px !important;
+  }
+  
+  .member-details h5 {
+    font-size: 16px;
+  }
+  
+  .member-details p {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 576px) {
+  .bookingSection {
+    margin: 15px 5px;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .bookingFormHeading h2 {
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
+  
+  .yachtName h4 {
+    font-size: 14px;
+    letter-spacing: 1px;
+    padding: 6px;
+  }
+  
+  .form form input,
+  .form form select {
+    font-size: 13px;
+    padding: 10px 6px;
+    margin: 6px 0;
+    line-height: 2;
+  }
+  
+  .charter-member-card {
+    padding: 15px !important;
+  }
+  
+  .charter-header h5 {
+    font-size: 14px;
+  }
+  
+  .charter-header span {
+    font-size: 14px;
+  }
+  
+  .member-image img {
+    width: 80px !important;
+    height: 80px !important;
+  }
+  
+  .member-details h5 {
+    font-size: 14px;
+  }
+  
+  .member-details p {
+    font-size: 12px;
+  }
+  
+  .btn {
+    font-size: 12px;
+    padding: 10px 16px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .bookingSection {
+    margin: 10px 2px;
+    padding: 15px;
+  }
+  
+  .bookingFormHeading h2 {
+    font-size: 13px;
+  }
+  
+  .yachtName h4 {
+    font-size: 13px;
+  }
+  
+  .form form input,
+  .form form select {
+    font-size: 12px;
+    padding: 8px 4px;
+  }
+  
+  .charter-member-card {
+    padding: 12px !important;
+  }
+  
+  .member-image img {
+    width: 70px !important;
+    height: 70px !important;
+  }
 }
 
 .yachtName {
@@ -186,6 +688,11 @@
 }
 
 
+.yacht-fleet {
+  position: relative;
+  padding: 60px 0;
+}
+
 .yacht-fleet::before {
   content: "";
   position: absolute;
@@ -202,6 +709,203 @@
   );
   z-index: 1;
   border-radius: 20px;
+}
+
+/* Yacht Fleet Section Responsive Design */
+@media (max-width: 1367px) {
+  .yacht-fleet {
+    padding: 50px 0;
+  }
+  
+  .yacht-fleet::before {
+    left: -40px;
+    right: -40px;
+    width: calc(100% + 80px);
+    border-radius: 18px;
+  }
+  
+  .yacht-fleet .subheading {
+    font-size: 22px;
+  }
+  
+  .yacht-fleet .heading {
+    font-size: 36px;
+  }
+  
+  /* Navigation controls for laptops */
+  .navigation-controls {
+    margin-top: 30px;
+  }
+  
+  .nav-arrow {
+    padding: 30px 30px !important;
+    font-size: 30px !important;
+  }
+}
+
+@media (max-width: 992px) {
+  .yacht-fleet {
+    padding: 40px 0;
+  }
+  
+  .yacht-fleet::before {
+    left: -30px;
+    right: -30px;
+    width: calc(100% + 60px);
+  }
+  
+  .yacht-fleet .subheading {
+    font-size: 20px;
+  }
+  
+  .yacht-fleet .heading {
+    font-size: 32px;
+  }
+}
+
+@media (max-width: 768px) {
+  .yacht-fleet {
+    padding: 30px 0;
+  }
+  
+  .yacht-fleet::before {
+    left: -15px;
+    right: -15px;
+    width: calc(100% + 30px);
+    border-radius: 10px;
+  }
+  
+  .yacht-fleet .subheading {
+    font-size: 18px;
+    text-align: center;
+  }
+  
+  .yacht-fleet .heading {
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .yacht-card {
+    margin-bottom: 20px;
+  }
+  
+  .yacht-card .yacht-title {
+    font-size: 16px;
+  }
+  
+  .yacht-card .capacity {
+    font-size: 13px;
+  }
+  
+  .yacht-card .price-tag {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+  
+  .yacht-card .btn-book {
+    font-size: 11px;
+    padding: 6px 12px;
+  }
+  
+  .navigation-controls {
+    margin-top: 20px;
+  }
+  
+  .nav-arrow {
+    padding: 25px 25px !important;
+    font-size: 28px !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .yacht-fleet {
+    padding: 20px 0;
+  }
+  
+  .yacht-fleet::before {
+    left: 0;
+    right: 0;
+    width: 100%;
+  }
+  
+  .yacht-fleet .subheading {
+    font-size: 16px;
+  }
+  
+  .yacht-fleet .heading {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .yacht-card {
+    transform: scale(0.95);
+    margin-bottom: 15px;
+  }
+  
+  .yacht-card .yacht-image {
+    height: 180px;
+  }
+  
+  .yacht-card .yacht-title {
+    font-size: 14px;
+  }
+  
+  .yacht-card .capacity {
+    font-size: 12px;
+  }
+  
+  .yacht-card .price-tag {
+    font-size: 11px;
+    padding: 3px 6px;
+  }
+  
+  .yacht-card .price-value {
+    font-size: 11px;
+  }
+  
+  .yacht-card .btn-book {
+    font-size: 10px;
+    padding: 5px 8px;
+  }
+  
+  .nav-arrow {
+    padding: 20px 20px !important;
+    font-size: 24px !important;
+  }
+  
+  /* Show only one yacht card per slide on mobile */
+  .carousel-item .row .col-md-4 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .yacht-fleet {
+    padding: 15px 0;
+  }
+  
+  .yacht-fleet .subheading {
+    font-size: 14px;
+  }
+  
+  .yacht-fleet .heading {
+    font-size: 20px;
+  }
+  
+  .yacht-card {
+    transform: scale(0.9);
+  }
+  
+  .yacht-card .yacht-image {
+    height: 160px;
+  }
+  
+  .nav-arrow {
+    padding: 15px 15px !important;
+    font-size: 20px !important;
+  }
 }
 
 /* .yacht-fleet h2 {
@@ -231,9 +935,690 @@
   z-index: 2;
 } */
 
+/* Navigation and Header Responsive Design */
+@media (max-width: 992px) {
+  .detailsMenu ul {
+    left: 20px;
+    gap: 20px;
+  }
+  
+  .detailsMenu li {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .detailsMenu ul {
+    left: 15px;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+  
+  .detailsMenu li {
+    font-size: 14px;
+  }
+}
+
 /* mediaquery for lower than 700px screen size */
 @media (max-width: 700px) {
   .detailsMenu{ 
     display: none;
+  }
+}
+
+/* Info items styling for responsive design */
+.blueStrip .info-item {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.blueStrip .info-separator {
+  display: inline;
+  margin: 0 8px;
+}
+
+/* Responsive design for blue strip */
+@media (max-width: 768px) {
+  .blueStrip {
+    height: auto;
+    min-height: 60px;
+    padding: 5px;
+  }
+  
+  .blueStrip p {
+    font-size: 14px;
+    letter-spacing: 1px;
+    padding: 10px;
+    line-height: 1.4;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+  }
+  
+  .blueStrip .info-item {
+    display: inline-block;
+    margin-bottom: 5px;
+  }
+  
+  .blueStrip .info-separator {
+    display: none;
+  }
+  
+  .blueStrip p i {
+    margin-right: 5px;
+  }
+}
+
+@media (max-width: 576px) {
+  .blueStrip {
+    height: auto;
+    min-height: 80px;
+    margin-bottom: 15px;
+  }
+  
+  .blueStrip p {
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    padding: 8px;
+    line-height: 1.3;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: left;
+  }
+  
+  .blueStrip .info-item {
+    display: block;
+    margin-bottom: 3px;
+    padding: 2px 0;
+  }
+  
+  .blueStrip .info-separator {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .blueStrip {
+    height: auto;
+    min-height: 100px;
+    border-radius: 8px;
+  }
+  
+  .blueStrip p {
+    font-size: 11px;
+    letter-spacing: 0.2px;
+    padding: 6px;
+    line-height: 1.2;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .blueStrip .info-item {
+    display: block;
+    margin-bottom: 2px;
+    padding: 1px 0;
+  }
+  
+  .blueStrip .info-separator {
+    display: none;
+  }
+}
+
+/* General Responsive Utilities and Layout Adjustments */
+@media (max-width: 1367px) {
+  .container-fluid {
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+  
+  /* Yacht Fleet Section for Laptops */
+  .yacht-fleet {
+    padding: 50px 0;
+  }
+  
+  .yacht-fleet .subheading {
+    font-size: 22px;
+  }
+  
+  .yacht-fleet .heading {
+    font-size: 36px;
+  }
+  
+  /* Overview Section for Laptops */
+  .overview {
+    margin: 40px 30px;
+  }
+  
+  .overview h2 {
+    font-size: 30px;
+  }
+  
+  .overview h4 {
+    font-size: 19px;
+  }
+  
+  /* Booking Section for Laptops */
+  .bookingSection {
+    margin: 40px 30px;
+    padding: 40px;
+  }
+  
+  /* Navigation adjustments */
+  .detailsMenu ul {
+    left: 40px;
+    gap: 30px;
+  }
+  
+  .detailsMenu li {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .container-fluid {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+@media (max-width: 992px) {
+  .container-fluid {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  
+  /* Adjust column layouts */
+  .col-md-7 {
+    flex: 0 0 100%;
+    max-width: 100%;
+    margin-bottom: 30px;
+  }
+  
+  .col-md-5 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .container-fluid {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  
+  /* Adjust section spacing */
+  section {
+    padding: 20px 0;
+  }
+  
+  .mt-5 {
+    margin-top: 2rem !important;
+  }
+  
+  .mt-4 {
+    margin-top: 1.5rem !important;
+  }
+  
+  .mt-3 {
+    margin-top: 1rem !important;
+  }
+  
+  /* Accordion responsive adjustments */
+  .accordion-button {
+    font-size: 14px;
+    padding: 12px 16px;
+  }
+  
+  .accordion-body {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 576px) {
+  .container-fluid {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  
+  /* Text adjustments */
+  h2 {
+    font-size: 18px;
+  }
+  
+  h3 {
+    font-size: 16px;
+  }
+  
+  h4 {
+    font-size: 14px;
+  }
+  
+  h5 {
+    font-size: 13px;
+  }
+  
+  p {
+    font-size: 13px;
+    line-height: 1.4;
+  }
+  
+  /* Button adjustments */
+  .btn {
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+  
+  .btn-primary {
+    font-size: 12px;
+  }
+  
+  /* Accordion responsive adjustments */
+  .accordion-button {
+    font-size: 12px;
+    padding: 10px 12px;
+    margin: 0 -10px;
+  }
+  
+  .accordion-body {
+    font-size: 12px;
+    line-height: 1.4;
+    padding: 10px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container-fluid {
+    padding-left: 2px;
+    padding-right: 2px;
+  }
+  
+  /* Further text adjustments */
+  h2 {
+    font-size: 16px;
+  }
+  
+  h3 {
+    font-size: 14px;
+  }
+  
+  h4 {
+    font-size: 12px;
+  }
+  
+  p {
+    font-size: 12px;
+  }
+  
+  /* Alert message responsive */
+  .alert {
+    font-size: 12px;
+    padding: 8px 10px;
+  }
+  
+  /* Loading spinner adjustments */
+  .spinner-border {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}
+
+/* Landscape mobile adjustments */
+@media (max-width: 768px) and (orientation: landscape) {
+  #yachtImageCarousel .carousel-inner {
+    height: 250px !important;
+  }
+  
+  #yachtImageCarousel .carousel-item img {
+    height: 250px !important;
+  }
+  
+  .overview {
+    margin: 15px 10px;
+  }
+  
+  .bookingSection {
+    margin: 15px 10px;
+    padding: 20px;
+  }
+}
+
+/* Yacht Card Responsive Design - Base overrides */
+@media (max-width: 1367px) {
+  .yacht-card {
+    margin: 0 8px;
+    border-radius: 18px;
+  }
+  
+  .yacht-image {
+    height: 320px;
+  }
+  
+  .price-tag {
+    font-size: 19px;
+    padding: 6px 12px;
+  }
+  
+  .yacht-title {
+    font-size: 19px;
+  }
+  
+  .capacity {
+    font-size: 13px;
+  }
+  
+  .yacht-footer {
+    margin: 13px;
+  }
+  
+  .price-info {
+    padding: 10px 18px;
+  }
+  
+  .btn-book {
+    padding: 10px 18px;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .yacht-card {
+    margin: 0 10px;
+  }
+  
+  .yacht-image {
+    height: 350px;
+  }
+  
+  .price-tag {
+    font-size: 20px;
+    padding: 6px 12px;
+  }
+  
+  .yacht-title {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 992px) {
+  .yacht-card {
+    margin: 0 8px;
+    border-radius: 15px;
+  }
+  
+  .yacht-image {
+    height: 300px;
+  }
+  
+  .price-tag {
+    font-size: 18px;
+    padding: 5px 10px;
+  }
+  
+  .yacht-title {
+    font-size: 18px;
+  }
+  
+  .capacity {
+    font-size: 13px;
+  }
+  
+  .yacht-footer {
+    margin: 12px;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .price-info {
+    border-right: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    padding: 10px 15px;
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .btn-book {
+    margin: 5px 10px;
+    padding: 8px 15px;
+    font-size: 14px;
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .yacht-card {
+    margin: 0 5px;
+    border-radius: 12px;
+    max-width: 300px;
+    margin: 0 auto 20px auto;
+  }
+  
+  .yacht-image {
+    height: 250px;
+  }
+  
+  .price-tag {
+    font-size: 16px;
+    padding: 4px 8px;
+  }
+  
+  .yacht-info {
+    padding: 10px 12px;
+  }
+  
+  .yacht-title {
+    font-size: 16px;
+  }
+  
+  .capacity {
+    font-size: 12px;
+  }
+  
+  .rating {
+    font-size: 12px;
+    right: 12px;
+  }
+  
+  .rating .fas {
+    font-size: 16px;
+  }
+  
+  .yacht-footer {
+    margin: 10px;
+  }
+  
+  .price-info {
+    padding: 8px 12px;
+  }
+  
+  .price-label {
+    font-size: 13px;
+  }
+  
+  .price-value {
+    font-size: 13px;
+  }
+  
+  .btn-book {
+    font-size: 12px;
+    padding: 6px 12px;
+    margin: 5px 8px;
+  }
+}
+
+@media (max-width: 576px) {
+  .yacht-card {
+    margin: 0 auto 15px auto;
+    max-width: 280px;
+    border-radius: 10px;
+  }
+  
+  .yacht-image {
+    height: 200px;
+  }
+  
+  .price-tag {
+    font-size: 14px;
+    padding: 3px 6px;
+  }
+  
+  .yacht-info {
+    padding: 8px 10px;
+  }
+  
+  .yacht-title {
+    font-size: 14px;
+  }
+  
+  .capacity {
+    font-size: 11px;
+  }
+  
+  .rating {
+    font-size: 11px;
+    right: 10px;
+  }
+  
+  .rating .fas {
+    font-size: 14px;
+  }
+  
+  .yacht-footer {
+    margin: 8px;
+    gap: 8px;
+  }
+  
+  .price-info {
+    padding: 6px 10px;
+  }
+  
+  .price-label {
+    font-size: 12px;
+  }
+  
+  .price-value {
+    font-size: 12px;
+  }
+  
+  .btn-book {
+    font-size: 11px;
+    padding: 5px 10px;
+    margin: 4px 6px;
+  }
+  
+  /* Ensure yacht cards stack properly in carousel */
+  .carousel-item .row .col-lg-4,
+  .carousel-item .row .col-md-6,
+  .carousel-item .row .col-sm-12 {
+    padding: 0 5px;
+    margin-bottom: 15px;
+  }
+  
+  /* Force single column layout on mobile */
+  .carousel-item .row .col-lg-4 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .yacht-card {
+    max-width: 260px;
+    margin: 0 auto 12px auto;
+    border-radius: 8px;
+  }
+  
+  .yacht-image {
+    height: 180px;
+  }
+  
+  .price-tag {
+    font-size: 12px;
+    padding: 2px 5px;
+  }
+  
+  .yacht-info {
+    padding: 6px 8px;
+  }
+  
+  .yacht-title {
+    font-size: 12px;
+    line-height: 1.2;
+  }
+  
+  .capacity {
+    font-size: 10px;
+    line-height: 1.2;
+  }
+  
+  .rating {
+    font-size: 10px;
+    right: 8px;
+  }
+  
+  .rating .fas {
+    font-size: 12px;
+  }
+  
+  .yacht-footer {
+    margin: 6px;
+    gap: 6px;
+    flex-direction: column;
+  }
+  
+  .price-info {
+    padding: 5px 8px;
+    border-right: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    justify-content: center;
+  }
+  
+  .price-info img {
+    width: 16px !important;
+    height: 16px !important;
+  }
+  
+  .price-label {
+    font-size: 11px;
+  }
+  
+  .price-value {
+    font-size: 11px;
+  }
+  
+  .btn-book {
+    font-size: 10px;
+    padding: 4px 8px;
+    margin: 3px 5px;
+    width: 100%;
+    justify-content: center;
+  }
+  
+  /* Carousel specific adjustments */
+  .carousel-item .row .col-lg-4 {
+    padding: 0 10px;
+  }
+}
+
+/* Print styles */
+@media print {
+  .carousel-control-prev,
+  .carousel-control-next,
+  .carousel-indicators,
+  .btn,
+  .navigation-controls {
+    display: none !important;
+  }
+  
+  .yacht-fleet {
+    page-break-inside: avoid;
+  }
+  
+  .bookingSection {
+    page-break-inside: avoid;
   }
 }

@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>GR Yachts Dubai - Luxury Yacht Rentals</title>
     <!-- Bootstrap CSS -->
     <link
@@ -15,7 +15,7 @@
       href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/css/intlTelInput.css"
     />
     <!-- Custom CSS -->
-    <link href="assets/css/style.css?v=5" rel="stylesheet" />
+    <link href="assets/css/style.css?v=54" rel="stylesheet" />
     <link rel="stylesheet" href="assets/css/yacht-details.css?v=2" />
 
     <!-- Font Awesome -->
@@ -28,42 +28,98 @@
   <body>
     <!-- Navigation -->
     <div id="header"></div>
-    <!-- Hero Section with Image Slider -->
+    <!-- Hero Section with Image Grid -->
     <section class="images" id="yachtImageSection">
       <div class="col-12 imageSection">
-        <div id="yachtImageCarousel" class="carousel slide" data-bs-ride="carousel" style="position: relative;">
-          <!-- Loading placeholder -->
-          <div id="imageSliderLoading" class="d-flex justify-content-center align-items-center" style="height: 600px; background-color: #f8f9fa; position: absolute; top: 0; left: 0; right: 0; z-index: 10;">
-            <div class="text-center">
-              <div class="spinner-border text-primary" role="status">
-                <span class="visually-hidden">Loading...</span>
+        <!-- Loading placeholder -->
+        <div id="imageGridLoading" class="d-flex justify-content-center align-items-center" style="height: 600px; background-color: #f8f9fa;">
+          <div class="text-center">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-2 text-muted">Loading yacht images...</p>
+          </div>
+        </div>
+        
+        <!-- Image Grid -->
+        <div id="yachtImageGrid" class="yacht-image-grid" style="display: none;">
+          <div class="row g-0">
+            <div class="col-md-7 p-0 main-image-container position-relative">
+              <img id="mainImage" src="" alt="Main yacht image" class="img-fluid w-100 h-100 main-yacht-image"
+                   style="border-right: 3px solid rgb(255, 255, 255); min-height: 600px; object-fit: cover;">
+              <button class="view-all-btn position-absolute" onclick="openLightbox()" type="button">
+                <i class="fas fa-images me-2"></i>
+                <span>View All Photos</span>
+                <span id="imageCount" class="image-count ms-2 badge bg-light text-dark">0</span>
+              </button>
+            </div>
+            <div class="col-md-5 p-0">
+              <div class="row g-0">
+                <div class="col-12 side-image-wrapper">
+                  <img id="sideImage1" src="" alt="Yacht image 2" class="img-fluid w-100 h-100 side-yacht-image"
+                       style="min-height: 299px; object-fit: cover; cursor: pointer;" onclick="openLightbox(1)">
+                </div>
               </div>
-              <p class="mt-2 text-muted">Loading yacht images...</p>
+              <div class="row g-0">
+                <div class="col-12 side-image-wrapper position-relative">
+                  <img id="sideImage2" src="" alt="Yacht image 3" class="img-fluid w-100 h-100 side-yacht-image"
+                       style="border-top: 3px solid rgb(255, 255, 255); min-height: 299px; object-fit: cover; cursor: pointer;" onclick="openLightbox(2)">
+                  <div class="more-images-overlay position-absolute d-flex align-items-center justify-content-center" 
+                       style="top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); color: white; cursor: pointer;"
+                       onclick="openLightbox(2)" id="moreImagesOverlay">
+                    <div class="text-center">
+                      <i class="fas fa-plus-circle fa-3x mb-2"></i>
+                      <div class="h5">View More</div>
+                      <!-- <div ><span id="remainingCount">0</span> Photos</div> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          
-          <!-- Carousel indicators -->
-          <div class="carousel-indicators" id="carouselIndicators" style="display: none;">
-            <!-- Will be populated by JavaScript -->
-          </div>
-          
-          <!-- Carousel inner -->
-          <div class="carousel-inner" id="carouselInner" style="height: 600px; display: none;">
-            <!-- Will be populated by JavaScript -->
-          </div>
-          
-          <!-- Carousel controls -->
-          <button class="carousel-control-prev" type="button" data-bs-target="#yachtImageCarousel" data-bs-slide="prev" style="display: none;" id="carouselPrev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#yachtImageCarousel" data-bs-slide="next" style="display: none;" id="carouselNext">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
         </div>
       </div>
     </section>
+
+    <!-- Lightbox Modal -->
+    <div class="modal fade" id="yachtLightbox" tabindex="-1" aria-labelledby="yachtLightboxLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content bg-dark">
+          <div class="modal-header border-0">
+            <h5 class="modal-title text-white" id="yachtLightboxLabel">Yacht Gallery</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body p-0">
+            <div id="lightboxCarousel" class="carousel slide" data-bs-ride="false">
+              <!-- Carousel indicators -->
+              <div class="carousel-indicators" id="lightboxIndicators">
+                <!-- Will be populated by JavaScript -->
+              </div>
+              
+              <!-- Carousel inner -->
+              <div class="carousel-inner" id="lightboxCarouselInner" style="max-height: 80vh;">
+                <!-- Will be populated by JavaScript -->
+              </div>
+              
+              <!-- Carousel controls -->
+              <button class="carousel-control-prev" type="button" data-bs-target="#lightboxCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#lightboxCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+          </div>
+          <div class="modal-footer border-0 justify-content-center">
+            <div class="lightbox-info text-white">
+              <span id="currentImageIndex">1</span> / <span id="totalImages">1</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <section class="DetailsSection">
       <div class="container detailsMenu">
@@ -76,7 +132,7 @@
       </div>
 
       <div class="col-12 mt-5">
-        <div class="row"> 
+        <div class="row g-4"> 
           <div class="col-md-7 detailsContent" id="yachtDetailsContent">
             <!-- // Left Column Content -->
             <div class="container overview">
@@ -91,15 +147,21 @@
                 </h4>
                 <div class="blueStrip mt-3">
                   <p class="text-light">
-                    <i class="fa-solid fa-user-group"></i> Guests: <span id="numberOfGuests">--</span> &nbsp;
-                    &nbsp; | &nbsp; &nbsp;
-                    <i class="fa-solid fa-bed-pulse"></i> Overnight Guests: <span id="overnightGuests">--</span>
-                    &nbsp; &nbsp; | &nbsp; &nbsp;<i
-                      class="fa-solid fa-sailboat"
-                    ></i>
-                    <span id="yachtType">Yacht</span> &nbsp; &nbsp;| &nbsp; &nbsp;
-                    <i class="fa-regular fa-clock"></i> &nbsp; Min. Charter
-                    Length: <span id="minCharterLength">-- Hours</span>
+                    <span class="info-item">
+                      <i class="fa-solid fa-user-group"></i> Guests: <span id="numberOfGuests">--</span>
+                    </span>
+                    <span class="info-separator"> | </span>
+                    <span class="info-item">
+                      <i class="fa-solid fa-bed-pulse"></i> Overnight Guests: <span id="overnightGuests">--</span>
+                    </span>
+                    <span class="info-separator"> | </span>
+                    <span class="info-item">
+                      <i class="fa-solid fa-sailboat"></i> <span id="yachtType">Yacht</span>
+                    </span>
+                    <span class="info-separator"> | </span>
+                    <span class="info-item">
+                      <i class="fa-regular fa-clock"></i> Min. Charter Length: <span id="minCharterLength">-- Hours</span>
+                    </span>
                   </p>
                 </div>
               </div>
@@ -643,25 +705,28 @@
     }
 
     function updateYachtDetailsPage(yacht) {
-        // Create image slider
-        createImageSlider(yacht);
+        // Create image grid
+        createImageGrid(yacht);
         
         // Update yacht details
         updateYachtInfo(yacht);
     }
 
-    function createImageSlider(yacht) {
-        console.log('Creating image slider for yacht:', yacht.title);
+    function createImageGrid(yacht) {
+        console.log('Creating image grid for yacht:', yacht.title);
         
-        const imageSliderLoading = document.getElementById('imageSliderLoading');
-        const carouselIndicators = document.getElementById('carouselIndicators');
-        const carouselInner = document.getElementById('carouselInner');
-        const carouselPrev = document.getElementById('carouselPrev');
-        const carouselNext = document.getElementById('carouselNext');
+        const imageGridLoading = document.getElementById('imageGridLoading');
+        const yachtImageGrid = document.getElementById('yachtImageGrid');
+        const mainImage = document.getElementById('mainImage');
+        const sideImage1 = document.getElementById('sideImage1');
+        const sideImage2 = document.getElementById('sideImage2');
+        const imageCount = document.getElementById('imageCount');
+        const remainingCount = document.getElementById('remainingCount');
+        const moreImagesOverlay = document.getElementById('moreImagesOverlay');
 
         // Ensure loading is visible initially
-        if (imageSliderLoading) {
-            imageSliderLoading.style.display = 'flex';
+        if (imageGridLoading) {
+            imageGridLoading.style.display = 'flex';
         }
 
         let yachtImages = [];
@@ -689,56 +754,70 @@
 
         console.log('Final yacht images array:', yachtImages);
 
+        // Store images globally for lightbox
+        window.currentYachtImages = yachtImages;
+
         if (yachtImages.length === 0) {
             console.log('No images found, showing placeholder');
-            carouselInner.innerHTML = '<div class="carousel-item active"><img src="assets/images/placeholder-yacht.jpg" class="d-block w-100" alt="No images available" style="height: 600px; object-fit: cover;"></div>';
-            carouselInner.style.display = 'block';
-            if (imageSliderLoading) imageSliderLoading.style.display = 'none';
-            return;
+            mainImage.src = 'assets/images/placeholder-yacht.jpg';
+            sideImage1.src = 'assets/images/placeholder-yacht.jpg';
+            sideImage2.src = 'assets/images/placeholder-yacht.jpg';
+            imageCount.textContent = '0';
+            moreImagesOverlay.style.display = 'none';
+        } else {
+            // Set main image (first image)
+            mainImage.src = `api/uploads/yachtFleet/${yachtImages[0]}`;
+            mainImage.alt = `${yacht.title} - Main Image`;
+            
+            // Set side images
+            if (yachtImages.length > 1) {
+                sideImage1.src = `api/uploads/yachtFleet/${yachtImages[1]}`;
+                sideImage1.alt = `${yacht.title} - Image 2`;
+            } else {
+                sideImage1.src = `api/uploads/yachtFleet/${yachtImages[0]}`;
+                sideImage1.alt = `${yacht.title} - Image 1`;
+            }
+            
+            if (yachtImages.length > 2) {
+                sideImage2.src = `api/uploads/yachtFleet/${yachtImages[2]}`;
+                sideImage2.alt = `${yacht.title} - Image 3`;
+                
+                // Show overlay with remaining count if more than 3 images
+                if (yachtImages.length > 3) {
+                    const remaining = yachtImages.length - 3;
+                    remainingCount.textContent = `+${remaining} Photos`;
+                    moreImagesOverlay.style.display = 'flex';
+                } else {
+                    moreImagesOverlay.style.display = 'none';
+                }
+            } else {
+                sideImage2.src = `api/uploads/yachtFleet/${yachtImages[0]}`;
+                sideImage2.alt = `${yacht.title} - Image 1`;
+                moreImagesOverlay.style.display = 'none';
+            }
+            
+            // Update image count
+            imageCount.textContent = yachtImages.length;
         }
 
-        // Create carousel indicators
-        let indicatorsHTML = '';
-        yachtImages.forEach((image, index) => {
-            indicatorsHTML += `
-                <button type="button" data-bs-target="#yachtImageCarousel" data-bs-slide-to="${index}" 
-                        ${index === 0 ? 'class="active" aria-current="true"' : ''} 
-                        aria-label="Slide ${index + 1}"></button>
-            `;
-        });
-        if (carouselIndicators) carouselIndicators.innerHTML = indicatorsHTML;
-
-        // Create carousel items
-        let carouselHTML = '';
-        yachtImages.forEach((image, index) => {
-            carouselHTML += `
-                <div class="carousel-item ${index === 0 ? 'active' : ''}">
-                     <img src="api/uploads/yachtFleet/${image}" class="d-block w-100" alt="${yacht.title} Image ${index + 1}" 
-                         style="height: 600px; object-fit: cover;" 
-                         onload="console.log('Image loaded:', '${image}')"
-                         onerror="console.error('Image failed to load:', '${image}')">
-                </div>
-            `;
-        });
-        if (carouselInner) carouselInner.innerHTML = carouselHTML;
-
-        // Show carousel elements and hide loading
-        if (carouselIndicators) carouselIndicators.style.display = yachtImages.length > 1 ? 'flex' : 'none';
-        if (carouselInner) carouselInner.style.display = 'block';
-        if (carouselPrev) carouselPrev.style.display = yachtImages.length > 1 ? 'block' : 'none';
-        if (carouselNext) carouselNext.style.display = yachtImages.length > 1 ? 'block' : 'none';
+        // Hide loading and show grid
+        if (imageGridLoading) {
+            imageGridLoading.style.display = 'none';
+            imageGridLoading.style.visibility = 'hidden';
+            imageGridLoading.classList.add('d-none');
+        }
         
-        // Hide loading immediately and with backup
-        if (imageSliderLoading) {
-            imageSliderLoading.style.display = 'none';
-            imageSliderLoading.style.visibility = 'hidden';
-            imageSliderLoading.classList.add('d-none');
-            console.log('Loading state hidden');
+        if (yachtImageGrid) {
+            yachtImageGrid.style.display = 'block';
+            yachtImageGrid.style.visibility = 'visible';
+            yachtImageGrid.classList.remove('d-none');
         }
+
+        console.log('Image grid created successfully');
         
         // Additional backup to ensure loading is hidden
         setTimeout(() => {
-            const loadingEl = document.getElementById('imageSliderLoading');
+            const loadingEl = document.getElementById('imageGridLoading');
             if (loadingEl) {
                 loadingEl.style.display = 'none';
                 loadingEl.style.visibility = 'hidden';
@@ -1034,8 +1113,16 @@
         const yachtCarouselNext = document.getElementById('yachtCarouselNext');
         const yachtSliderNavigation = document.getElementById('yachtSliderNavigation');
 
-        // Group yachts into slides of 3
-        const yachtsPerSlide = 3;
+        // Determine yachts per slide based on screen size
+        let yachtsPerSlide = 3;
+        if (window.innerWidth <= 768) {
+            yachtsPerSlide = 2;
+        }
+        if (window.innerWidth <= 576) {
+            yachtsPerSlide = 1;
+        }
+        
+        // Group yachts into slides
         const slides = [];
         for (let i = 0; i < yachts.length; i += yachtsPerSlide) {
             slides.push(yachts.slice(i, i + yachtsPerSlide));
@@ -1100,13 +1187,13 @@
     function createYachtCardHTML(yacht) {
         const slug = createSlug(yacht.title);
         return `
-            <div class="col-md-4">
+            <div class="col-lg-4 col-md-6 col-sm-12">
                 <div class="yacht-card" onclick="navigateToYachtDetails('${slug}', ${yacht.id})" style="cursor: pointer;">
                     <div class="price-tag">AED ${yacht.price_per_hour || yacht.price} | hr</div>
-                    <img class="yacht-image" src="api/uploads/yachtFleet/${yacht.main_image}" alt="${yacht.title}">
+                    <img class="yacht-image" src="api/uploads/yachtFleet/${yacht.main_image}" alt="${yacht.title}" loading="lazy">
                     <div class="yacht-info">
                         <div class="d-flex justify-content-between align-items-center">
-                            <div>
+                            <div class="yacht-details">
                                 <h5 class="yacht-title">${yacht.title}</h5>
                                 <p class="capacity">Capacity Up to ${yacht.number_of_guests} Person</p>
                             </div>
@@ -1118,10 +1205,10 @@
                     </div>
                     <div class="yacht-footer">
                         <div class="price-info">
-                            <img src="assets/images/coin_1.png" alt="Price">
+                            <img src="assets/images/coin_1.png" alt="Price" style="width: 20px; height: 20px;">
                             <div class="price-text">
                                 <span class="price-label">Price</span>
-                                <span class="price-value">Half Day: ${yacht.price} AED</span>
+                                <span class="price-value">Half Day: ${yacht.price || yacht.price_per_hour || 'Call'} AED</span>
                             </div>
                         </div>
                         <button class="btn-book" onclick="event.stopPropagation(); window.open('${yacht.whatsapp_link || 'https://wa.me/971505540073'}', '_blank')">
@@ -1146,6 +1233,67 @@
     function navigateToYachtDetails(slug, yachtId) {
         window.location.href = `yacht-details.html?slug=${slug}&id=${yachtId}`;
     }
+
+    // Lightbox functionality
+    function openLightbox(startIndex = 0) {
+        if (!window.currentYachtImages || window.currentYachtImages.length === 0) {
+            console.error('No images available for lightbox');
+            return;
+        }
+
+        const lightboxModal = new bootstrap.Modal(document.getElementById('yachtLightbox'));
+        const lightboxCarouselInner = document.getElementById('lightboxCarouselInner');
+        const lightboxIndicators = document.getElementById('lightboxIndicators');
+        const currentImageIndex = document.getElementById('currentImageIndex');
+        const totalImages = document.getElementById('totalImages');
+
+        // Create carousel items for lightbox
+        let carouselHTML = '';
+        let indicatorsHTML = '';
+        
+        window.currentYachtImages.forEach((image, index) => {
+            const isActive = index === startIndex ? 'active' : '';
+            carouselHTML += `
+                <div class="carousel-item ${isActive}">
+                    <img src="api/uploads/yachtFleet/${image}" class="d-block w-100" alt="Yacht Image ${index + 1}"
+                         style="max-height: 80vh; object-fit: contain;">
+                </div>
+            `;
+            
+            indicatorsHTML += `
+                <button type="button" data-bs-target="#lightboxCarousel" data-bs-slide-to="${index}" 
+                        ${index === startIndex ? 'class="active" aria-current="true"' : ''} 
+                        aria-label="Slide ${index + 1}"></button>
+            `;
+        });
+
+        lightboxCarouselInner.innerHTML = carouselHTML;
+        lightboxIndicators.innerHTML = indicatorsHTML;
+        
+        // Update image counter
+        currentImageIndex.textContent = startIndex + 1;
+        totalImages.textContent = window.currentYachtImages.length;
+
+        // Listen for carousel slide events to update counter
+        const lightboxCarousel = document.getElementById('lightboxCarousel');
+        lightboxCarousel.addEventListener('slid.bs.carousel', function (e) {
+            const activeIndex = Array.from(e.target.querySelectorAll('.carousel-item')).indexOf(e.relatedTarget);
+            currentImageIndex.textContent = activeIndex + 1;
+        });
+
+        // Show the modal
+        lightboxModal.show();
+    }
+
+    // Add click handlers to images for lightbox
+    document.addEventListener('DOMContentLoaded', function() {
+        // Main image click handler
+        document.addEventListener('click', function(e) {
+            if (e.target && e.target.id === 'mainImage') {
+                openLightbox(0);
+            }
+        });
+    });
   
     </script>
   </body>
