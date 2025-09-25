@@ -27,123 +27,40 @@
 
   <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg custom-navbar w-100 py-3">
-      <div
-        class="container-fluid d-flex align-items-center justify-content-between"
-      >
-        <!-- Left: Menu Links -->
-        <div
-          class="d-flex align-items-center justify-content-start flex-grow-1 flex-shrink-1 flex-basis-0"
-          style="flex: 1 1 0%"
-        >
-          <ul class="navbar-nav flex-row">
-            <li class="nav-item">
-              <a class="nav-link active" href="/">Home</a>
-            </li>
-            <li class="nav-item"><a class="nav-link" href="#">About us</a></li>
-            <li class="nav-item">
-              <a class="nav-link" href="/service.html">Services</a>
-            </li>
-            <li class="nav-item"><a class="nav-link" href="#">Package</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Blog</a></li>
-            <li class="nav-item">
-              <a class="nav-link" href="/contact.html">Contact us</a>
-            </li>
-          </ul>
-        </div>
-        <!-- Center: Logo -->
-        <div class="navbar-logo" style="flex: 0 0 auto; margin: 0 auto">
-          <img
-            src="assets/images/logo.png"
-            alt="GR Yachts Dubai"
-            height="160"
-          />
-        </div>
-        <!-- Right: Contact and Selectors -->
-        <div
-          class="d-flex align-items-center justify-content-end flex-grow-1 flex-shrink-1 flex-basis-0 gap-5 pe-5"
-          style="flex: 1 1 0%"
-        >
-          <div class="d-flex align-items-center gap-3">
-            <i class="fab fa-whatsapp text-light" style="font-size: 1.2rem"></i>
-            <span class="contact-number">+971 50 554 3873</span>
-          </div>
-          <div class="dropdown">
-            <button
-              class="btn rounded-button dropdown-toggle selected"
-              type="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <span class="selected-value">AED</span>
-              <i class="fas fa-chevron-down"></i>
-            </button>
-            <ul class="dropdown-menu">
-              <li>
-                <a class="dropdown-item active" href="#" data-value="AED"
-                  >AED</a
-                >
-              </li>
-              <li>
-                <a class="dropdown-item" href="#" data-value="USD">USD</a>
-              </li>
-            </ul>
-          </div>
-          <div class="dropdown">
-            <button
-              class="btn rounded-button dropdown-toggle selected"
-              type="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <span class="selected-value">EN</span>
-              <i class="fas fa-chevron-down"></i>
-            </button>
-            <ul class="dropdown-menu">
-              <li>
-                <a class="dropdown-item active" href="#" data-value="EN">EN</a>
-              </li>
-              <li><a class="dropdown-item" href="#" data-value="IN">IN</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="images">
+    <div id="header"></div>
+    <!-- Hero Section with Image Slider -->
+    <section class="images" id="yachtImageSection">
       <div class="col-12 imageSection">
-        <div class="row">
-          <div class="col-md-7 p-0">
-            <img
-              src="assets/images/yachtdetailsPage/yacht.png"
-              alt="Yacht Image 1"
-              class="img-fluid w-100 h-100"
-              style="
-                border-top: 0 solid rgb(255, 255, 255);
-                border-right: 3px solid rgb(255, 255, 255);
-                border-bottom: 0;
-                border-left: 0;
-              "
-            />
-          </div>
-          <div class="col-md-5 p-0">
-            <div class="row">
-              <img
-                src="assets/images/yachtdetailsPage/living.png"
-                alt="Yacht Image 2"
-                class="img-fluid w-100 h-100"
-              />
-            </div>
-            <div class="row">
-              <img
-                src="assets/images/yachtdetailsPage/living.png"
-                style="border-top: 3px solid rgb(255, 255, 255); z-index: -1"
-                alt="Yacht Image 2"
-                class="img-fluid w-100 h-100"
-              />
+        <div id="yachtImageCarousel" class="carousel slide" data-bs-ride="carousel" style="position: relative;">
+          <!-- Loading placeholder -->
+          <div id="imageSliderLoading" class="d-flex justify-content-center align-items-center" style="height: 600px; background-color: #f8f9fa; position: absolute; top: 0; left: 0; right: 0; z-index: 10;">
+            <div class="text-center">
+              <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <p class="mt-2 text-muted">Loading yacht images...</p>
             </div>
           </div>
+          
+          <!-- Carousel indicators -->
+          <div class="carousel-indicators" id="carouselIndicators" style="display: none;">
+            <!-- Will be populated by JavaScript -->
+          </div>
+          
+          <!-- Carousel inner -->
+          <div class="carousel-inner" id="carouselInner" style="height: 600px; display: none;">
+            <!-- Will be populated by JavaScript -->
+          </div>
+          
+          <!-- Carousel controls -->
+          <button class="carousel-control-prev" type="button" data-bs-target="#yachtImageCarousel" data-bs-slide="prev" style="display: none;" id="carouselPrev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#yachtImageCarousel" data-bs-slide="next" style="display: none;" id="carouselNext">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
         </div>
       </div>
     </section>
@@ -151,65 +68,46 @@
     <section class="DetailsSection">
       <div class="container detailsMenu">
         <ul>
-          <li>IMAGES</li>
-          <li class="active">OVERVIEW</li>
-          <li>HIGHLIGHTS</li>
-          <li>LOCATION</li>
+          <li><a href="#yachtImageSection" class="text-decoration-none text-dark">IMAGES</a></li>
+           <li><a href="#yachtDetailsContent" class="text-decoration-none text-dark">OVERVIEW</a></li>
+           <li><a href="#accordionFlushExample" class="text-decoration-none text-dark">HIGHLIGHTS</a></li>
+           <li><a href="#locationSection" class="text-decoration-none text-dark">LOCATION</a></li>
         </ul>
       </div>
 
       <div class="col-12 mt-5">
-        <div class="row">
-          <div class="col-md-7 detailsContent">
+        <div class="row"> 
+          <div class="col-md-7 detailsContent" id="yachtDetailsContent">
             <!-- // Left Column Content -->
             <div class="container overview">
-              <div class="heading">
-                <h2>BLACK PEARL 95</h2>
-                <h4>40 FT YACHT</h4>
+              <div class="">
+                <h2 id="yachtTitle">Loading...</h2>
+
+                <h4 id="yachtSubtitle"><span id="yachtLength">--</span> FT YACHT</h4>
 
                 <h4 class="mt-4">
-                  PRICE PER HOUR: <strong>AED 1,200</strong> | PRICE PER DAY:
-                  <strong>AED 14,400+VAT</strong>
+                  PRICE PER HOUR: <strong id="pricePerHour">AED --</strong> | PRICE PER DAY:
+                  <strong id="pricePerDay">AED --+VAT</strong>
                 </h4>
                 <div class="blueStrip mt-3">
                   <p class="text-light">
-                    <i class="fa-solid fa-user-group"></i> Guests: 10 &nbsp;
+                    <i class="fa-solid fa-user-group"></i> Guests: <span id="numberOfGuests">--</span> &nbsp;
                     &nbsp; | &nbsp; &nbsp;
-                    <i class="fa-solid fa-bed-pulse"></i> Overnight Guests: 0
+                    <i class="fa-solid fa-bed-pulse"></i> Overnight Guests: <span id="overnightGuests">--</span>
                     &nbsp; &nbsp; | &nbsp; &nbsp;<i
                       class="fa-solid fa-sailboat"
                     ></i>
-                    Van Dutch &nbsp; &nbsp;| &nbsp; &nbsp;
+                    <span id="yachtType">Yacht</span> &nbsp; &nbsp;| &nbsp; &nbsp;
                     <i class="fa-regular fa-clock"></i> &nbsp; Min. Charter
-                    Length: 3 Hours
+                    Length: <span id="minCharterLength">-- Hours</span>
                   </p>
                 </div>
               </div>
 
               <div class="description mt-4">
-                <p>
-                  Turn heads with Moonraker, our sleek and stylish 40ft VanDutch
-                  — a luxury day boat made for cruising Dubai in serious style.
-                  Refit in 2024, this modern icon of design is the ultimate
-                  choice for those who want to make a statement on the water.
-                </p>
-
-                <p>
-                  With its distinctive silhouette, open-plan deck, and spacious
-                  lounging areas, Moonraker is built for sun-soaked afternoons,
-                  champagne cruises, and unforgettable celebrations with up to
-                  10 guests. Whether you’re gliding past the Burj Al Arab or
-                  anchoring at the Palm for a swim stop, this boat brings both
-                  performance and presence.
-                </p>
-
-                <p>
-                  Inside, you’ll find a minimalist interior with air-conditioned
-                  comfort, a sleek bathroom, and a premium sound system to keep
-                  the vibes high all day long. Perfect for couples, groups, or
-                  luxury experiences that don’t need overnight stays — just
-                  sunshine, music, and the open sea.
-                </p>
+                <div id="yachtDescription">
+                  <p>Loading yacht description...</p>
+                </div>
               </div>
 
               <div class="accordion accordion-flush" id="accordionFlushExample">
@@ -231,12 +129,8 @@
                     class="accordion-collapse collapse"
                     data-bs-parent="#accordionFlushExample"
                   >
-                    <div class="accordion-body">
-                      Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                      Pariatur animi ipsam neque excepturi, magni ratione
-                      repudiandae dolore possimus quos similique, deleniti
-                      tempore iusto culpa dolores totam quaerat accusantium
-                      porro quis.
+                    <div class="accordion-body" id="facilitiesContent">
+                      Loading facilities...
                     </div>
                   </div>
                 </div>
@@ -258,11 +152,8 @@
                     class="accordion-collapse collapse"
                     data-bs-parent="#accordionFlushExample"
                   >
-                    <div class="accordion-body">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Labore quia magnam eius, ratione molestiae eos praesentium
-                      nam temporibus dignissimos minima maxime quam aliquam
-                      itaque placeat laudantium doloremque laboriosam. In, ipsa.
+                    <div class="accordion-body" id="experiencesContent">
+                      Loading experiences...
                     </div>
                   </div>
                 </div>
@@ -285,12 +176,8 @@
                     class="accordion-collapse collapse"
                     data-bs-parent="#accordionFlushExample"
                   >
-                    <div class="accordion-body">
-                      Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                      Itaque veniam doloremque, numquam quibusdam veritatis
-                      praesentium sed ratione aliquam rerum sequi obcaecati
-                      dolorem nobis perferendis cum, quisquam maxime laborum
-                      incidunt minus?
+                    <div class="accordion-body" id="watersportsContent">
+                      Loading watersports...
                     </div>
                   </div>
                 </div>
@@ -313,20 +200,14 @@
                     class="accordion-collapse collapse"
                     data-bs-parent="#accordionFlushExample"
                   >
-                    <div class="accordion-body">
-                      Placeholder content for this accordion, which is intended
-                      to demonstrate the <code>.accordion-flush</code> class.
-                      This is the third item’s accordion body. Nothing more
-                      exciting happening here in terms of content, but just
-                      filling up the space to make it look, at least at first
-                      glance, a bit more representative of how this would look
-                      in a real-world application.
+                    <div class="accordion-body" id="crewContent">
+                      Loading crew information...
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div class="location">
+              <div class="location" id="locationSection">
                 <h4 class="mt-5 mb-4">LOCATION</h4>
                 <p>Dubai Harbour</p>
                 <div class="mapouter">
@@ -372,45 +253,56 @@
               <div class="container bookingFormHeading">
                 <h2>CHECK AVAILABILITY</h2>
                 <div class="yachtName">
-                  <h4>BLACK PEARL 95</h4>
+                  <h4 id="bookingYachtName">Loading...</h4>
                 </div>
               </div>
 
               <div class="form">
-                <form action="">
+                <!-- Alert Messages -->
+                <div id="yachtAlertMessage" class="alert alert-dismissible fade" role="alert" style="display: none; margin-bottom: 20px;">
+                    <span id="yachtAlertText"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+                <form id="yachtBookingForm">
                   <input
                     type="text"
-                    name=""
+                    name="full_name"
                     id="name"
                     placeholder="FULL NAME"
+                    required
                   />
                   <input
                     type="email"
-                    name=""
+                    name="email"
                     id="email"
                     placeholder="EMAIL ADDRESS"
+                    required
                   />
                   <input
                     type="tel"
                     name="phone"
                     id="phone"
                     placeholder="PHONE NUMBER"
+                    required
                   />
                   <input
                     type="text"
-                    name=""
+                    name="preferred_date"
                     id="date"
                     placeholder="PREFERRED DATE"
                     onfocus="(this.type='date')"
+                    required
                   />
                   <input
                     type="text"
-                    name=""
+                    name="preferred_time"
                     id="time"
                     placeholder="PREFERRED TIME"
                     onfocus="(this.type='time')"
+                    required
                   />
-                  <select name="charterLength" id="CharterLength">
+                  <select name="charter_length" id="CharterLength" required>
                     <option value="" disabled selected>
                       SELECT CHARTER LENGTH
                     </option>
@@ -422,8 +314,10 @@
                     <option value="6 Hours">6 Hours</option>
                     <option value="Full Day">Full Day</option>
                   </select>
-                  <button type="submit" class="btn btn-primary w-100">
-                    SUBMIT
+                  <input type="hidden" name="yacht_name" value="BLACK PEARL 95">
+                  <button type="submit" class="btn btn-primary w-100" id="yachtSubmitBtn">
+                    <span class="btn-text">SUBMIT</span>
+                    <span class="btn-spinner spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
                   </button>
                 </form>
               </div>
@@ -474,219 +368,73 @@
       </div>
     </section>
 
-    <!-- Our Yacht Fleet Section -->
+    <!-- More Yachts Section -->
     <section class="yacht-fleet">
       <div class="container-fluid px-4">
-        <h2 class="text-center">FIND</h2>
-        <h3 class="text-center">MORE YACHTS</h3>
+        <h2 class="subheading">FIND</h2>
+        <h3 class="heading">MORE YACHTS</h3>
 
-        <div class="row g-4 px-3">
-          <!-- Yacht Card 1 -->
-          <div class="col-md-4">
-            <div class="yacht-card card1">
-              <div class="price-tag">AED 6500 | hr</div>
-              <img
-                class="yacht-image"
-                src="assets/images/yatch1.png"
-                alt="GR-BLACK PEARL 95"
-              />
-              <div class="yacht-info">
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <h5 class="yacht-title">GR-BLACK PEARL 95</h5>
-                    <p class="capacity">Capacity Up to 15 Person</p>
-                  </div>
-                  <div class="rating">
-                    <i class="fas fa-star"></i>
-                    <span>5.0 (179)</span>
-                  </div>
-                </div>
-              </div>
-              <div class="yacht-footer">
-                <div class="price-info">
-                  <img src="assets/images/coin_1.png" alt="Price" />
-                  <div class="price-text">
-                    <span class="price-label">Price</span>
-                    <span class="price-value">Half Day: 26000 AED</span>
-                  </div>
-                </div>
-                <button class="btn-book">
-                  BOOK YACHT BY <i class="fab fa-whatsapp"></i>
-                </button>
-              </div>
+        <!-- Loading state -->
+        <div id="moreYachtsLoading" class="d-flex justify-content-center align-items-center" style="height: 300px;">
+          <div class="text-center">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
             </div>
+            <p class="mt-2 text-muted">Loading more yachts...</p>
           </div>
-          <!-- Yacht Card 2 -->
-          <div class="col-md-4">
-            <div class="yacht-card card2">
-              <div class="price-tag">AED 6500 | hr</div>
-              <img
-                class="yacht-image"
-                src="assets/images/yatch2.png"
-                alt="GR-BLACK PEARL 95"
-              />
-              <div class="yacht-info">
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <h5 class="yacht-title">GR-BLACK PEARL 95</h5>
-                    <p class="capacity">Capacity Up to 15 Person</p>
-                  </div>
-                  <div class="rating">
-                    <i class="fas fa-star"></i>
-                    <span>5.0 (179)</span>
-                  </div>
-                </div>
-              </div>
-              <div class="yacht-footer">
-                <div class="price-info">
-                  <img src="assets/images/coin_1.png" alt="Price" />
-                  <div class="price-text">
-                    <span class="price-label">Price</span>
-                    <span class="price-value">Half Day: 26000 AED</span>
-                  </div>
-                </div>
-                <button class="btn-book">
-                  BOOK YACHT BY <i class="fab fa-whatsapp"></i>
-                </button>
-              </div>
-            </div>
-          </div>
+        </div>
 
-          <!-- Yacht Card 3 -->
-          <div class="col-md-4">
-            <div class="yacht-card card3">
-              <div class="price-tag">AED 6500 | hr</div>
-              <img
-                class="yacht-image"
-                src="assets/images/yatch3.png"
-                alt="GR-BLACK PEARL 95"
-              />
-              <div class="yacht-info">
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <h5 class="yacht-title">GR-BLACK PEARL 95</h5>
-                    <p class="capacity">Capacity Up to 15 Person</p>
-                  </div>
-                  <div class="rating">
-                    <i class="fas fa-star"></i>
-                    <span>5.0 (179)</span>
-                  </div>
-                </div>
-              </div>
-              <div class="yacht-footer">
-                <div class="price-info">
-                  <img src="assets/images/coin_1.png" alt="Price" />
-                  <div class="price-text">
-                    <span class="price-label">Price</span>
-                    <span class="price-value">Half Day: 26000 AED</span>
-                  </div>
-                </div>
-                <button class="btn-book">
-                  BOOK YACHT BY <i class="fab fa-whatsapp"></i>
-                </button>
-              </div>
-            </div>
+        <!-- Yacht Slider -->
+        <div id="moreYachtsSlider" class="carousel slide" data-bs-ride="false" style="display: none;">
+          <!-- Carousel indicators -->
+          <div class="carousel-indicators" id="yachtCarouselIndicators" style="display: none;">
+            <!-- Will be populated by JavaScript -->
           </div>
+          
+          <!-- Carousel inner -->
+          <div class="carousel-inner" id="yachtCarouselInner">
+            <!-- Will be populated by JavaScript -->
+          </div>
+          
+          <!-- Carousel controls -->
+          <button class="carousel-control-prev" type="button" data-bs-target="#moreYachtsSlider" data-bs-slide="prev" id="yachtCarouselPrev" style="display: none;">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#moreYachtsSlider" data-bs-slide="next" id="yachtCarouselNext" style="display: none;">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+
+        <!-- Fallback: Regular grid for small screens or when slider fails -->
+        <div class="row g-4 px-3" id="moreYachtsFallback" style="display: none;">
+          <!-- Will be populated by JavaScript if slider fails -->
         </div>
       </div>
     </section>
 
-    <div class="navigation-controls text-center">
+    <!-- Navigation Controls for Yacht Slider -->
+    <div class="navigation-controls text-center" id="yachtSliderNavigation" style="display: none;">
       <div class="d-flex justify-content-center align-items-center gap-5">
-        <button
-          class="nav-arrow prev"
-          style="font-size: 34px; padding: 35px 35px"
-        >
+        <button class="nav-arrow prev" onclick="document.getElementById('yachtCarouselPrev').click()" style="font-size: 34px; padding: 35px 35px;">
           <i class="fa-solid fa-arrow-left fa-sm"></i>
         </button>
-
-        <button
-          class="nav-arrow next"
-          style="font-size: 34px; padding: 35px 35px"
-        >
+        <button class="nav-arrow next" onclick="document.getElementById('yachtCarouselNext').click()" style="font-size: 34px; padding: 35px 35px;">
           <i class="fa-solid fa-arrow-right"></i>
         </button>
       </div>
     </div>
 
     <!-- Footer -->
-    <footer class="custom-footer">
-      <div class="footer-container">
-        <div class="footer-top-section">
-          <div class="footer-logo">
-            <img src="assets/images/logoColoured.png" alt="GR Yachts Dubai" />
-          </div>
-          <div class="top-line"></div>
-        </div>
-        <div class="footer-main-content">
-          <div class="footer-about">
-            <p>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book. It has
-              survived not only five centuries
-            </p>
-          </div>
-          <div class="footer-links-section">
-            <div class="vertical-line"></div>
-            <div class="footer-column">
-              <h5 class="footer-heading">Contact Us</h5>
-              <ul class="list-unstyled contact-info">
-                <li>
-                  Dubai Harbour Marina <br />
-                  Club
-                </li>
-                <li class="phone">+971 9818020096</li>
-                <li class="email">info@gryachts.com</li>
-                <li class="website">www.gryachts.com</li>
-              </ul>
-            </div>
-            <div class="vertical-line"></div>
-            <div class="footer-column">
-              <h5 class="footer-heading">Quick Links</h5>
-              <ul class="list-unstyled quick-links">
-                <li><a href="#">About Us</a></li>
-                <li><a href="#">Contact Us</a></li>
-                <li><a href="#">FAQ's</a></li>
-                <li><a href="#">Privacy Policy</a></li>
-              </ul>
-            </div>
-            <div class="vertical-line"></div>
-            <div class="footer-column">
-              <h5 class="footer-heading">Follow Us</h5>
-              <div class="social-icons">
-                <a href="#" class="social-icon"
-                  ><i class="fab fa-facebook-f"></i
-                ></a>
-                <a href="#" class="social-icon"
-                  ><i class="fab fa-instagram"></i
-                ></a>
-                <a href="#" class="social-icon"
-                  ><i class="fab fa-youtube"></i
-                ></a>
-                <a href="#" class="social-icon"
-                  ><i class="fab fa-whatsapp"></i
-                ></a>
-                <a href="#" class="social-icon"
-                  ><i class="fab fa-linkedin-in"></i
-                ></a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="footer-bottom-section">
-          <div class="bottom-line"></div>
-        </div>
-      </div>
-    </footer>
+   <div id="footer"></div>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- IntlTelInput JS -->
     <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/intlTelInput.min.js"></script>
     <script>
       const phoneInput = document.querySelector("#phone");
-      window.intlTelInput(phoneInput, {
+      const intlTelInstance = window.intlTelInput(phoneInput, {
         initialCountry: "ae",
         preferredCountries: ["ae", "gb", "us"],
         separateDialCode: true,
@@ -694,7 +442,711 @@
           "https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js",
       });
     </script>
+
+    <!-- Yacht Booking Form AJAX Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const yachtBookingForm = document.getElementById('yachtBookingForm');
+            const yachtSubmitBtn = document.getElementById('yachtSubmitBtn');
+            const btnText = yachtSubmitBtn.querySelector('.btn-text');
+            const btnSpinner = yachtSubmitBtn.querySelector('.btn-spinner');
+            const yachtAlertMessage = document.getElementById('yachtAlertMessage');
+            const yachtAlertText = document.getElementById('yachtAlertText');
+
+            // Function to show alert messages
+            function showYachtAlert(message, type) {
+                yachtAlertText.textContent = message;
+                yachtAlertMessage.className = `alert alert-${type} alert-dismissible fade show`;
+                yachtAlertMessage.style.display = 'block';
+                
+                // Auto hide after 8 seconds for success messages
+                if (type === 'success') {
+                    setTimeout(() => {
+                        yachtAlertMessage.style.display = 'none';
+                    }, 8000);
+                } else {
+                    // Auto hide after 5 seconds for error messages
+                    setTimeout(() => {
+                        yachtAlertMessage.style.display = 'none';
+                    }, 5000);
+                }
+            }
+
+            // Function to set loading state
+            function setYachtLoadingState(isLoading) {
+                if (isLoading) {
+                    yachtSubmitBtn.disabled = true;
+                    btnText.textContent = 'SUBMITTING...';
+                    btnSpinner.classList.remove('d-none');
+                } else {
+                    yachtSubmitBtn.disabled = false;
+                    btnText.textContent = 'SUBMIT';
+                    btnSpinner.classList.add('d-none');
+                }
+            }
+
+            // Handle form submission
+            yachtBookingForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                // Get form data
+                const formData = new FormData(yachtBookingForm);
+                
+                // Get the full phone number with country code
+                const phoneNumber = intlTelInstance.getNumber();
+                if (phoneNumber) {
+                    formData.set('phone', phoneNumber);
+                }
+                
+                // Basic validation
+                const fullName = formData.get('full_name').trim();
+                const email = formData.get('email').trim();
+                const phone = formData.get('phone').trim();
+                const preferredDate = formData.get('preferred_date');
+                const preferredTime = formData.get('preferred_time');
+                const charterLength = formData.get('charter_length');
+                
+                if (!fullName || !email || !phone || !preferredDate || !preferredTime || !charterLength) {
+                    showYachtAlert('Please fill in all required fields.', 'danger');
+                    return;
+                }
+                
+                // Email validation
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    showYachtAlert('Please enter a valid email address.', 'danger');
+                    return;
+                }
+                
+                // Date validation (not in past)
+                const selectedDate = new Date(preferredDate);
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                
+                if (selectedDate < today) {
+                    showYachtAlert('Booking date cannot be in the past.', 'danger');
+                    return;
+                }
+                
+                // Set loading state
+                setYachtLoadingState(true);
+                
+                try {
+                    // Make API request
+                    const response = await fetch('api/v1/yachtBookingHandler.php', {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    });
+                    
+                    // Parse response
+                    const result = await response.json();
+                    
+                    if (response.ok && result.success) {
+                        // Success
+                        let successMessage = result.message;
+                        if (result.estimated_price) {
+                            successMessage += ` Estimated price: ${result.estimated_price} ${result.currency || 'AED'}`;
+                        }
+                        showYachtAlert(successMessage, 'success');
+                        yachtBookingForm.reset();
+                        
+                        // Reset form field types
+                        document.getElementById('date').type = 'text';
+                        document.getElementById('time').type = 'text';
+                    } else {
+                        // Error from server
+                        showYachtAlert(result.message || 'Failed to submit booking request. Please try again.', 'danger');
+                    }
+                    
+                } catch (error) {
+                    console.error('Error:', error);
+                    showYachtAlert('Network error occurred. Please check your connection and try again.', 'danger');
+                } finally {
+                    // Reset loading state
+                    setYachtLoadingState(false);
+                }
+            });
+            
+            // Hide alert when user starts typing
+            const formInputs = yachtBookingForm.querySelectorAll('input, select');
+            formInputs.forEach(input => {
+                input.addEventListener('input', function() {
+                    if (yachtAlertMessage.style.display !== 'none') {
+                        yachtAlertMessage.style.display = 'none';
+                    }
+                });
+            });
+
+            // Set minimum date to today
+            const dateInput = document.getElementById('date');
+            const today = new Date().toISOString().split('T')[0];
+            dateInput.addEventListener('focus', function() {
+                this.type = 'date';
+                this.min = today;
+            });
+        });
+    </script>
+
     <!-- Custom JS -->
     <script src="assets/js/main.js"></script>
+
+      <script>
+         async function loadComponent(id, file) {
+      const response = await fetch(file);
+      const html = await response.text();
+      document.getElementById(id).innerHTML = html;
+    }
+    loadComponent("header", "_partials/header.html");
+    loadComponent("footer", "_partials/footer.html");
+
+    // Load yacht details from URL parameters
+    async function loadYachtDetails() {
+        try {
+            // Get URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const yachtId = urlParams.get('id');
+            const slug = urlParams.get('slug');
+            
+            if (!yachtId) {
+                console.error('No yacht ID provided in URL');
+                showYachtAlert('Yacht not found. Please select a yacht from the fleet.', 'danger');
+                return;
+            }
+
+            // Fetch yacht data from API
+            const response = await fetch(`api/v1/yachtFleetHandler.php?action=get&id=${yachtId}`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const { success, data } = await response.json();
+            if (!success || !data) {
+                throw new Error('Yacht not found');
+            }
+
+            // Update page with yacht data
+            updateYachtDetailsPage(data);
+            
+            // Update page title with yacht name
+            document.title = `${data.title} - GR Yachts Dubai`;
+            
+            // Load more yachts slider (exclude current yacht)
+            loadMoreYachts(data.id);
+            
+        } catch (error) {
+            console.error('Error loading yacht details:', error);
+            showYachtAlert('Failed to load yacht details. Please try again.', 'danger');
+        }
+    }
+
+    function updateYachtDetailsPage(yacht) {
+        // Create image slider
+        createImageSlider(yacht);
+        
+        // Update yacht details
+        updateYachtInfo(yacht);
+    }
+
+    function createImageSlider(yacht) {
+        console.log('Creating image slider for yacht:', yacht.title);
+        
+        const imageSliderLoading = document.getElementById('imageSliderLoading');
+        const carouselIndicators = document.getElementById('carouselIndicators');
+        const carouselInner = document.getElementById('carouselInner');
+        const carouselPrev = document.getElementById('carouselPrev');
+        const carouselNext = document.getElementById('carouselNext');
+
+        // Ensure loading is visible initially
+        if (imageSliderLoading) {
+            imageSliderLoading.style.display = 'flex';
+        }
+
+        let yachtImages = [];
+        
+        // Parse yacht images
+        if (yacht.yacht_images) {
+            try {
+                yachtImages = JSON.parse(yacht.yacht_images);
+                console.log('Parsed yacht_images:', yachtImages);
+            } catch (e) {
+                console.error('Error parsing yacht_images:', e);
+                yachtImages = yacht.main_image ? [yacht.main_image] : [];
+            }
+        } else if (yacht.main_image) {
+            yachtImages = [yacht.main_image];
+            if (yacht.secondary_images) {
+                try {
+                    const secondaryImages = JSON.parse(yacht.secondary_images);
+                    yachtImages = yachtImages.concat(secondaryImages);
+                } catch (e) {
+                    console.error('Error parsing secondary_images:', e);
+                }
+            }
+        }
+
+        console.log('Final yacht images array:', yachtImages);
+
+        if (yachtImages.length === 0) {
+            console.log('No images found, showing placeholder');
+            carouselInner.innerHTML = '<div class="carousel-item active"><img src="assets/images/placeholder-yacht.jpg" class="d-block w-100" alt="No images available" style="height: 600px; object-fit: cover;"></div>';
+            carouselInner.style.display = 'block';
+            if (imageSliderLoading) imageSliderLoading.style.display = 'none';
+            return;
+        }
+
+        // Create carousel indicators
+        let indicatorsHTML = '';
+        yachtImages.forEach((image, index) => {
+            indicatorsHTML += `
+                <button type="button" data-bs-target="#yachtImageCarousel" data-bs-slide-to="${index}" 
+                        ${index === 0 ? 'class="active" aria-current="true"' : ''} 
+                        aria-label="Slide ${index + 1}"></button>
+            `;
+        });
+        if (carouselIndicators) carouselIndicators.innerHTML = indicatorsHTML;
+
+        // Create carousel items
+        let carouselHTML = '';
+        yachtImages.forEach((image, index) => {
+            carouselHTML += `
+                <div class="carousel-item ${index === 0 ? 'active' : ''}">
+                     <img src="api/uploads/yachtFleet/${image}" class="d-block w-100" alt="${yacht.title} Image ${index + 1}" 
+                         style="height: 600px; object-fit: cover;" 
+                         onload="console.log('Image loaded:', '${image}')"
+                         onerror="console.error('Image failed to load:', '${image}')">
+                </div>
+            `;
+        });
+        if (carouselInner) carouselInner.innerHTML = carouselHTML;
+
+        // Show carousel elements and hide loading
+        if (carouselIndicators) carouselIndicators.style.display = yachtImages.length > 1 ? 'flex' : 'none';
+        if (carouselInner) carouselInner.style.display = 'block';
+        if (carouselPrev) carouselPrev.style.display = yachtImages.length > 1 ? 'block' : 'none';
+        if (carouselNext) carouselNext.style.display = yachtImages.length > 1 ? 'block' : 'none';
+        
+        // Hide loading immediately and with backup
+        if (imageSliderLoading) {
+            imageSliderLoading.style.display = 'none';
+            imageSliderLoading.style.visibility = 'hidden';
+            imageSliderLoading.classList.add('d-none');
+            console.log('Loading state hidden');
+        }
+        
+        // Additional backup to ensure loading is hidden
+        setTimeout(() => {
+            const loadingEl = document.getElementById('imageSliderLoading');
+            if (loadingEl) {
+                loadingEl.style.display = 'none';
+                loadingEl.style.visibility = 'hidden';
+                loadingEl.classList.add('d-none');
+            }
+        }, 50);
+    }
+
+    function updateYachtInfo(yacht) {
+        // Update main title and details
+        document.getElementById('yachtTitle').textContent = yacht.title;
+        document.getElementById('yachtLength').textContent = yacht.length || '--';
+        document.getElementById('pricePerHour').textContent = `AED ${yacht.price_per_hour || '--'}`;
+        document.getElementById('pricePerDay').textContent = `AED ${yacht.price_per_day || '--'}+VAT`;
+        document.getElementById('numberOfGuests').textContent = yacht.number_of_guests || '--';
+        document.getElementById('overnightGuests').textContent = yacht.overnight_guests || '--';
+        document.getElementById('minCharterLength').textContent = yacht.min_charter_length ? `${yacht.min_charter_length} Hours` : '-- Hours';
+        
+        // Update booking section yacht name
+        document.getElementById('bookingYachtName').textContent = yacht.title;
+
+        // Update hidden yacht name in booking form
+        const yachtNameInput = document.querySelector('input[name="yacht_name"]');
+        if (yachtNameInput) {
+            yachtNameInput.value = yacht.title;
+        }
+
+        // Update charter member name and WhatsApp link
+        updateCharterMember(yacht);
+
+        // Update description
+        const descriptionElement = document.getElementById('yachtDescription');
+        if (yacht.description) {
+            // Convert line breaks to paragraphs
+            const paragraphs = yacht.description.split('\n\n').filter(p => p.trim());
+            descriptionElement.innerHTML = paragraphs.map(p => `<p>${p.trim()}</p>`).join('');
+        } else {
+            descriptionElement.innerHTML = '<p>No description available.</p>';
+        }
+
+        // Update accordion sections
+        updateAccordionSections(yacht);
+        
+        // Update map
+        updateMap(yacht);
+
+        // Update WhatsApp links
+        updateWhatsAppLinks(yacht);
+    }
+
+    function updateCharterMember(yacht) {
+        // Update charter member name
+        const memberNameElement = document.querySelector('.member-details h5');
+        if (memberNameElement && yacht.charter_member_name) {
+            memberNameElement.textContent = yacht.charter_member_name;
+        }
+
+        // Update charter member WhatsApp link
+        const whatsappLink = yacht.whatsapp_link || 'https://wa.me/+971505543873';
+        const charterWhatsappButton = document.querySelector('.member a[href*="wa.me"]');
+        if (charterWhatsappButton) {
+            charterWhatsappButton.href = whatsappLink;
+        }
+
+        // Also update the alt attribute of the member image if we have the name
+        const memberImage = document.querySelector('.member-image img');
+        if (memberImage && yacht.charter_member_name) {
+            memberImage.alt = yacht.charter_member_name;
+        }
+    }
+
+    function updateAccordionSections(yacht) {
+        // Update facilities
+        const facilitiesContent = document.getElementById('facilitiesContent');
+        if (facilitiesContent) {
+            facilitiesContent.innerHTML = yacht.facilities || 'No facilities information available.';
+        }
+
+        // Update experiences
+        const experiencesContent = document.getElementById('experiencesContent');
+        if (experiencesContent) {
+            experiencesContent.innerHTML = yacht.experiences || 'No experiences information available.';
+        }
+
+        // Update watersports
+        const watersportsContent = document.getElementById('watersportsContent');
+        if (watersportsContent) {
+            watersportsContent.innerHTML = yacht.watersports || 'No watersports information available.';
+        }
+
+        // Update crew
+        const crewContent = document.getElementById('crewContent');
+        if (crewContent) {
+            crewContent.innerHTML = yacht.crew || 'No crew information available.';
+        }
+    }
+
+    function updateMap(yacht) {
+        if (yacht.google_map_iframe) {
+            let mapContent = yacht.google_map_iframe;
+            
+            // Check if it's a Google Maps link instead of iframe
+            if (isGoogleMapsLink(yacht.google_map_iframe)) {
+                console.log('Converting Google Maps link to iframe:', yacht.google_map_iframe);
+                mapContent = convertGoogleMapsLinkToIframe(yacht.google_map_iframe);
+            }
+            
+            const mapContainer = document.querySelector('.mapouter .gmap_canvas');
+            if (mapContainer) {
+                mapContainer.innerHTML = mapContent;
+            } else {
+                // If no container, find the iframe directly
+                const mapIframe = document.getElementById('gmap_canvas');
+                if (mapIframe) {
+                    if (mapContent.includes('src=')) {
+                        // Extract src from iframe HTML
+                        const srcMatch = mapContent.match(/src="([^"]+)"/);
+                        if (srcMatch) {
+                            mapIframe.src = srcMatch[1];
+                        }
+                    } else if (isGoogleMapsLink(mapContent)) {
+                        // Direct link, convert to embed URL
+                        const embedUrl = convertGoogleMapsLinkToEmbedUrl(mapContent);
+                        if (embedUrl) {
+                            mapIframe.src = embedUrl;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Function to detect if string is a Google Maps link
+    function isGoogleMapsLink(str) {
+        if (!str) return false;
+        
+        // Remove iframe tags if present and check the content
+        const cleanStr = str.replace(/<[^>]*>/g, '');
+        
+        // Check for various Google Maps URL patterns
+        const googleMapsPatterns = [
+            /maps\.google\.com/,
+            /google\.com\/maps/,
+            /goo\.gl\/maps/,
+            /maps\.app\.goo\.gl/
+        ];
+        
+        return googleMapsPatterns.some(pattern => pattern.test(cleanStr)) && 
+               !str.includes('<iframe'); // Not already an iframe
+    }
+
+    // Function to convert Google Maps link to iframe
+    function convertGoogleMapsLinkToIframe(link) {
+        const embedUrl = convertGoogleMapsLinkToEmbedUrl(link);
+        if (!embedUrl) return link; // Return original if conversion fails
+        
+        return `<iframe src="${embedUrl}" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`;
+    }
+
+    // Function to convert Google Maps link to embed URL
+    function convertGoogleMapsLinkToEmbedUrl(link) {
+        try {
+            // Handle different Google Maps URL formats
+            let embedUrl = '';
+            
+            // Format 1: Standard Google Maps URL with coordinates
+            if (link.includes('@') && link.includes(',')) {
+                const coordsMatch = link.match(/@(-?\d+\.?\d*),(-?\d+\.?\d*)/);
+                if (coordsMatch) {
+                    const lat = coordsMatch[1];
+                    const lng = coordsMatch[2];
+                    embedUrl = `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3000!2d${lng}!3d${lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM°00'00.0"N+00°00'00.0"E!5e0!3m2!1sen!2s!4v1000000000000!5m2!1sen!2s`;
+                    return embedUrl;
+                }
+            }
+            
+            // Format 2: Google Maps place URL
+            if (link.includes('/place/')) {
+                const placeMatch = link.match(/\/place\/([^\/\?]+)/);
+                if (placeMatch) {
+                    const placeName = placeMatch[1].replace(/\+/g, ' ');
+                    // Use the generic embed format for places
+                    embedUrl = `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3000!2d0!3d0!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2s${encodeURIComponent(placeName)}!5e0!3m2!1sen!2s!4v1000000000000!5m2!1sen!2s`;
+                    return embedUrl;
+                }
+            }
+            
+            // Format 3: Short Google Maps URL (goo.gl or maps.app.goo.gl)
+            if (link.includes('goo.gl') || link.includes('maps.app.goo.gl')) {
+                // For short URLs, we'll use a generic embed approach
+                const encodedUrl = encodeURIComponent(link);
+                embedUrl = `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3000!2d0!3d0!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2s${encodedUrl}!5e0!3m2!1sen!2s!4v1000000000000!5m2!1sen!2s`;
+                return embedUrl;
+            }
+            
+            // Format 4: Already an embed URL
+            if (link.includes('google.com/maps/embed')) {
+                return link;
+            }
+            
+            // Fallback: Try to extract any coordinates from the URL
+            const coordsMatch = link.match(/(-?\d+\.?\d*),(-?\d+\.?\d*)/);
+            if (coordsMatch) {
+                const lat = coordsMatch[1];
+                const lng = coordsMatch[2];
+                embedUrl = `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3000!2d${lng}!3d${lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM°00'00.0"N+00°00'00.0"E!5e0!3m2!1sen!2s!4v1000000000000!5m2!1sen!2s`;
+                return embedUrl;
+            }
+            
+            return null;
+        } catch (error) {
+            console.error('Error converting Google Maps link:', error);
+            return null;
+        }
+    }
+
+    function updateWhatsAppLinks(yacht) {
+        const whatsappButtons = document.querySelectorAll('.btn-book, button[onclick*="whatsapp"]');
+        const whatsappLink = yacht.whatsapp_link || 'https://wa.me/971505540073';
+        
+        whatsappButtons.forEach(btn => {
+            btn.onclick = (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                window.open(whatsappLink, '_blank');
+            };
+        });
+    }
+
+
+    // Load yacht details when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        loadYachtDetails();
+    });
+
+    // Load more yachts for slider
+    async function loadMoreYachts(currentYachtId) {
+        console.log('Loading more yachts, excluding yacht ID:', currentYachtId);
+        
+        const moreYachtsLoading = document.getElementById('moreYachtsLoading');
+        const moreYachtsSlider = document.getElementById('moreYachtsSlider');
+        const moreYachtsFallback = document.getElementById('moreYachtsFallback');
+        const yachtSliderNavigation = document.getElementById('yachtSliderNavigation');
+
+        if (!moreYachtsLoading) {
+            console.error('moreYachtsLoading element not found');
+            return;
+        }
+
+        try {
+            // Show loading state
+            console.log('Showing loading state');
+            moreYachtsLoading.style.display = 'flex';
+            moreYachtsSlider.style.display = 'none';
+            moreYachtsFallback.style.display = 'none';
+            yachtSliderNavigation.style.display = 'none';
+
+            const response = await fetch('api/v1/yachtFleetHandler.php?action=list');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const { success, data } = await response.json();
+            if (!success || !Array.isArray(data)) {
+                throw new Error('Invalid data received from server');
+            }
+
+            // Filter out current yacht and limit to 6 yachts
+            const otherYachts = data.filter(yacht => yacht.id != currentYachtId).slice(0, 6);
+            
+            if (otherYachts.length === 0) {
+                moreYachtsLoading.innerHTML = '<div class="text-center p-4"><p class="text-muted">No other yachts available</p></div>';
+                moreYachtsLoading.style.display = 'flex';
+                return;
+            }
+
+            // Create yacht slider
+            createYachtSlider(otherYachts);
+
+        } catch (error) {
+            console.error('Error loading more yachts:', error);
+            moreYachtsLoading.innerHTML = '<div class="text-center p-4"><p class="text-danger">Failed to load more yachts</p></div>';
+            moreYachtsLoading.style.display = 'flex';
+        }
+    }
+
+    function createYachtSlider(yachts) {
+        const moreYachtsLoading = document.getElementById('moreYachtsLoading');
+        const moreYachtsSlider = document.getElementById('moreYachtsSlider');
+        const yachtCarouselIndicators = document.getElementById('yachtCarouselIndicators');
+        const yachtCarouselInner = document.getElementById('yachtCarouselInner');
+        const yachtCarouselPrev = document.getElementById('yachtCarouselPrev');
+        const yachtCarouselNext = document.getElementById('yachtCarouselNext');
+        const yachtSliderNavigation = document.getElementById('yachtSliderNavigation');
+
+        // Group yachts into slides of 3
+        const yachtsPerSlide = 3;
+        const slides = [];
+        for (let i = 0; i < yachts.length; i += yachtsPerSlide) {
+            slides.push(yachts.slice(i, i + yachtsPerSlide));
+        }
+
+        // Create carousel indicators
+        let indicatorsHTML = '';
+        slides.forEach((slide, index) => {
+            indicatorsHTML += `
+                <button type="button" data-bs-target="#moreYachtsSlider" data-bs-slide-to="${index}" 
+                        ${index === 0 ? 'class="active" aria-current="true"' : ''} 
+                        aria-label="Slide ${index + 1}"></button>
+            `;
+        });
+        yachtCarouselIndicators.innerHTML = indicatorsHTML;
+
+        // Create carousel slides
+        let slidesHTML = '';
+        slides.forEach((slide, slideIndex) => {
+            slidesHTML += `
+                <div class="carousel-item ${slideIndex === 0 ? 'active' : ''}">
+                    <div class="row g-4 px-3">
+                        ${slide.map(yacht => createYachtCardHTML(yacht)).join('')}
+                    </div>
+                </div>
+            `;
+        });
+        yachtCarouselInner.innerHTML = slidesHTML;
+
+        // Show/hide controls based on number of slides
+        const showControls = slides.length > 1;
+        yachtCarouselIndicators.style.display = showControls ? 'flex' : 'none';
+        yachtCarouselPrev.style.display = showControls ? 'block' : 'none';
+        yachtCarouselNext.style.display = showControls ? 'block' : 'none';
+        yachtSliderNavigation.style.display = showControls ? 'block' : 'none';
+
+        // Hide loading and show slider
+        console.log('Hiding loading and showing slider');
+        moreYachtsLoading.style.display = 'none';
+        moreYachtsSlider.style.display = 'block';
+        
+        // Force hide loading with additional methods as backup
+        moreYachtsLoading.classList.add('d-none');
+        moreYachtsLoading.style.visibility = 'hidden';
+        
+        // Ensure slider is visible
+        moreYachtsSlider.classList.remove('d-none');
+        moreYachtsSlider.style.visibility = 'visible';
+        
+        console.log('More yachts slider created with', yachts.length, 'yachts in', slides.length, 'slides');
+        
+        // Additional backup to force hide loading after a short delay
+        setTimeout(() => {
+            if (moreYachtsLoading) {
+                moreYachtsLoading.style.display = 'none';
+                moreYachtsLoading.classList.add('d-none');
+                console.log('Backup: Forced loading to hide');
+            }
+        }, 100);
+    }
+
+    function createYachtCardHTML(yacht) {
+        const slug = createSlug(yacht.title);
+        return `
+            <div class="col-md-4">
+                <div class="yacht-card" onclick="navigateToYachtDetails('${slug}', ${yacht.id})" style="cursor: pointer;">
+                    <div class="price-tag">AED ${yacht.price_per_hour || yacht.price} | hr</div>
+                    <img class="yacht-image" src="api/uploads/yachtFleet/${yacht.main_image}" alt="${yacht.title}">
+                    <div class="yacht-info">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5 class="yacht-title">${yacht.title}</h5>
+                                <p class="capacity">Capacity Up to ${yacht.number_of_guests} Person</p>
+                            </div>
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <span>5.0 (179)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="yacht-footer">
+                        <div class="price-info">
+                            <img src="assets/images/coin_1.png" alt="Price">
+                            <div class="price-text">
+                                <span class="price-label">Price</span>
+                                <span class="price-value">Half Day: ${yacht.price} AED</span>
+                            </div>
+                        </div>
+                        <button class="btn-book" onclick="event.stopPropagation(); window.open('${yacht.whatsapp_link || 'https://wa.me/971505540073'}', '_blank')">
+                            BOOK YACHT BY <i class="fab fa-whatsapp"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // Create slug function (reused from index.html)
+    function createSlug(title) {
+        return title.toLowerCase()
+            .replace(/[^a-z0-9 -]/g, '') // Remove invalid chars
+            .replace(/\s+/g, '-') // Replace spaces with -
+            .replace(/-+/g, '-') // Replace multiple - with single -
+            .trim('-'); // Trim - from start and end
+    }
+
+    // Navigate to yacht details with slug (reused from index.html)
+    function navigateToYachtDetails(slug, yachtId) {
+        window.location.href = `yacht-details.html?slug=${slug}&id=${yachtId}`;
+    }
+  
+    </script>
   </body>
 </html>

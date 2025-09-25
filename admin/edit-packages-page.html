@@ -1,0 +1,1838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Packages Page - GR Yachts Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="admin-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <!-- Quill Rich Text Editor -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    <style>
+        .package-item {
+            position: relative;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .package-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .package-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .package-item-info {
+            padding: 15px;
+            background: white;
+        }
+        
+        .package-item-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .package-item-description {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        .package-item-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .package-item-overlay {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+        }
+        
+        .package-image-preview img {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 8px;
+        }
+        
+        .package-drag-area {
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .package-drag-area:hover,
+        .package-drag-area.dragover {
+            border-color: var(--yacht-blue);
+            background-color: rgba(0, 167, 189, 0.05);
+        }
+        
+        .package-empty {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+        
+        .package-empty i {
+            font-size: 48px;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+        
+        .feature-item {
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: #f8f9fa;
+        }
+        
+        .main-package-preview {
+            border: 2px solid #28a745;
+            border-radius: 10px;
+            padding: 20px;
+            background: #f8fff8;
+        }
+        
+        /* Quill Editor Customization */
+        .ql-editor {
+            min-height: 120px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .ql-toolbar {
+            border-top: 1px solid #ccc;
+            border-left: 1px solid #ccc;
+            border-right: 1px solid #ccc;
+            border-bottom: none;
+        }
+        
+        .ql-container {
+            border-bottom: 1px solid #ccc;
+            border-left: 1px solid #ccc;
+            border-right: 1px solid #ccc;
+            border-top: none;
+        }
+        
+        .ql-editor.ql-blank::before {
+            font-style: italic;
+            color: #aaa;
+        }
+
+        /* Package Card Styles */
+        .package-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .package-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .package-card-header {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .package-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .package-card:hover .package-image {
+            transform: scale(1.05);
+        }
+
+        .featured-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: linear-gradient(45deg, #ffc107, #ff9800);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            z-index: 2;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .package-card-body {
+            padding: 20px;
+            flex-grow: 1;
+        }
+
+        .package-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        .package-price {
+            font-size: 1.1rem;
+            color: #e74c3c;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .package-description {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .package-card-actions {
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .package-card-actions .btn {
+            border-radius: 20px;
+            padding: 8px 12px;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+
+        .package-card-actions .btn:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <img src="../assets/images/logoColoured.png" alt="GR Yachts" class="sidebar-logo">
+            <h3 class="sidebar-title">GR YACHTS</h3>
+            <p class="sidebar-subtitle">Admin Dashboard</p>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <div class="nav-item">
+                <a href="dashboard.html" class="nav-link">
+                    <i class="fas fa-tachometer-alt"></i>
+                    Dashboard
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="contacts.html" class="nav-link">
+                    <i class="fas fa-envelope"></i>
+                    Contact Messages
+                    <span class="nav-badge" id="contactsBadge">0</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="bookings.html" class="nav-link">
+                    <i class="fas fa-anchor"></i>
+                    Yacht Bookings
+                    <span class="nav-badge" id="bookingsBadge">0</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="yacht-fleet.html" class="nav-link">
+                    <i class="fas fa-ship"></i>
+                    Yacht Fleet
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="manage-site.html" class="nav-link active">
+                    <i class="fas fa-edit"></i>
+                    Manage Site
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="settings.html" class="nav-link">
+                    <i class="fas fa-cog"></i>
+                    Settings
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="nav-link" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </a>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Sidebar Overlay for Mobile -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <!-- Top Navbar -->
+        <div class="top-navbar">
+            <div class="navbar-left">
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 class="page-title">Edit Packages Page</h1>
+            </div>
+            
+            <div class="navbar-right">
+                <div class="search-box">
+                    <input type="text" class="search-input" placeholder="Search...">
+                    <button class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                
+                <button class="notification-bell">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge" id="notificationBadge">0</span>
+                </button>
+                
+                <div class="user-dropdown">
+                    <div class="user-info" onclick="toggleUserMenu()">
+                        <div class="user-avatar" id="userAvatar">A</div>
+                        <div class="user-details">
+                            <p class="user-name" id="userName">Admin User</p>
+                            <p class="user-role" id="userRole">Administrator</p>
+                        </div>
+                        <i class="fas fa-chevron-down ms-2"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Packages Page Content -->
+        <div class="dashboard-content">
+            <div class="row">
+                <div class="col-12">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2>Edit Packages Page Content</h2>
+                        <div>
+                            <button type="button" class="btn btn-secondary me-2" onclick="window.location.href='manage-site.html'">
+                                <i class="fas fa-arrow-left me-2"></i>Back to Manage Site
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-info mb-4">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Edit the content that appears on your website's packages page. Changes will be reflected immediately after saving.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Section -->
+            <form id="packagesHeroForm">
+                <div class="table-card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">
+                            <i class="fas fa-star me-2"></i>Packages Hero Section
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="heroTitle" class="form-label">Hero Title</label>
+                                    <input type="text" class="form-control" id="heroTitle" name="heroTitle" placeholder="Enter hero title" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="heroButtonText" class="form-label">Button Text</label>
+                                    <input type="text" class="form-control" id="heroButtonText" name="heroButtonText" placeholder="Enter button text (e.g., BOOK A YACHT)">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="heroButtonLink" class="form-label">Button Link</label>
+                                    <input type="text" class="form-control" id="heroButtonLink" name="heroButtonLink" placeholder="Enter button link (e.g., #contact or /booking)">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="heroImage" class="form-label">Hero Background Image</label>
+                                    <input type="file" class="form-control" id="heroImage" name="image" accept="image/*" onchange="previewHeroImage(this)">
+                                    <div class="form-text">Current image: packages-hero-bg.jpg</div>
+                                </div>
+                                <div class="hero-preview mt-3">
+                                    <img src="../assets/images/allPackages/hero.png" id="heroImagePreview" alt="Hero Background" class="img-fluid rounded" style="max-height: 200px;" onerror="this.src='../assets/images/heroSectionbg.jpg'">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center mt-3">
+                            <button type="submit" class="btn btn-success btn-lg">
+                                <i class="fas fa-save me-2"></i>Save Hero Section
+                            </button>
+                            <button type="button" class="btn btn-secondary btn-lg ms-3" onclick="resetHeroForm()">
+                                <i class="fas fa-undo me-2"></i>Reset Hero
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <!-- All Packages Section -->
+            <div class="table-card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-th-large me-2"></i>All Packages
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5>Manage All Packages</h5>
+                                <button type="button" class="btn btn-success" onclick="openAddPackageModal()">
+                                    <i class="fas fa-plus me-2"></i>Add New Package
+                                </button>
+                            </div>
+                            
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle me-2"></i>
+                                <strong>Featured Package:</strong> The package marked as "Featured" will be displayed prominently on the packages page. Only one package can be featured at a time. Click the star icon to make a package featured.
+                            </div>
+
+                            <div id="allPackagesContainer" class="row">
+                                <!-- All packages will be loaded here -->
+                                <div class="col-12 text-center p-4">
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="visually-hidden">Loading packages...</span>
+                                    </div>
+                                    <p class="mt-2">Loading all packages...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add/Edit Package Modal -->
+            <div class="modal fade" id="packageModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header bg-primary text-white">
+                            <h5 class="modal-title" id="packageModalTitle">
+                                <i class="fas fa-plus me-2"></i>Add New Package
+                            </h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="packageForm" enctype="multipart/form-data">
+                                <input type="hidden" id="packageId" name="package_id">
+                                <input type="hidden" id="packageAction" name="action" value="addPackage">
+                                
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="packageTitle" class="form-label">Package Title *</label>
+                                            <input type="text" class="form-control" id="packageTitle" name="title" required>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="packagePrice" class="form-label">Package Price</label>
+                                            <input type="text" class="form-control" id="packagePrice" name="price" placeholder="e.g., For AED 25,000">
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="packageDescription" class="form-label">Package Description *</label>
+                                            <div id="packageDescriptionEditor" style="height: 200px;"></div>
+                                            <textarea class="form-control d-none" id="packageDescription" name="description"></textarea>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="packageBookButtonText" class="form-label">Book Button Text</label>
+                                            <input type="text" class="form-control" id="packageBookButtonText" name="bookButtonText" placeholder="e.g., Book This Package">
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="packageBookButtonLink" class="form-label">Book Button Link</label>
+                                            <input type="text" class="form-control" id="packageBookButtonLink" name="bookButtonLink" placeholder="e.g., https://wa.me/971554722066">
+                                        </div>
+                                        
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="checkbox" id="packageIsFeatured" name="is_featured">
+                                            <label class="form-check-label" for="packageIsFeatured">
+                                                <i class="fas fa-star text-warning me-1"></i>Make this the Featured Package
+                                            </label>
+                                            <div class="form-text">Only one package can be featured at a time</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="packageImage" class="form-label">Package Image</label>
+                                            <input type="file" class="form-control" id="packageImage" name="image" accept="image/*" onchange="previewPackageImage(this)">
+                                            <div class="form-text">Max size: 5MB. Formats: JPG, PNG, GIF</div>
+                                        </div>
+                                        <div class="package-image-preview border rounded p-3" id="packageImagePreview">
+                                            <div class="text-center p-4">
+                                                <i class="fas fa-image fa-3x text-muted mb-2"></i>
+                                                <p class="text-muted">No image selected</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-success" onclick="savePackage()">
+                                <i class="fas fa-save me-2"></i>Save Package
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar Package Details Modal -->
+            <div class="modal fade" id="sidebarPackageDetailsModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header bg-info text-white">
+                            <h5 class="modal-title" id="sidebarPackageDetailsTitle">
+                                <i class="fas fa-package me-2"></i>Package Details
+                            </h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="sidebarPackageDetailsForm" enctype="multipart/form-data">
+                                <input type="hidden" id="detailsPackageId" name="package_id">
+                                <input type="hidden" id="detailsPackageAction" name="action" value="updateSidebarPackage">
+                                
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="detailsPackageTitle" class="form-label">Package Title *</label>
+                                            <input type="text" class="form-control" id="detailsPackageTitle" name="title" required>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="detailsPackagePrice" class="form-label">Package Price</label>
+                                            <input type="text" class="form-control" id="detailsPackagePrice" name="price" placeholder="e.g., For AED 25,000">
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="detailsPackageDescription" class="form-label">Package Description *</label>
+                                            <div id="detailsPackageDescriptionEditor" style="height: 250px;"></div>
+                                            <textarea class="form-control d-none" id="detailsPackageDescription" name="description"></textarea>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="detailsBookButtonText" class="form-label">Book Button Text</label>
+                                            <input type="text" class="form-control" id="detailsBookButtonText" name="bookButtonText" placeholder="e.g., Book This Package">
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="detailsBookButtonLink" class="form-label">Book Button Link</label>
+                                            <input type="text" class="form-control" id="detailsBookButtonLink" name="bookButtonLink" placeholder="e.g., https://wa.me/971554722066">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="detailsPackageImage" class="form-label">Package Image</label>
+                                            <input type="file" class="form-control" id="detailsPackageImage" name="image" accept="image/*" onchange="previewDetailsPackageImage(this)">
+                                            <div class="form-text">Max size: 5MB. Formats: JPG, PNG, GIF</div>
+                                        </div>
+                                        <div class="package-image-preview border rounded p-3" id="detailsPackageImagePreview">
+                                            <div class="text-center p-4">
+                                                <i class="fas fa-image fa-3x text-muted mb-2"></i>
+                                                <p class="text-muted">No image selected</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mt-3">
+                                            <h6>Package Features (Optional)</h6>
+                                            <div id="packageFeatures">
+                                                <div class="feature-item">
+                                                    <div class="row">
+                                                        <div class="col-4">
+                                                            <input type="text" class="form-control form-control-sm" placeholder="Feature title" name="features[0][title]">
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <input type="text" class="form-control form-control-sm" placeholder="Feature description" name="features[0][description]">
+                                                        </div>
+                                                        <div class="col-2">
+                                                            <button type="button" class="btn btn-sm btn-outline-success" onclick="addFeature()">
+                                                                <i class="fas fa-plus"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-success" onclick="saveDetailedSidebarPackage()">
+                                <i class="fas fa-save me-2"></i>Save Package Details
+                            </button>
+                            <button type="button" class="btn btn-info ms-2" onclick="promoteToMainPackage()">
+                                <i class="fas fa-crown me-2"></i>Make Main Package
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Loading Modal -->
+    <div class="modal fade" id="loadingModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center p-4">
+                    <div class="spinner-border text-primary mb-3" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mb-0">Saving changes...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="admin-common.js"></script>
+
+    <script>
+        /**
+         * Packages Page Editor - Content management functionality
+         */
+
+        // Rich Text Editors
+        let mainPackageDescriptionQuill;
+        let sidebarPackageDescriptionQuill;
+        let detailsPackageDescriptionQuill;
+        let packageDescriptionQuill;
+
+        class PackagesPageEditor extends AdminBase {
+            constructor() {
+                super();
+                this.loadPackagesPage();
+            }
+
+            loadPackagesPage() {
+                console.log('Packages Page editor loaded');
+                this.initializeRichTextEditors();
+                this.setupContentManagement();
+            }
+
+            initializeRichTextEditors() {
+                // Initialize Main Package Description Editor
+                mainPackageDescriptionQuill = new Quill('#mainPackageDescriptionEditor', {
+                    theme: 'snow',
+                    modules: {
+                        toolbar: [
+                            [{ 'header': [1, 2, 3, false] }],
+                            ['bold', 'italic', 'underline', 'strike'],
+                            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                            ['link', 'blockquote'],
+                            [{ 'color': [] }, { 'background': [] }],
+                            ['clean']
+                        ]
+                    },
+                    placeholder: 'Enter detailed package description...'
+                });
+
+                // Initialize Sidebar Package Description Editor
+                sidebarPackageDescriptionQuill = new Quill('#sidebarPackageDescriptionEditor', {
+                    theme: 'snow',
+                    modules: {
+                        toolbar: [
+                            ['bold', 'italic', 'underline'],
+                            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                            ['link'],
+                            ['clean']
+                        ]
+                    },
+                    placeholder: 'Enter package description (optional)...'
+                });
+
+                // Initialize Details Package Description Editor
+                detailsPackageDescriptionQuill = new Quill('#detailsPackageDescriptionEditor', {
+                    theme: 'snow',
+                    modules: {
+                        toolbar: [
+                            [{ 'header': [1, 2, 3, false] }],
+                            ['bold', 'italic', 'underline', 'strike'],
+                            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                            ['link', 'blockquote'],
+                            [{ 'color': [] }, { 'background': [] }],
+                            ['clean']
+                        ]
+                    },
+                    placeholder: 'Enter detailed package description...'
+                });
+
+                // Initialize Package Modal Description Editor
+                packageDescriptionQuill = new Quill('#packageDescriptionEditor', {
+                    theme: 'snow',
+                    modules: {
+                        toolbar: [
+                            [{ 'header': [1, 2, 3, false] }],
+                            ['bold', 'italic', 'underline', 'strike'],
+                            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                            ['link', 'blockquote'],
+                            [{ 'color': [] }, { 'background': [] }],
+                            ['clean']
+                        ]
+                    },
+                    placeholder: 'Enter package description...'
+                });
+            }
+
+            setupContentManagement() {
+                // Initialize packages page functionality
+                fetchHeroSectionData();
+                loadAllPackages();
+            }
+        }
+
+        // Hero Section Management
+        function saveHeroSectionContent(event) {
+            event.preventDefault();
+            
+            const form = document.getElementById('packagesHeroForm');
+            const formData = new FormData(form);
+            formData.append('action', 'updateHeroSection');
+            
+            Swal.fire({
+                title: 'Saving changes...',
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                showConfirmButton: false
+            });
+            
+            fetch('../api/v1/packagesHandler.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: 'Hero section updated successfully!',
+                        timer: 2000,
+                        showConfirmButton: false
+                    }).then(() => {
+                        fetchHeroSectionData(); // Refresh data
+                    });
+                } else {
+                    throw new Error(data.message || 'Unknown error occurred');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'An error occurred while updating the hero section',
+                    confirmButtonColor: '#3085d6'
+                });
+            });
+        }
+
+        function previewHeroImage(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('heroImagePreview').src = e.target.result;
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function fetchHeroSectionData() {
+            console.log('Fetching hero section data...');
+            fetch('../api/v1/packagesHandler.php?action=getHeroSection')
+            .then(response => {
+                console.log('Hero section response status:', response.status);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.text();
+            })
+            .then(text => {
+                console.log('Hero section raw response:', text);
+                try {
+                    const data = JSON.parse(text);
+                    console.log('Hero section parsed data:', data);
+                    if (data.success && data.data.homePageContent) {
+                        const content = data.data.homePageContent;
+                        document.getElementById('heroTitle').value = content.title || '';
+                        document.getElementById('heroButtonText').value = content.buttonText || '';
+                        document.getElementById('heroButtonLink').value = content.buttonLink || '';
+                        
+                        // Update image preview if imageUrl exists
+                        if (content.imageUrl) {
+                            document.getElementById('heroImagePreview').src = '/' + content.imageUrl;
+                            document.querySelector('#heroImage').nextElementSibling.textContent = 'Current image: ' + content.imageUrl.split('/').pop();
+                        }
+                        console.log('Hero section data loaded successfully');
+                    } else {
+                        console.log('No hero section data found or invalid response structure');
+                    }
+                } catch (e) {
+                    console.error('JSON parse error:', e);
+                    console.error('Raw response was:', text);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching hero section data:', error);
+            });
+        }
+
+        function resetHeroForm() {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "This will reset all hero section changes!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, reset it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('packagesHeroForm').reset();
+                    document.getElementById('heroImagePreview').src = '../assets/images/allPackages/hero.png';
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Reset Complete!',
+                        text: 'The hero form has been reset to default values.',
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
+                }
+            });
+        }
+
+        // Main Package Management
+        function saveMainPackageContent(event) {
+            event.preventDefault();
+            
+            // Update hidden textarea with Quill editor content
+            const descriptionHTML = mainPackageDescriptionQuill.root.innerHTML;
+            document.getElementById('mainPackageDescription').value = descriptionHTML;
+            
+            // Validate required fields
+            const title = document.getElementById('mainPackageTitle').value.trim();
+            if (!title) {
+                Swal.fire('Error', 'Please enter a package title', 'error');
+                return;
+            }
+            
+            // Validate description from Quill editor
+            const editorText = mainPackageDescriptionQuill.getText().trim();
+            if (!editorText || editorText.length < 10) {
+                Swal.fire('Error', 'Please enter a package description (at least 10 characters)', 'error');
+                return;
+            }
+            
+            const form = document.getElementById('mainPackageForm');
+            const formData = new FormData(form);
+            formData.append('action', 'updateMainPackage');
+            
+            // Debug: Log form data
+            console.log('Main package form data:');
+            for (let pair of formData.entries()) {
+                console.log(pair[0] + ': ' + pair[1]);
+            }
+            
+            Swal.fire({
+                title: 'Saving...',
+                text: 'Updating main package content',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+            
+            fetch('../api/v1/packagesHandler.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                console.log('Response status:', response.status);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.text();
+            })
+            .then(text => {
+                console.log('Raw response:', text);
+                try {
+                    const data = JSON.parse(text);
+                    if (data.success) {
+                        Swal.fire('Success', 'Main package updated successfully!', 'success');
+                        fetchMainPackageData();
+                    } else {
+                        Swal.fire('Error', data.message || 'Failed to update main package', 'error');
+                    }
+                } catch (e) {
+                    console.error('JSON parse error:', e);
+                    Swal.fire('Error', 'Invalid response from server: ' + text.substring(0, 200), 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire('Error', 'An error occurred while updating the main package: ' + error.message, 'error');
+            });
+        }
+
+        function previewMainPackageImage(input) {
+            const preview = document.getElementById('mainPackageImagePreview');
+            
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                
+                // Validate file size (5MB)
+                if (file.size > 5 * 1024 * 1024) {
+                    Swal.fire('Error', 'Image size must be less than 5MB', 'error');
+                    input.value = '';
+                    return;
+                }
+                
+                // Validate file type
+                const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+                if (!allowedTypes.includes(file.type)) {
+                    Swal.fire('Error', 'Please select a valid image file (JPG, PNG, GIF)', 'error');
+                    input.value = '';
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.innerHTML = `<img src="${e.target.result}" class="img-fluid rounded" alt="Preview">`;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function fetchMainPackageData() {
+            console.log('Fetching main package data...');
+            fetch('../api/v1/packagesHandler.php?action=getMainPackage')
+            .then(response => {
+                console.log('Main package response status:', response.status);
+                return response.text();
+            })
+            .then(text => {
+                console.log('Main package raw response:', text);
+                try {
+                    const data = JSON.parse(text);
+                    console.log('Main package parsed data:', data);
+                    if (data.success && data.data) {
+                        const pkg = data.data;
+                        document.getElementById('mainPackageTitle').value = pkg.title || '';
+                        document.getElementById('mainPackagePrice').value = pkg.price || '';
+                        document.getElementById('bookButtonText').value = pkg.bookButtonText || '';
+                        document.getElementById('bookButtonLink').value = pkg.bookButtonLink || '';
+                        
+                        // Set Quill editor content
+                        if (pkg.description) {
+                            mainPackageDescriptionQuill.setContents([]);
+                            mainPackageDescriptionQuill.clipboard.dangerouslyPasteHTML(pkg.description);
+                            document.getElementById('mainPackageDescription').value = pkg.description;
+                        } else {
+                            mainPackageDescriptionQuill.setContents([]);
+                            document.getElementById('mainPackageDescription').value = '';
+                        }
+                        
+                        // Show current image
+                        if (pkg.filename) {
+                            document.getElementById('mainPackageImagePreview').innerHTML = `
+                                <img src="../api/uploads/packages/${pkg.filename}" alt="${pkg.title}" class="img-fluid rounded">
+                            `;
+                        }
+                        console.log('Main package data loaded successfully');
+                    } else {
+                        console.log('No main package data found or invalid response structure');
+                    }
+                } catch (e) {
+                    console.error('JSON parse error:', e);
+                    console.error('Raw response was:', text);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching main package data:', error);
+            });
+        }
+
+        function resetMainPackageForm() {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "This will reset all main package changes!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, reset it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('mainPackageForm').reset();
+                    mainPackageDescriptionQuill.setContents([]);
+                    document.getElementById('mainPackageImagePreview').innerHTML = `
+                        <div class="text-center p-4">
+                            <i class="fas fa-image fa-3x text-muted mb-2"></i>
+                            <p class="text-muted">No image selected</p>
+                        </div>
+                    `;
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Reset Complete!',
+                        text: 'The main package form has been reset.',
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
+                }
+            });
+        }
+
+        // Sidebar Packages Management
+        let sidebarPackages = [];
+        let currentEditingSidebarPackageId = null;
+
+        function loadSidebarPackages() {
+            console.log('Loading sidebar packages...');
+            const container = document.getElementById('sidebarPackagesContainer');
+            
+            fetch('../api/v1/packagesHandler.php?action=getSidebarPackages')
+                .then(response => {
+                    console.log('Sidebar packages response status:', response.status);
+                    return response.text();
+                })
+                .then(text => {
+                    console.log('Sidebar packages raw response:', text);
+                    try {
+                        const data = JSON.parse(text);
+                        console.log('Sidebar packages parsed data:', data);
+                        if (data.success) {
+                            sidebarPackages = data.data || [];
+                            renderSidebarPackages();
+                            console.log('Sidebar packages loaded successfully, count:', sidebarPackages.length);
+                        } else {
+                            console.log('No sidebar packages data or failed response');
+                            container.innerHTML = `
+                                <div class="col-12 text-center p-4">
+                                    <i class="fas fa-package fa-3x text-muted mb-3"></i>
+                                    <h5>No sidebar packages yet</h5>
+                                    <p>Click "Add New Package" to get started</p>
+                                </div>
+                            `;
+                        }
+                    } catch (e) {
+                        console.error('JSON parse error:', e);
+                        console.error('Raw response was:', text);
+                        container.innerHTML = `
+                            <div class="col-12 text-center p-4">
+                                <i class="fas fa-exclamation-triangle text-warning fa-2x mb-2"></i>
+                                <p class="text-muted">Error parsing response: ${e.message}</p>
+                            </div>
+                        `;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading sidebar packages:', error);
+                    container.innerHTML = `
+                        <div class="col-12 text-center p-4">
+                            <i class="fas fa-exclamation-triangle text-warning fa-2x mb-2"></i>
+                            <p class="text-muted">Error loading sidebar packages: ${error.message}</p>
+                        </div>
+                    `;
+                });
+        }
+
+        function renderSidebarPackages() {
+            const container = document.getElementById('sidebarPackagesContainer');
+            
+            if (sidebarPackages.length === 0) {
+                container.innerHTML = `
+                    <div class="col-12 text-center p-4">
+                        <i class="fas fa-package fa-3x text-muted mb-3"></i>
+                        <h5>No sidebar packages yet</h5>
+                        <p>Click "Add New Package" to get started</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = sidebarPackages.map((pkg, index) => `
+                <div class="col-lg-4 col-md-6 mb-3">
+                    <div class="package-item" data-package-id="${pkg.id}">
+                        <div class="package-item-overlay">#${index + 1}</div>
+                        <img src="../api/uploads/packages/${pkg.filename}" alt="${pkg.title}" onerror="this.src='../assets/images/allPackages/hero.png'">
+                        <div class="package-item-info">
+                            <div class="package-item-title">${pkg.title}</div>
+                            ${pkg.description ? `<div class="package-item-description">${pkg.description}</div>` : ''}
+                            <div class="package-item-actions">
+                                <button type="button" class="btn btn-sm btn-outline-info" onclick="viewSidebarPackageDetails(${pkg.id})">
+                                    <i class="fas fa-eye"></i> View Details
+                                </button>
+                                <button type="button" class="btn btn-sm btn-outline-primary" onclick="editSidebarPackage(${pkg.id})">
+                                    <i class="fas fa-edit"></i> Quick Edit
+                                </button>
+                                <button type="button" class="btn btn-sm btn-outline-danger" onclick="deleteSidebarPackage(${pkg.id})">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openAddSidebarPackageModal() {
+            currentEditingSidebarPackageId = null;
+            document.getElementById('sidebarPackageModalTitle').innerHTML = '<i class="fas fa-package me-2"></i>Add Sidebar Package';
+            document.getElementById('sidebarPackageAction').value = 'addSidebarPackage';
+            document.getElementById('sidebarPackageForm').reset();
+            sidebarPackageDescriptionQuill.setContents([]);
+            document.getElementById('sidebarPackageImagePreview').innerHTML = `
+                <div class="text-center p-4 border rounded">
+                    <i class="fas fa-image fa-3x text-muted mb-2"></i>
+                    <p class="text-muted">No image selected</p>
+                </div>
+            `;
+            
+            const modal = new bootstrap.Modal(document.getElementById('sidebarPackageModal'));
+            modal.show();
+        }
+
+        function editSidebarPackage(packageId) {
+            const pkg = sidebarPackages.find(p => p.id == packageId);
+            if (!pkg) return;
+
+            currentEditingSidebarPackageId = packageId;
+            document.getElementById('sidebarPackageModalTitle').innerHTML = '<i class="fas fa-edit me-2"></i>Edit Sidebar Package';
+            document.getElementById('sidebarPackageAction').value = 'updateSidebarPackage';
+            document.getElementById('sidebarPackageId').value = packageId;
+            document.getElementById('sidebarPackageTitle').value = pkg.title;
+            
+            // Set Quill editor content
+            if (pkg.description) {
+                sidebarPackageDescriptionQuill.setContents([]);
+                sidebarPackageDescriptionQuill.clipboard.dangerouslyPasteHTML(pkg.description);
+                document.getElementById('sidebarPackageDescription').value = pkg.description;
+            } else {
+                sidebarPackageDescriptionQuill.setContents([]);
+                document.getElementById('sidebarPackageDescription').value = '';
+            }
+            
+            // Clear the file input for editing
+            document.getElementById('sidebarPackageImage').value = '';
+            
+            // Show current image
+            document.getElementById('sidebarPackageImagePreview').innerHTML = `
+                <img src="../api/uploads/packages/${pkg.filename}" alt="${pkg.title}" class="img-fluid rounded">
+            `;
+            
+            const modal = new bootstrap.Modal(document.getElementById('sidebarPackageModal'));
+            modal.show();
+        }
+
+        function previewSidebarPackageImage(input) {
+            const preview = document.getElementById('sidebarPackageImagePreview');
+            
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                
+                // Validate file size (5MB)
+                if (file.size > 5 * 1024 * 1024) {
+                    Swal.fire('Error', 'Image size must be less than 5MB', 'error');
+                    input.value = '';
+                    return;
+                }
+                
+                // Validate file type
+                const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+                if (!allowedTypes.includes(file.type)) {
+                    Swal.fire('Error', 'Please select a valid image file (JPG, PNG, GIF)', 'error');
+                    input.value = '';
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.innerHTML = `<img src="${e.target.result}" class="img-fluid rounded" alt="Preview">`;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function saveSidebarPackage() {
+            // Update hidden textarea with Quill editor content
+            const descriptionHTML = sidebarPackageDescriptionQuill.root.innerHTML;
+            document.getElementById('sidebarPackageDescription').value = descriptionHTML;
+            
+            const form = document.getElementById('sidebarPackageForm');
+            const formData = new FormData(form);
+            
+            // Debug: Log form data
+            console.log('Sidebar package form data:');
+            for (let pair of formData.entries()) {
+                console.log(pair[0] + ': ' + pair[1]);
+            }
+            
+            // Validate required fields
+            const title = document.getElementById('sidebarPackageTitle').value.trim();
+            const imageFile = document.getElementById('sidebarPackageImage').files[0];
+            const action = document.getElementById('sidebarPackageAction').value;
+            
+            if (!title) {
+                Swal.fire('Error', 'Please enter a package title', 'error');
+                return;
+            }
+            
+            if (action === 'addSidebarPackage' && !imageFile) {
+                Swal.fire('Error', 'Please select a package image', 'error');
+                return;
+            }
+            
+            // Show loading
+            Swal.fire({
+                title: 'Saving...',
+                text: 'Please wait while we save your package',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+            
+            fetch('../api/v1/packagesHandler.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                console.log('Sidebar package response status:', response.status);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.text();
+            })
+            .then(text => {
+                console.log('Sidebar package raw response:', text);
+                try {
+                    const data = JSON.parse(text);
+                    if (data.success) {
+                        Swal.fire('Success', data.message, 'success');
+                        bootstrap.Modal.getInstance(document.getElementById('sidebarPackageModal')).hide();
+                        loadSidebarPackages();
+                    } else {
+                        Swal.fire('Error', data.message || 'Failed to save package', 'error');
+                    }
+                } catch (e) {
+                    console.error('JSON parse error:', e);
+                    Swal.fire('Error', 'Invalid response from server: ' + text.substring(0, 200), 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error saving package:', error);
+                Swal.fire('Error', 'An error occurred while saving the package: ' + error.message, 'error');
+            });
+        }
+
+        function deleteSidebarPackage(packageId) {
+            const pkg = sidebarPackages.find(p => p.id == packageId);
+            if (!pkg) return;
+
+            Swal.fire({
+                title: 'Delete Package?',
+                text: `Are you sure you want to delete "${pkg.title}"? This action cannot be undone.`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#dc3545',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const formData = new FormData();
+                    formData.append('action', 'deleteSidebarPackage');
+                    formData.append('package_id', packageId);
+                    
+                    Swal.fire({
+                        title: 'Deleting...',
+                        text: 'Please wait',
+                        allowOutsideClick: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+                    
+                    fetch('../api/v1/packagesHandler.php', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            Swal.fire('Deleted!', 'The package has been deleted.', 'success');
+                            loadSidebarPackages();
+                        } else {
+                            Swal.fire('Error', data.message || 'Failed to delete package', 'error');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error deleting package:', error);
+                        Swal.fire('Error', 'An error occurred while deleting the package', 'error');
+                    });
+                }
+            });
+        }
+
+        // Form event listeners
+        document.getElementById('packagesHeroForm').addEventListener('submit', function(event) {
+            saveHeroSectionContent(event);
+        });
+
+        // Sidebar Package Details Functions
+        function viewSidebarPackageDetails(packageId) {
+            const pkg = sidebarPackages.find(p => p.id == packageId);
+            if (!pkg) return;
+
+            // Set modal title
+            document.getElementById('sidebarPackageDetailsTitle').innerHTML = `<i class="fas fa-package me-2"></i>${pkg.title} - Details`;
+            
+            // Populate form fields
+            document.getElementById('detailsPackageId').value = packageId;
+            document.getElementById('detailsPackageTitle').value = pkg.title;
+            document.getElementById('detailsPackagePrice').value = pkg.price || '';
+            document.getElementById('detailsBookButtonText').value = pkg.bookButtonText || '';
+            document.getElementById('detailsBookButtonLink').value = pkg.bookButtonLink || '';
+            
+            // Set Quill editor content
+            if (pkg.description) {
+                detailsPackageDescriptionQuill.setContents([]);
+                detailsPackageDescriptionQuill.clipboard.dangerouslyPasteHTML(pkg.description);
+                document.getElementById('detailsPackageDescription').value = pkg.description;
+            } else {
+                detailsPackageDescriptionQuill.setContents([]);
+                document.getElementById('detailsPackageDescription').value = '';
+            }
+            
+            // Clear the file input
+            document.getElementById('detailsPackageImage').value = '';
+            
+            // Show current image
+            document.getElementById('detailsPackageImagePreview').innerHTML = `
+                <img src="../api/uploads/packages/${pkg.filename}" alt="${pkg.title}" class="img-fluid rounded">
+            `;
+            
+            const modal = new bootstrap.Modal(document.getElementById('sidebarPackageDetailsModal'));
+            modal.show();
+        }
+
+        function previewDetailsPackageImage(input) {
+            const preview = document.getElementById('detailsPackageImagePreview');
+            
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                
+                // Validate file size (5MB)
+                if (file.size > 5 * 1024 * 1024) {
+                    Swal.fire('Error', 'Image size must be less than 5MB', 'error');
+                    input.value = '';
+                    return;
+                }
+                
+                // Validate file type
+                const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+                if (!allowedTypes.includes(file.type)) {
+                    Swal.fire('Error', 'Please select a valid image file (JPG, PNG, GIF)', 'error');
+                    input.value = '';
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.innerHTML = `<img src="${e.target.result}" class="img-fluid rounded" alt="Preview">`;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function saveDetailedSidebarPackage() {
+            // Update hidden textarea with Quill editor content
+            const descriptionHTML = detailsPackageDescriptionQuill.root.innerHTML;
+            document.getElementById('detailsPackageDescription').value = descriptionHTML;
+            
+            const form = document.getElementById('sidebarPackageDetailsForm');
+            const formData = new FormData(form);
+            
+            // Validate required fields
+            const title = document.getElementById('detailsPackageTitle').value.trim();
+            if (!title) {
+                Swal.fire('Error', 'Please enter a package title', 'error');
+                return;
+            }
+            
+            // Validate description from Quill editor
+            const editorText = detailsPackageDescriptionQuill.getText().trim();
+            if (!editorText || editorText.length < 10) {
+                Swal.fire('Error', 'Please enter a package description (at least 10 characters)', 'error');
+                return;
+            }
+            
+            // Show loading
+            Swal.fire({
+                title: 'Saving...',
+                text: 'Please wait while we save your detailed package',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+            
+            fetch('../api/v1/packagesHandler.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                console.log('Detailed package response status:', response.status);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.text();
+            })
+            .then(text => {
+                console.log('Detailed package raw response:', text);
+                try {
+                    const data = JSON.parse(text);
+                    if (data.success) {
+                        Swal.fire('Success', 'Package details updated successfully!', 'success');
+                        bootstrap.Modal.getInstance(document.getElementById('sidebarPackageDetailsModal')).hide();
+                        loadSidebarPackages();
+                    } else {
+                        Swal.fire('Error', data.message || 'Failed to save package details', 'error');
+                    }
+                } catch (e) {
+                    console.error('JSON parse error:', e);
+                    Swal.fire('Error', 'Invalid response from server: ' + text.substring(0, 200), 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error saving detailed package:', error);
+                Swal.fire('Error', 'An error occurred while saving the package details: ' + error.message, 'error');
+            });
+        }
+
+        function promoteToMainPackage() {
+            const packageId = document.getElementById('detailsPackageId').value;
+            const pkg = sidebarPackages.find(p => p.id == packageId);
+            
+            if (!pkg) return;
+            
+            Swal.fire({
+                title: 'Promote to Main Package?',
+                text: `Are you sure you want to make "${pkg.title}" the main featured package? This will replace the current main package.`,
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#28a745',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Yes, promote it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // First save the current details
+                    saveDetailedSidebarPackage();
+                    
+                    // Then promote to main package (this would need additional API endpoint)
+                    Swal.fire('Feature Coming Soon', 'Package promotion functionality will be available soon!', 'info');
+                }
+            });
+        }
+
+        function addFeature() {
+            const featuresContainer = document.getElementById('packageFeatures');
+            const featureCount = featuresContainer.children.length;
+            
+            const newFeature = document.createElement('div');
+            newFeature.className = 'feature-item mt-2';
+            newFeature.innerHTML = `
+                <div class="row">
+                    <div class="col-4">
+                        <input type="text" class="form-control form-control-sm" placeholder="Feature title" name="features[${featureCount}][title]">
+                    </div>
+                    <div class="col-6">
+                        <input type="text" class="form-control form-control-sm" placeholder="Feature description" name="features[${featureCount}][description]">
+                    </div>
+                    <div class="col-2">
+                        <button type="button" class="btn btn-sm btn-outline-danger" onclick="removeFeature(this)">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            featuresContainer.appendChild(newFeature);
+        }
+
+        function removeFeature(button) {
+            button.closest('.feature-item').remove();
+        }
+
+        // Unified Package Management Functions
+        function loadAllPackages() {
+            fetch('../api/v1/packagesHandler.php?action=getAllPackages')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('All packages response:', data);
+                    if (data.success) {
+                        displayAllPackages(data.data);
+                    } else {
+                        showPackagesError(data.message || 'Failed to load packages');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading packages:', error);
+                    showPackagesError('Error loading packages');
+                });
+        }
+
+        function displayAllPackages(packages) {
+            const container = document.getElementById('allPackagesContainer');
+            
+            if (!packages || packages.length === 0) {
+                container.innerHTML = `
+                    <div class="col-12 text-center p-5">
+                        <i class="fas fa-box-open fa-3x text-muted mb-3"></i>
+                        <h5 class="text-muted">No packages found</h5>
+                        <p class="text-muted">Click "Add New Package" to create your first package.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = packages.map((pkg, index) => `
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="package-card h-100">
+                        <div class="package-card-header">
+                            ${pkg.is_featured ? '<div class="featured-badge"><i class="fas fa-star"></i> Featured</div>' : ''}
+                            <img src="../api/uploads/packages/${pkg.filename}" alt="${pkg.title}" class="package-image" onerror="this.src='../assets/images/allPackages/hero.png'">
+                        </div>
+                        <div class="package-card-body">
+                            <h5 class="package-title">${pkg.title}</h5>
+                            ${pkg.price ? `<div class="package-price text-primary mb-2"><strong>${pkg.price}</strong></div>` : ''}
+                            ${pkg.description ? `<div class="package-description">${pkg.description.substring(0, 100)}...</div>` : ''}
+                        </div>
+                        <div class="package-card-actions">
+                            <button type="button" class="btn btn-sm ${pkg.is_featured ? 'btn-warning' : 'btn-outline-warning'}" onclick="toggleFeatured(${pkg.id})" title="Toggle Featured">
+                                <i class="fas fa-star"></i>
+                            </button>
+                            <button type="button" class="btn btn-sm btn-outline-info" onclick="editPackage(${pkg.id})" title="Edit Package">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button type="button" class="btn btn-sm btn-outline-danger" onclick="deletePackage(${pkg.id})" title="Delete Package">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function showPackagesError(message) {
+            const container = document.getElementById('allPackagesContainer');
+            container.innerHTML = `
+                <div class="col-12 text-center p-5">
+                    <i class="fas fa-exclamation-triangle fa-3x text-danger mb-3"></i>
+                    <h5 class="text-danger">Error Loading Packages</h5>
+                    <p class="text-muted">${message}</p>
+                    <button type="button" class="btn btn-primary" onclick="loadAllPackages()">
+                        <i class="fas fa-redo me-2"></i>Try Again
+                    </button>
+                </div>
+            `;
+        }
+
+        function openAddPackageModal() {
+            // Reset form
+            document.getElementById('packageForm').reset();
+            document.getElementById('packageId').value = '';
+            document.getElementById('packageAction').value = 'addPackage';
+            document.getElementById('packageModalTitle').innerHTML = '<i class="fas fa-plus me-2"></i>Add New Package';
+            
+            // Clear Quill editor
+            packageDescriptionQuill.setContents([]);
+            document.getElementById('packageDescription').value = '';
+            
+            // Clear image preview
+            document.getElementById('packageImagePreview').innerHTML = `
+                <div class="text-center p-4">
+                    <i class="fas fa-image fa-3x text-muted mb-2"></i>
+                    <p class="text-muted">No image selected</p>
+                </div>
+            `;
+            
+            // Show modal
+            const modal = new bootstrap.Modal(document.getElementById('packageModal'));
+            modal.show();
+        }
+
+        function editPackage(packageId) {
+            // Find package data
+            fetch('../api/v1/packagesHandler.php?action=getAllPackages')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const pkg = data.data.find(p => p.id == packageId);
+                        if (pkg) {
+                            populatePackageModal(pkg);
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading package:', error);
+                    Swal.fire('Error', 'Failed to load package data', 'error');
+                });
+        }
+
+        function populatePackageModal(pkg) {
+            // Set form values
+            document.getElementById('packageId').value = pkg.id;
+            document.getElementById('packageAction').value = 'updatePackage';
+            document.getElementById('packageTitle').value = pkg.title;
+            document.getElementById('packagePrice').value = pkg.price || '';
+            document.getElementById('packageBookButtonText').value = pkg.book_button_text || '';
+            document.getElementById('packageBookButtonLink').value = pkg.book_button_link || '';
+            document.getElementById('packageIsFeatured').checked = pkg.is_featured == 1;
+            
+            // Set Quill editor content
+            if (pkg.description) {
+                packageDescriptionQuill.setContents([]);
+                packageDescriptionQuill.clipboard.dangerouslyPasteHTML(pkg.description);
+                document.getElementById('packageDescription').value = pkg.description;
+            } else {
+                packageDescriptionQuill.setContents([]);
+                document.getElementById('packageDescription').value = '';
+            }
+            
+            // Show current image
+            if (pkg.filename) {
+                document.getElementById('packageImagePreview').innerHTML = `
+                    <img src="../api/uploads/packages/${pkg.filename}" alt="${pkg.title}" class="img-fluid rounded">
+                `;
+            }
+            
+            // Update modal title
+            document.getElementById('packageModalTitle').innerHTML = `<i class="fas fa-edit me-2"></i>Edit Package: ${pkg.title}`;
+            
+            // Show modal
+            const modal = new bootstrap.Modal(document.getElementById('packageModal'));
+            modal.show();
+        }
+
+        function savePackage() {
+            // Update hidden textarea with Quill editor content
+            const descriptionHTML = packageDescriptionQuill.root.innerHTML;
+            document.getElementById('packageDescription').value = descriptionHTML;
+            
+            const form = document.getElementById('packageForm');
+            const formData = new FormData(form);
+            
+            // Validate required fields
+            const title = document.getElementById('packageTitle').value.trim();
+            if (!title) {
+                Swal.fire('Error', 'Please enter a package title', 'error');
+                return;
+            }
+            
+            // Validate description from Quill editor
+            const editorText = packageDescriptionQuill.getText().trim();
+            if (!editorText || editorText.length < 10) {
+                Swal.fire('Error', 'Please enter a package description (at least 10 characters)', 'error');
+                return;
+            }
+            
+            // Show loading
+            Swal.fire({
+                title: 'Saving...',
+                text: 'Please wait while we save your package',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+            
+            fetch('../api/v1/packagesHandler.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                console.log('Package response status:', response.status);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.text();
+            })
+            .then(text => {
+                console.log('Package raw response:', text);
+                try {
+                    const data = JSON.parse(text);
+                    if (data.success) {
+                        Swal.fire('Success', 'Package saved successfully!', 'success');
+                        bootstrap.Modal.getInstance(document.getElementById('packageModal')).hide();
+                        loadAllPackages();
+                    } else {
+                        Swal.fire('Error', data.message || 'Failed to save package', 'error');
+                    }
+                } catch (e) {
+                    console.error('JSON parse error:', e);
+                    Swal.fire('Error', 'Invalid response from server: ' + text.substring(0, 200), 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error saving package:', error);
+                Swal.fire('Error', 'An error occurred while saving the package: ' + error.message, 'error');
+            });
+        }
+
+        function toggleFeatured(packageId) {
+            Swal.fire({
+                title: 'Set as Featured Package?',
+                text: 'This will make this package the main featured package on the packages page.',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#28a745',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Yes, make it featured!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const formData = new FormData();
+                    formData.append('action', 'setFeaturedPackage');
+                    formData.append('package_id', packageId);
+                    
+                    fetch('../api/v1/packagesHandler.php', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            Swal.fire('Success', 'Package set as featured!', 'success');
+                            loadAllPackages();
+                        } else {
+                            Swal.fire('Error', data.message || 'Failed to set featured package', 'error');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error setting featured package:', error);
+                        Swal.fire('Error', 'An error occurred', 'error');
+                    });
+                }
+            });
+        }
+
+        function deletePackage(packageId) {
+            Swal.fire({
+                title: 'Delete Package?',
+                text: 'This action cannot be undone!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const formData = new FormData();
+                    formData.append('action', 'deleteSidebarPackage');
+                    formData.append('package_id', packageId);
+                    
+                    fetch('../api/v1/packagesHandler.php', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            Swal.fire('Deleted!', 'Package has been deleted.', 'success');
+                            loadAllPackages();
+                        } else {
+                            Swal.fire('Error', data.message || 'Failed to delete package', 'error');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error deleting package:', error);
+                        Swal.fire('Error', 'An error occurred', 'error');
+                    });
+                }
+            });
+        }
+
+        function previewPackageImage(input) {
+            const preview = document.getElementById('packageImagePreview');
+            
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                
+                // Validate file size (5MB)
+                if (file.size > 5 * 1024 * 1024) {
+                    Swal.fire('Error', 'Image size must be less than 5MB', 'error');
+                    input.value = '';
+                    return;
+                }
+                
+                // Validate file type
+                const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+                if (!allowedTypes.includes(file.type)) {
+                    Swal.fire('Error', 'Please select a valid image file (JPG, PNG, GIF)', 'error');
+                    input.value = '';
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.innerHTML = `<img src="${e.target.result}" class="img-fluid rounded" alt="Preview">`;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            new PackagesPageEditor();
+        });
+
+    </script>
+</body>
+</html>

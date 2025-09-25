@@ -1,0 +1,3 @@
+# Deny access to log files for security
+Order deny,allow
+Deny from all

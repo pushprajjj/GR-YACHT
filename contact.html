@@ -17,61 +17,15 @@
 
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg custom-navbar w-100 py-3">
-        <div class="container-fluid d-flex align-items-center justify-content-between">
-            <!-- Left: Menu Links -->
-            <div class="d-flex align-items-center justify-content-start flex-grow-1 flex-shrink-1 flex-basis-0" style="flex: 1 1 0%;">
-                <ul class="navbar-nav flex-row">
-                    <li class="nav-item"><a class="nav-link active" href="/">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">About us</a></li>
-                    <li class="nav-item"><a class="nav-link " href="/service.html">Services</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Package</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Blog</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/contact.html">Contact us</a></li>
-                </ul>
-            </div>
-            <!-- Center: Logo -->
-            <div class="navbar-logo" style="flex: 0 0 auto; margin: 0 auto;">
-                <img src="assets/images/logo.png" alt="GR Yachts Dubai" height="160">
-            </div>
-            <!-- Right: Contact and Selectors -->
-            <div class="d-flex align-items-center justify-content-end flex-grow-1 flex-shrink-1 flex-basis-0 gap-5 pe-5" style="flex: 1 1 0%;">
-                <div class="d-flex align-items-center gap-3">
-                    <i class="fab fa-whatsapp text-light" style="font-size: 1.2rem;"></i>
-                    <span class="contact-number">+971 50 554 3873</span>
-                </div>
-                <div class="dropdown">
-                    <button class="btn rounded-button dropdown-toggle selected" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="selected-value">AED</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item active" href="#" data-value="AED">AED</a></li>
-                        <li><a class="dropdown-item" href="#" data-value="USD">USD</a></li>
-                    </ul>
-                </div>
-                <div class="dropdown">
-                    <button class="btn rounded-button dropdown-toggle selected" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="selected-value">EN</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item active" href="#" data-value="EN">EN</a></li>
-                        <li><a class="dropdown-item" href="#" data-value="IN">IN</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </nav>
-
+   <div id="header"></div>
 
     <!-- Hero Section -->
     <section class="hero">
         <div class="container h-100">
             <div class="row h-100 align-items-center" style="margin-top: -40px;">
                 <div class="col-12 text-center text-white">
-                    <h1 class="hero-title">Embark on an Unforgettable Luxury <br> Experience with Us</h1>
-                    <button class="btn btn-primary mt-3">BOOK A YACHT</button>
+                    <h1 class="hero-title" id="heroTitle">Embark on an Unforgettable Luxury <br> Experience with Us</h1>
+                    <button class="btn btn-primary mt-3" id="heroButton">BOOK A YACHT</button>
                 </div>
             </div>
         </div>
@@ -83,37 +37,46 @@
             <!-- Contact Header -->
             <div class="contact-header text-center mb-5">
                 <div class="d-flex justify-content-center align-items-center gap-4 mb-4">
-                    <span class="contact-info-text">CONTACT US FOR MORE INFO</span>
-                    <a href="https://wa.me/+971581862811" class="whatsapp-btn btn btn-success d-flex align-items-center gap-2">
+                    <span class="contact-info-text" id="contactInfoTitle">CONTACT US FOR MORE INFO</span>
+                    <a href="https://wa.me/+971581862811" id="whatsappLink" class="whatsapp-btn btn btn-success d-flex align-items-center gap-2">
                         <i class="fab fa-whatsapp"></i>
-                        <span>+971 58 186 2811</span>
+                        <span id="whatsappNumber">+971 58 186 2811</span>
                     </a>
                 </div>
             </div>
 
             <!-- Contact Form Section -->
-            <div class="contact-form-section">
-                <div class="text-center mb-4">
-                    <p class="form-subtitle mb-2">Fill the details</p>
-                    <h2 class="form-title">Drop us message for business & query</h2>
+            <div class="contact-form-section" id="contact-form">
+                <div class="text-center" style="margin: 6rem 0 0 0 ;">
+                    <p class="subheading" id="formSubtitle">Fill the details</p>
+                    <h2 class="heading" id="formTitle">Drop us message for business & query</h2>
                 </div>
                 
                 <div class="row justify-content-center">
-                    <div class="col-lg-8">
-                        <form class="contact-form">
+                    <div class="col-lg-10">
+                        <!-- Alert Messages -->
+                        <div id="alertMessage" class="alert alert-dismissible fade" role="alert" style="display: none;">
+                            <span id="alertText"></span>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        
+                        <form class="contact-form" id="contactForm">
                             <div class="row mb-3">
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control contact-input" placeholder="Name" required>
+                                    <input type="text" class="form-control contact-input" name="name" placeholder="Name" required>
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="email" class="form-control contact-input" placeholder="Email" required>
+                                    <input type="email" class="form-control contact-input" name="email" placeholder="Email" required>
                                 </div>
                             </div>
                             <div class="mb-4">
-                                <textarea class="form-control contact-textarea" rows="6" placeholder="Message" required></textarea>
+                                <textarea class="form-control contact-textarea" name="message" rows="6" placeholder="Message" required></textarea>
                             </div>
                             <div class="text-center">
-                                <button type="submit" class="btn contact-submit-btn">Send</button>
+                                <button type="submit" class="contact-submit-btn" id="submitBtn">
+                                    <span class="btn-text">Send</span>
+                                    <span class="btn-spinner spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -122,7 +85,7 @@
 
             <!-- Map Section -->
             <div class="map-section mt-5">
-                <div class="map-container">
+                <div class="map-container" id="mapContainer">
                     <iframe 
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4286.068757984126!2d55.14171589999999!3d25.092280099999993!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f6bf95c8a25d1%3A0x38632f3f01b35be4!2sDubai%20Harbour%20-%20Yacht%20Club!5e1!3m2!1sen!2sin!4v1757347257302!5m2!1sen!2sin"
                         width="100%" 
@@ -143,8 +106,8 @@
                             <div class="contact-icon mb-3">
                                 <i class="fas fa-map-marker-alt"></i>
                             </div>
-                            <h5 class="contact-info-title">GR YACHTS</h5>
-                            <p class="contact-info-details">Dubai Harbour, Dubai Marina, Dubai</p>
+                            <h5 class="contact-info-title" id="locationTitle">GR YACHTS</h5>
+                            <p class="contact-info-details" id="locationAddress">Dubai Harbour, Dubai Marina, Dubai</p>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -153,7 +116,7 @@
                                 <i class="fab fa-whatsapp"></i>
                             </div>
                             <h5 class="contact-info-title">Whatsapp</h5>
-                            <p class="contact-info-details">+971 58 186 2811</p>
+                            <p class="contact-info-details" id="locationWhatsapp">+971 58 186 2811</p>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -162,7 +125,7 @@
                                 <i class="fas fa-envelope"></i>
                             </div>
                             <h5 class="contact-info-title">Email us at</h5>
-                            <p class="contact-info-details">sales@gr-yachts.com</p>
+                            <p class="contact-info-details" id="locationEmail">sales@gr-yachts.com</p>
                         </div>
                     </div>
                 </div>
@@ -171,60 +134,310 @@
     </section>
    
     <!-- Footer -->
-    <footer class="custom-footer">
-        <div class="footer-container">
-            <div class="footer-top-section">
-                <div class="footer-logo">
-                    <img src="assets/images/logoColoured.png" alt="GR Yachts Dubai">
-                </div>
-                <div class="top-line"></div>
-            </div>
-            <div class="footer-main-content">
-                <div class="footer-about">
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries</p>
-                </div>
-                <div class="footer-links-section">
-                    <div class="vertical-line"></div>
-                    <div class="footer-column">
-                        <h5 class="footer-heading">Contact Us</h5>
-                        <ul class="list-unstyled contact-info">
-                            <li>Dubai Harbour Marina <br> Club</li>
-                            <li class="phone">+971 9818020096</li>
-                            <li class="email">info@gryachts.com</li>
-                            <li class="website">www.gryachts.com</li>
-                        </ul>
-                    </div>
-                    <div class="vertical-line"></div>
-                    <div class="footer-column">
-                        <h5 class="footer-heading">Quick Links</h5>
-                        <ul class="list-unstyled quick-links">
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Contact Us</a></li>
-                            <li><a href="#">FAQ's</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
-                        </ul>
-                    </div>
-                    <div class="vertical-line"></div>
-                    <div class="footer-column">
-                        <h5 class="footer-heading">Follow Us</h5>
-                        <div class="social-icons">
-                            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
-                            <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
-                            <a href="#" class="social-icon"><i class="fab fa-whatsapp"></i></a>
-                            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom-section">
-                <div class="bottom-line"></div>
-            </div>
-        </div>
-    </footer>
+     <div id="footer"></div>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Custom JS -->
     <script src="assets/js/main.js"></script>
+    
+    <!-- Contact Page Dynamic Content Script -->
+    <script>
+        // Load contact page content from API
+        async function loadContactPageContent() {
+            try {
+                const response = await fetch('api/v1/publicContactPageHandler.php?action=getContactContent');
+                const data = await response.json();
+                
+                if (data.success && data.data) {
+                    updateContactPageContent(data.data);
+                } else {
+                    console.warn('Failed to load contact page content:', data.message);
+                }
+            } catch (error) {
+                console.error('Error loading contact page content:', error);
+            }
+        }
+
+        function updateContactPageContent(content) {
+            // Update hero section
+            if (content.hero) {
+                const heroTitle = document.getElementById('heroTitle');
+                const heroButton = document.getElementById('heroButton');
+                const heroSection = document.querySelector('.hero');
+                
+                if (heroTitle && content.hero.title && content.hero.subtitle) {
+                    heroTitle.innerHTML = `${content.hero.title} <br> ${content.hero.subtitle}`;
+                }
+                
+                if (heroButton) {
+                    if (content.hero.button_text) {
+                        heroButton.textContent = content.hero.button_text;
+                    }
+                    if (content.hero.button_link) {
+                        heroButton.onclick = () => {
+                            if (content.hero.button_link.startsWith('#')) {
+                                document.querySelector(content.hero.button_link)?.scrollIntoView({ behavior: 'smooth' });
+                            } else {
+                                window.open(content.hero.button_link, '_blank');
+                            }
+                        };
+                    }
+                }
+                
+                // Update hero background image
+                if (heroSection && content.hero.image_path) {
+                    const imageUrl = `api/uploads/contact/${content.hero.image_path}`;
+                    
+                    // Add loading state
+                    heroSection.style.opacity = '0.8';
+                    
+                    // Test if image exists before applying
+                    const testImage = new Image();
+                    testImage.onload = function() {
+                        heroSection.style.backgroundImage = `url('${imageUrl}')`;
+                        heroSection.style.backgroundSize = 'cover';
+                        heroSection.style.backgroundPosition = 'center center';
+                        heroSection.style.backgroundRepeat = 'no-repeat';
+                        heroSection.style.opacity = '1';
+                        console.log('Hero background updated to:', imageUrl);
+                    };
+                    testImage.onerror = function() {
+                        // Fallback to default background if custom image fails to load
+                        heroSection.style.backgroundImage = "url('assets/images/contact/hero.png')";
+                        heroSection.style.backgroundSize = 'cover';
+                        heroSection.style.backgroundPosition = 'center center';
+                        heroSection.style.backgroundRepeat = 'no-repeat';
+                        heroSection.style.opacity = '1';
+                        console.warn('Failed to load custom hero image, using default:', imageUrl);
+                    };
+                    testImage.src = imageUrl;
+                } else if (heroSection) {
+                    // Fallback to default background if no custom image
+                    heroSection.style.backgroundImage = "url('assets/images/contact/hero.png')";
+                    heroSection.style.backgroundSize = 'cover';
+                    heroSection.style.backgroundPosition = 'center center';
+                    heroSection.style.backgroundRepeat = 'no-repeat';
+                    console.log('Using default hero background');
+                }
+            }
+
+            // Update contact info section
+            if (content.contact_info) {
+                const contactInfoTitle = document.getElementById('contactInfoTitle');
+                const whatsappNumber = document.getElementById('whatsappNumber');
+                const whatsappLink = document.getElementById('whatsappLink');
+                
+                if (contactInfoTitle && content.contact_info.title) {
+                    contactInfoTitle.textContent = content.contact_info.title;
+                }
+                
+                if (whatsappNumber && content.contact_info.whatsapp_number) {
+                    whatsappNumber.textContent = content.contact_info.whatsapp_number;
+                }
+                
+                if (whatsappLink && content.contact_info.whatsapp_number) {
+                    const cleanNumber = content.contact_info.whatsapp_number.replace(/\s+/g, '');
+                    whatsappLink.href = `https://wa.me/${cleanNumber}`;
+                }
+            }
+
+            // Update form section
+            if (content.form_section) {
+                const formSubtitle = document.getElementById('formSubtitle');
+                const formTitle = document.getElementById('formTitle');
+                
+                if (formSubtitle && content.form_section.subtitle) {
+                    formSubtitle.textContent = content.form_section.subtitle;
+                }
+                
+                if (formTitle && content.form_section.title) {
+                    formTitle.textContent = content.form_section.title;
+                }
+            }
+
+            // Update location info section
+            if (content.location_info) {
+                const locationTitle = document.getElementById('locationTitle');
+                const locationAddress = document.getElementById('locationAddress');
+                const locationWhatsapp = document.getElementById('locationWhatsapp');
+                const locationEmail = document.getElementById('locationEmail');
+                
+                if (locationTitle && content.location_info.title) {
+                    locationTitle.textContent = content.location_info.title;
+                }
+                
+                if (locationAddress && content.location_info.address) {
+                    locationAddress.textContent = content.location_info.address;
+                }
+                
+                if (locationWhatsapp && content.location_info.whatsapp_number) {
+                    locationWhatsapp.textContent = content.location_info.whatsapp_number;
+                }
+                
+                if (locationEmail && content.location_info.email) {
+                    locationEmail.textContent = content.location_info.email;
+                }
+            }
+
+            // Update map section
+            if (content.map && content.map.map_iframe) {
+                const mapContainer = document.getElementById('mapContainer');
+                if (mapContainer) {
+                    let mapContent = content.map.map_iframe;
+                    
+                    // Check if it's already complete iframe code
+                    if (mapContent.trim().toLowerCase().includes('<iframe')) {
+                        // It's complete iframe code, use it directly but ensure proper dimensions
+                        mapContent = mapContent.replace(/width=["'][^"']*["']/gi, 'width="100%"');
+                        mapContent = mapContent.replace(/height=["'][^"']*["']/gi, 'height="400"');
+                        
+                        // If no width/height specified, add them
+                        if (!mapContent.includes('width=')) {
+                            mapContent = mapContent.replace('<iframe', '<iframe width="100%"');
+                        }
+                        if (!mapContent.includes('height=')) {
+                            mapContent = mapContent.replace('<iframe', '<iframe height="400"');
+                        }
+                        
+                        mapContainer.innerHTML = mapContent;
+                    } else {
+                        // It's just a URL, create iframe element
+                        mapContainer.innerHTML = `
+                            <iframe 
+                                src="${mapContent}"
+                                width="100%" 
+                                height="400" 
+                                style="border:0;" 
+                                allowfullscreen="" 
+                                loading="lazy" 
+                                referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                        `;
+                    }
+                }
+            }
+        }
+
+        // Load content when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadContactPageContent();
+        });
+    </script>
+
+    <!-- Contact Form AJAX Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const contactForm = document.getElementById('contactForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = submitBtn.querySelector('.btn-text');
+            const btnSpinner = submitBtn.querySelector('.btn-spinner');
+            const alertMessage = document.getElementById('alertMessage');
+            const alertText = document.getElementById('alertText');
+
+            // Function to show alert messages
+            function showAlert(message, type) {
+                alertText.textContent = message;
+                alertMessage.className = `alert alert-${type} alert-dismissible fade show`;
+                alertMessage.style.display = 'block';
+                
+                // Auto hide after 5 seconds
+                setTimeout(() => {
+                    alertMessage.style.display = 'none';
+                }, 5000);
+            }
+
+            // Function to set loading state
+            function setLoadingState(isLoading) {
+                if (isLoading) {
+                    submitBtn.disabled = true;
+                    btnText.textContent = 'Sending...';
+                    btnSpinner.classList.remove('d-none');
+                } else {
+                    submitBtn.disabled = false;
+                    btnText.textContent = 'Send';
+                    btnSpinner.classList.add('d-none');
+                }
+            }
+
+            // Handle form submission
+            contactForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                // Get form data
+                const formData = new FormData(contactForm);
+                
+                // Validate form fields
+                const name = formData.get('name').trim();
+                const email = formData.get('email').trim();
+                const message = formData.get('message').trim();
+                
+                if (!name || !email || !message) {
+                    showAlert('Please fill in all required fields.', 'danger');
+                    return;
+                }
+                
+                // Email validation
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    showAlert('Please enter a valid email address.', 'danger');
+                    return;
+                }
+                
+                // Set loading state
+                setLoadingState(true);
+                
+                try {
+                    // Make API request
+                    const response = await fetch('api/v1/contacHandler.php', {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    });
+                    
+                    // Parse response
+                    const result = await response.json();
+                    
+                    if (response.ok && result.success) {
+                        // Success
+                        showAlert(result.message || 'Your message has been sent successfully! We will get back to you soon.', 'success');
+                        contactForm.reset();
+                    } else {
+                        // Error from server
+                        showAlert(result.message || 'Failed to send message. Please try again.', 'danger');
+                    }
+                    
+                } catch (error) {
+                    console.error('Error:', error);
+                    showAlert('Network error occurred. Please check your connection and try again.', 'danger');
+                } finally {
+                    // Reset loading state
+                    setLoadingState(false);
+                }
+            });
+            
+            // Hide alert when user starts typing
+            const formInputs = contactForm.querySelectorAll('input, textarea');
+            formInputs.forEach(input => {
+                input.addEventListener('input', function() {
+                    if (alertMessage.style.display !== 'none') {
+                        alertMessage.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+
+      <script>
+         async function loadComponent(id, file) {
+      const response = await fetch(file);
+      const html = await response.text();
+      document.getElementById(id).innerHTML = html;
+    }
+    loadComponent("header", "_partials/header.html");
+    loadComponent("footer", "_partials/footer.html");
+  
+    </script>
 </body>
 </html>

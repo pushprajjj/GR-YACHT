@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit About Page - GR Yachts Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="admin-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        .hero-preview img, .story-preview img {
+            max-height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        
+        .about-section-card {
+            margin-bottom: 20px;
+        }
+        
+        .section-preview {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <img src="../assets/images/logoColoured.png" alt="GR Yachts" class="sidebar-logo">
+            <h3 class="sidebar-title">GR YACHTS</h3>
+            <p class="sidebar-subtitle">Admin Dashboard</p>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <div class="nav-item">
+                <a href="dashboard.html" class="nav-link">
+                    <i class="fas fa-tachometer-alt"></i>
+                    Dashboard
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="contacts.html" class="nav-link">
+                    <i class="fas fa-envelope"></i>
+                    Contact Messages
+                    <span class="nav-badge" id="contactsBadge">0</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="bookings.html" class="nav-link">
+                    <i class="fas fa-anchor"></i>
+                    Yacht Bookings
+                    <span class="nav-badge" id="bookingsBadge">0</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="yacht-fleet.html" class="nav-link">
+                    <i class="fas fa-ship"></i>
+                    Yacht Fleet
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="manage-site.html" class="nav-link active">
+                    <i class="fas fa-edit"></i>
+                    Manage Site
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="settings.html" class="nav-link">
+                    <i class="fas fa-cog"></i>
+                    Settings
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="nav-link" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </a>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Sidebar Overlay for Mobile -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <!-- Top Navbar -->
+        <div class="top-navbar">
+            <div class="navbar-left">
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 class="page-title">Edit About Page</h1>
+            </div>
+            
+            <div class="navbar-right">
+                <div class="search-box">
+                    <input type="text" class="search-input" placeholder="Search...">
+                    <button class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                
+                <button class="notification-bell">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge" id="notificationBadge">0</span>
+                </button>
+                
+                <div class="user-dropdown">
+                    <div class="user-info" onclick="toggleUserMenu()">
+                        <div class="user-avatar" id="userAvatar">A</div>
+                        <div class="user-details">
+                            <p class="user-name" id="userName">Admin User</p>
+                            <p class="user-role" id="userRole">Administrator</p>
+                        </div>
+                        <i class="fas fa-chevron-down ms-2"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Home Page Content -->
+        <div class="dashboard-content">
+            <div class="row">
+                <div class="col-12">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2>Edit About Page Content</h2>
+                        <div>
+                            <button type="button" class="btn btn-secondary me-2" onclick="window.location.href='manage-site.html'">
+                                <i class="fas fa-arrow-left me-2"></i>Back to Manage Site
+                            </button>
+                           
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-info mb-4">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Edit the content that appears on your website's about page. Changes will be reflected immediately after saving.
+                    </div>
+                </div>
+            </div>
+
+            <form id="aboutPageForm">
+                <!-- About Hero Section -->
+                <div class="table-card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">
+                            <i class="fas fa-info-circle me-2"></i>About Hero Section
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="heroTitle" class="form-label">Hero Title (Thin)</label>
+                                    <input type="text" class="form-control" id="heroTitle" name="heroTitle" placeholder="Enter hero title" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="heroTitleBold" class="form-label">Hero Title (Bold)</label>
+                                    <input type="text" class="form-control" id="heroTitleBold" name="heroTitleBold" placeholder="Enter hero title bold" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="heroButtonText" class="form-label">Button Text</label>
+                                    <input type="text" class="form-control" id="heroButtonText" name="heroButtonText" placeholder="Enter button text" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="heroButtonLink" class="form-label">Button Link</label>
+                                    <input type="text" class="form-control" id="heroButtonLink" name="heroButtonLink" placeholder="Enter button link" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="aboutHeroImage" class="form-label">About Hero Image</label>
+                                    <input type="file" class="form-control" id="aboutHeroImage" name="heroImage" accept="image/*" onchange="previewImage(this)">
+                                    <div class="form-text">Current image: about-hero.jpg</div>
+                                </div>
+                                <div class="hero-preview mt-3">
+                                    <img src="../assets/images/about/hero.png" id="imagePreview" alt="About Hero" class="img-fluid rounded" style="max-height: 200px;" onerror="this.src='../assets/images/heroSectionbg.jpg'">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Statistics & Vision Section -->
+                <div class="table-card mb-4">
+                    <div class="card-header bg-warning text-dark">
+                        <h4 class="mb-0">
+                            <i class="fas fa-chart-bar me-2"></i>Statistics & Vision Section
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="statisticsTitle" class="form-label">Statistics Section Title</label>
+                                    <input type="text" class="form-control" id="statisticsTitle" name="statisticsTitle" placeholder="Enter statistics section title" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="visionTitle" class="form-label">Vision Title</label>
+                                    <input type="text" class="form-control" id="visionTitle" name="visionTitle" placeholder="Enter vision title" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="visionContent" class="form-label">Vision Statement</label>
+                                    <textarea class="form-control" id="visionContent" name="visionContent" rows="4" placeholder="Enter vision statement" required></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-12 mb-3">
+                                        <h6 class="text-muted">Statistics</h6>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="stats1Title" class="form-label">Stat #1 Title</label>
+                                            <input type="text" class="form-control" id="stats1Title" name="stats1Title" placeholder="e.g., Years Experience" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="stats1Number" class="form-label">Stat #1 Number</label>
+                                            <input type="text" class="form-control" id="stats1Number" name="stats1Number" placeholder="e.g., 15+" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="stats2Title" class="form-label">Stat #2 Title</label>
+                                            <input type="text" class="form-control" id="stats2Title" name="stats2Title" placeholder="e.g., Happy Clients" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="stats2Number" class="form-label">Stat #2 Number</label>
+                                            <input type="text" class="form-control" id="stats2Number" name="stats2Number" placeholder="e.g., 500+" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="mb-3">
+                                            <label for="stats3Title" class="form-label">Stat #3 Title</label>
+                                            <input type="text" class="form-control" id="stats3Title" name="stats3Title" placeholder="e.g., Luxury Yachts" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="stats3Number" class="form-label">Stat #3 Number</label>
+                                            <input type="text" class="form-control" id="stats3Number" name="stats3Number" placeholder="e.g., 100+" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Our Team Section -->
+                <div class="table-card mb-4">
+                    <div class="card-header bg-info text-white">
+                        <h4 class="mb-0">
+                            <i class="fas fa-users me-2"></i>Our Team Section
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 mb-3">
+                                <div class="mb-3">
+                                    <label for="teamTitle" class="form-label">Team Section Title</label>
+                                    <input type="text" class="form-control" id="teamTitle" name="teamTitle" placeholder="Enter team section title" required>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="card border">
+                                    <div class="card-header bg-light">
+                                        <h6 class="mb-0">Team Member #1</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <label for="member1Name" class="form-label">Member Name</label>
+                                            <input type="text" class="form-control" id="member1Name" name="member1Name" placeholder="Enter member name" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="member1Designation" class="form-label">Designation</label>
+                                            <input type="text" class="form-control" id="member1Designation" name="member1Designation" placeholder="Enter designation" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="member1Description" class="form-label">Description</label>
+                                            <textarea class="form-control" id="member1Description" name="member1Description" rows="3" placeholder="Enter member description" required></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="member1Image" class="form-label">Member Image</label>
+                                            <input type="file" class="form-control" id="member1Image" name="member1Image" accept="image/*" onchange="previewMember1Image(this)">
+                                            <div class="form-text">Current image: member1.jpg</div>
+                                        </div>
+                                        <div class="member1-preview mt-3">
+                                            <img src="../assets/images/about/team1.png" id="member1ImagePreview" alt="Member 1" class="img-fluid rounded" style="max-height: 150px;" onerror="this.src='../assets/images/heroSectionbg.jpg'">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="card border">
+                                    <div class="card-header bg-light">
+                                        <h6 class="mb-0">Team Member #2</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <label for="member2Name" class="form-label">Member Name</label>
+                                            <input type="text" class="form-control" id="member2Name" name="member2Name" placeholder="Enter member name" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="member2Designation" class="form-label">Designation</label>
+                                            <input type="text" class="form-control" id="member2Designation" name="member2Designation" placeholder="Enter designation" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="member2Description" class="form-label">Description</label>
+                                            <textarea class="form-control" id="member2Description" name="member2Description" rows="3" placeholder="Enter member description" required></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="member2Image" class="form-label">Member Image</label>
+                                            <input type="file" class="form-control" id="member2Image" name="member2Image" accept="image/*" onchange="previewMember2Image(this)">
+                                            <div class="form-text">Current image: member2.jpg</div>
+                                        </div>
+                                        <div class="member2-preview mt-3">
+                                            <img src="../assets/images/about/team2.png" id="member2ImagePreview" alt="Member 2" class="img-fluid rounded" style="max-height: 150px;" onerror="this.src='../assets/images/heroSectionbg.jpg'">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+               
+
+                <!-- Save Button -->
+                <div class="text-center mb-4">
+                    <button type="submit" class="btn btn-success btn-lg">
+                        <i class="fas fa-save me-2"></i>Save All Changes
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-lg ms-3" onclick="resetForm()">
+                        <i class="fas fa-undo me-2"></i>Reset Form
+                    </button>
+                </div>
+            </form>
+
+        </div>
+
+        
+    </div>
+
+
+
+    <!-- Loading Modal -->
+    <div class="modal fade" id="loadingModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center p-4">
+                    <div class="spinner-border text-primary mb-3" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mb-0">Saving changes...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+      
+        <script src="admin-common.js"></script>
+
+        <script>
+        /**
+ * About Page Editor - Content management functionality
+ */
+
+class AboutPageEditor extends AdminBase {
+    constructor() {
+        super();
+        this.loadAboutPage();
+    }
+
+    loadAboutPage() {
+        console.log('About Page editor loaded');
+        this.setupContentManagement();
+    }
+
+    setupContentManagement() {
+        // Initialize about page functionality
+        this.fetchAboutPageData();
+    }
+
+    async fetchAboutPageData() {
+        try {
+            const response = await fetch('../api/v1/aboutPageHandler.php?action=getAboutContent');
+            const data = await response.json();
+            
+            if (data.success && data.data) {
+                this.populateForm(data.data);
+            }
+        } catch (error) {
+            console.error('Error fetching about page data:', error);
+        }
+    }
+
+    populateForm(data) {
+        // Populate hero section
+        if (data.hero) {
+            document.getElementById('heroTitle').value = data.hero.title || '';
+            document.getElementById('heroTitleBold').value = data.hero.titleBold || '';
+            document.getElementById('heroButtonText').value = data.hero.buttonText || '';
+            document.getElementById('heroButtonLink').value = data.hero.buttonLink || '';
+            if (data.hero.imagePath) {
+                document.getElementById('imagePreview').src = `../api/uploads/about/${data.hero.imagePath}`;
+            }
+        }
+
+        // Populate statistics & vision section
+        if (data.statistics) {
+            document.getElementById('statisticsTitle').value = data.statistics.title || '';
+            document.getElementById('stats1Title').value = data.statistics.stat1Title || '';
+            document.getElementById('stats1Number').value = data.statistics.stat1Number || '';
+            document.getElementById('stats2Title').value = data.statistics.stat2Title || '';
+            document.getElementById('stats2Number').value = data.statistics.stat2Number || '';
+            document.getElementById('stats3Title').value = data.statistics.stat3Title || '';
+            document.getElementById('stats3Number').value = data.statistics.stat3Number || '';
+        }
+        
+        if (data.vision) {
+            document.getElementById('visionTitle').value = data.vision.title || '';
+            document.getElementById('visionContent').value = data.vision.content || '';
+        }
+
+        // Populate team section
+        if (data.team) {
+            document.getElementById('teamTitle').value = data.team.title || '';
+            document.getElementById('member1Name').value = data.team.member1Name || '';
+            document.getElementById('member1Designation').value = data.team.member1Designation || '';
+            document.getElementById('member1Description').value = data.team.member1Description || '';
+            if (data.team.member1Image) {
+                document.getElementById('member1ImagePreview').src = `../api/uploads/about/${data.team.member1Image}`;
+            }
+            
+            document.getElementById('member2Name').value = data.team.member2Name || '';
+            document.getElementById('member2Designation').value = data.team.member2Designation || '';
+            document.getElementById('member2Description').value = data.team.member2Description || '';
+            if (data.team.member2Image) {
+                document.getElementById('member2ImagePreview').src = `../api/uploads/about/${data.team.member2Image}`;
+            }
+        }
+    }
+}
+
+// Handle about page form submission
+function saveAboutPageContent(event) {
+    event.preventDefault();
+    
+    const form = document.getElementById('aboutPageForm');
+    const formData = new FormData(form);
+    formData.append('action', 'updateAboutContent');
+    
+    Swal.fire({
+        title: 'Saving changes...',
+        didOpen: () => {
+            Swal.showLoading();
+        },
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        showConfirmButton: false
+    });
+    
+    fetch('../api/v1/aboutPageHandler.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: 'About page updated successfully!',
+                timer: 2000,
+                showConfirmButton: false
+            });
+        } else {
+            throw new Error(data.message || 'Unknown error occurred');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'An error occurred while updating the about page',
+            confirmButtonColor: '#3085d6'
+        });
+    });
+}
+
+// Image preview functions
+function previewImage(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('imagePreview').src = e.target.result;
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+function previewMember1Image(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('member1ImagePreview').src = e.target.result;
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+function previewMember2Image(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('member2ImagePreview').src = e.target.result;
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+// Form event listener
+document.getElementById('aboutPageForm').addEventListener('submit', function(event) {
+    saveAboutPageContent(event);
+});
+
+// Reset form function
+function resetForm() {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "This will reset all your changes!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, reset it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById('aboutPageForm').reset();
+            document.getElementById('imagePreview').src = '../assets/images/about/hero.png';
+            document.getElementById('member1ImagePreview').src = '../assets/images/about/team1.png';
+            document.getElementById('member2ImagePreview').src = '../assets/images/about/team2.png';
+            Swal.fire({
+                icon: 'success',
+                title: 'Reset Complete!',
+                text: 'The form has been reset to default values.',
+                timer: 1500,
+                showConfirmButton: false
+            });
+        }
+    });
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+    new AboutPageEditor();
+});
+
+</script>
+</body>
+</html>
+
+

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GR Yachts Dubai - Luxury Yacht Rentals</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="assets/css/style.css?v=5" rel="stylesheet">
+    <link href="assets/css/about.css?v=5" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    
+    <div id="header"></div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="heroSection">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center" style="margin-top: -40px;">
+                <div class="col-12 text-center text-white">
+                    <h1 class="hero-title">
+                        <span id="heroTitleThin">Loading...</span>
+                        <strong id="heroTitleBold"></strong>
+                    </h1>
+                    <button class="btn btn-primary mt-3" id="heroButton" onclick="window.location.href='/all-packages.html'">
+                        <span id="heroButtonText">BOOK A YACHT</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Content -->
+    <section class="about-section">
+        <div class="container">
+            <!-- Vision Section -->
+            <div class="row justify-content-center mb-5" id="visionSection">
+                <div class="col-lg-8 text-center">
+                    <h2 class="section-title heading mb-4" id="visionTitle">Loading...</h2>
+                    <p class="section-description" id="visionContent">
+                        Loading content...
+                    </p>
+                </div>
+            </div>
+
+            <!-- Statistics Section -->
+            <div class="row justify-content-center mb-5" id="statisticsSection">
+                <div class="col-lg-10 text-center">
+                    <h2 class="heading mb-5" id="statisticsTitle">Loading...</h2>
+                    <div class="achievement-container">
+                        <div class="achievement-item">
+                            <div class="achievement-number" id="stat1Number">0</div>
+                            <div class="achievement-label" id="stat1Title">Loading...</div>
+                        </div>
+                        <div class="achievement-divider"></div>
+                        <div class="achievement-item">
+                            <div class="achievement-number" id="stat2Number">0</div>
+                            <div class="achievement-label" id="stat2Title">Loading...</div>
+                        </div>
+                        <div class="achievement-divider"></div>
+                        <div class="achievement-item">
+                            <div class="achievement-number" id="stat3Number">0</div>
+                            <div class="achievement-label" id="stat3Title">Loading...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Our Team Section -->
+            <div class="row justify-content-center teamMembers" id="teamSection">
+                <div class="col-lg-10">
+                    <h2 class="heading mb-5" id="teamTitle">Loading...</h2>
+                    <div class="team-container">
+                        <div class="team-member">
+                            <div class="team-image">
+                                <img id="member1Image" src="assets/images/about/user1.png" alt="Team Member 1" class="img-fluid">
+                            </div>
+                            <div class="team-info">
+                                <h4 class="team-name" id="member1Name">Loading...</h4>
+                                <p class="team-role" id="member1Designation">Loading...</p>
+                                <p class="team-description" id="member1Description">
+                                    Loading description...
+                                </p>
+                            </div>
+                        </div>
+                        <div class="team-member">
+                            <div class="team-image">
+                                <img id="member2Image" src="assets/images/about/user2.png" alt="Team Member 2" class="img-fluid">
+                            </div>
+                            <div class="team-info">
+                                <h4 class="team-name" id="member2Name">Loading...</h4>
+                                <p class="team-role" id="member2Designation">Loading...</p>
+                                <p class="team-description" id="member2Description">
+                                    Loading description...
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <div id="footer"></div>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="assets/js/main.js"></script>
+    <script>
+        // Load header and footer components
+        async function loadComponent(id, file) {
+            const response = await fetch(file);
+            const html = await response.text();
+            document.getElementById(id).innerHTML = html;
+        }
+        
+        loadComponent("header", "_partials/header.html");
+        loadComponent("footer", "_partials/footer.html");
+
+        // About Page Content Management
+        class AboutPageContent {
+            constructor() {
+                this.apiUrl = '/api/v1/aboutPageHandler.php?action=getAboutContent';
+                this.loadContent();
+            }
+
+            async loadContent() {
+                try {
+                    const response = await fetch(this.apiUrl);
+                    const data = await response.json();
+                    
+                    if (data.success && data.data) {
+                        this.populateContent(data.data);
+                    } else {
+                        console.error('Failed to load about content:', data.message);
+                        this.showError();
+                    }
+                } catch (error) {
+                    console.error('Error loading about content:', error);
+                    this.showError();
+                }
+            }
+
+            populateContent(data) {
+                // Populate Hero Section
+                if (data.hero) {
+                    this.updateElement('heroTitleThin', data.hero.title);
+                    this.updateElement('heroTitleBold', data.hero.titleBold);
+                    this.updateElement('heroButtonText', data.hero.buttonText || 'BOOK A YACHT');
+                    
+                    // Update button link
+                    const heroButton = document.getElementById('heroButton');
+                    if (heroButton && data.hero.buttonLink) {
+                        heroButton.onclick = () => window.location.href = data.hero.buttonLink;
+                    }
+                    
+                    // Update hero background image
+                    if (data.hero.imagePath) {
+                        const heroSection = document.getElementById('heroSection');
+                        heroSection.style.backgroundImage = `url('/api/uploads/about/${data.hero.imagePath}')`;
+                    }
+                }
+
+                // Populate Vision Section
+                if (data.vision) {
+                    this.updateElement('visionTitle', data.vision.title);
+                    this.updateElement('visionContent', data.vision.content);
+                }
+
+                // Populate Statistics Section
+                if (data.statistics) {
+                    this.updateElement('statisticsTitle', data.statistics.title);
+                    this.updateElement('stat1Number', data.statistics.stat1Number);
+                    this.updateElement('stat1Title', data.statistics.stat1Title);
+                    this.updateElement('stat2Number', data.statistics.stat2Number);
+                    this.updateElement('stat2Title', data.statistics.stat2Title);
+                    this.updateElement('stat3Number', data.statistics.stat3Number);
+                    this.updateElement('stat3Title', data.statistics.stat3Title);
+                }
+
+                // Populate Team Section
+                if (data.team) {
+                    this.updateElement('teamTitle', data.team.title);
+                    
+                    // Member 1
+                    this.updateElement('member1Name', data.team.member1Name);
+                    this.updateElement('member1Designation', data.team.member1Designation);
+                    this.updateElement('member1Description', data.team.member1Description);
+                    
+                    if (data.team.member1Image) {
+                        const member1Img = document.getElementById('member1Image');
+                        member1Img.src = `/api/uploads/about/${data.team.member1Image}`;
+                        member1Img.alt = data.team.member1Name || 'Team Member 1';
+                    }
+                    
+                    // Member 2
+                    this.updateElement('member2Name', data.team.member2Name);
+                    this.updateElement('member2Designation', data.team.member2Designation);
+                    this.updateElement('member2Description', data.team.member2Description);
+                    
+                    if (data.team.member2Image) {
+                        const member2Img = document.getElementById('member2Image');
+                        member2Img.src = `/api/uploads/about/${data.team.member2Image}`;
+                        member2Img.alt = data.team.member2Name || 'Team Member 2';
+                    }
+                }
+            }
+
+            updateElement(id, content, isHTML = false) {
+                const element = document.getElementById(id);
+                if (element && content) {
+                    if (isHTML) {
+                        element.innerHTML = content;
+                    } else {
+                        element.textContent = content;
+                    }
+                }
+            }
+
+            showError() {
+                // Show fallback content in case of error
+                this.updateElement('heroTitleThin', 'About GR Yachts');
+                this.updateElement('heroTitleBold', 'Luxury Yacht Rentals');
+                this.updateElement('visionTitle', 'Our Vision');
+                this.updateElement('visionContent', 'We are committed to providing exceptional yacht rental experiences in Dubai.');
+                this.updateElement('statisticsTitle', 'What We Achieve');
+                this.updateElement('teamTitle', 'Our Team Members');
+                
+                console.log('Using fallback content due to API error');
+            }
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            new AboutPageContent();
+        });
+    </script>
+
+   
+</body>
+</html>

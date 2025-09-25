@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Site - GR Yachts Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="admin-styles.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <img src="../assets/images/logoColoured.png" alt="GR Yachts" class="sidebar-logo">
+            <h3 class="sidebar-title">GR YACHTS</h3>
+            <p class="sidebar-subtitle">Admin Dashboard</p>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <div class="nav-item">
+                <a href="dashboard.html" class="nav-link">
+                    <i class="fas fa-tachometer-alt"></i>
+                    Dashboard
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="contacts.html" class="nav-link">
+                    <i class="fas fa-envelope"></i>
+                    Contact Messages
+                    <span class="nav-badge" id="contactsBadge">0</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="bookings.html" class="nav-link">
+                    <i class="fas fa-anchor"></i>
+                    Yacht Bookings
+                    <span class="nav-badge" id="bookingsBadge">0</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="yacht-fleet.html" class="nav-link">
+                    <i class="fas fa-ship"></i>
+                    Yacht Fleet
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="manage-site.html" class="nav-link active">
+                    <i class="fas fa-edit"></i>
+                    Manage Site
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="settings.html" class="nav-link">
+                    <i class="fas fa-cog"></i>
+                    Settings
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="nav-link" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </a>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Sidebar Overlay for Mobile -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <!-- Top Navbar -->
+        <div class="top-navbar">
+            <div class="navbar-left">
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 class="page-title">Manage Site</h1>
+            </div>
+            
+            <div class="navbar-right">
+                <div class="search-box">
+                    <input type="text" class="search-input" placeholder="Search...">
+                    <button class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                
+                <button class="notification-bell">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge" id="notificationBadge">0</span>
+                </button>
+                
+                <div class="user-dropdown">
+                    <div class="user-info" onclick="toggleUserMenu()">
+                        <div class="user-avatar" id="userAvatar">A</div>
+                        <div class="user-details">
+                            <p class="user-name" id="userName">Admin User</p>
+                            <p class="user-role" id="userRole">Administrator</p>
+                        </div>
+                        <i class="fas fa-chevron-down ms-2"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Manage Site Content -->
+        <div class="dashboard-content">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="mb-4">Manage Site Content</h2>
+                    <div class="alert alert-info mb-4">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Manage all website content including pages, images, and site settings from this central hub.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4">
+                    <div class="table-card h-100">
+                        <div class="management-header">
+                            <h3 class="management-title">
+                                <i class="fas fa-home text-primary"></i>
+                                Home Page
+                            </h3>
+                        </div>
+                        <p class="text-muted mb-3">Manage hero section, yacht fleet showcase, and homepage content.</p>
+                        <div class="text-center">
+                            <button class="btn btn-outline-primary w-100" onclick="window.location.href='edit-home-page.html'">
+                                <i class="fas fa-edit me-2"></i>Edit Home Page
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="table-card h-100">
+                        <div class="management-header">
+                            <h3 class="management-title">
+                                <i class="fas fa-info-circle text-info"></i>
+                                About Us
+                            </h3>
+                        </div>
+                        <p class="text-muted mb-3">Manage company information, mission, vision, and team details.</p>
+                        <div class="text-center">
+                            <button class="btn btn-outline-info w-100" onclick="window.location.href='edit-about-page.html'">
+                                <i class="fas fa-edit me-2"></i>Edit About Page
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="table-card h-100">
+                        <div class="management-header">
+                            <h3 class="management-title">
+                                <i class="fas fa-concierge-bell text-success"></i>
+                                Services
+                            </h3>
+                        </div>
+                        <p class="text-muted mb-3">Manage yacht services, amenities, and service descriptions.</p>
+                        <div class="text-center">
+                            <button class="btn btn-outline-success w-100" onclick="window.location.href='edit-services-page.html'">
+                                <i class="fas fa-edit me-2"></i>Edit Services
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="table-card h-100">
+                        <div class="management-header">
+                            <h3 class="management-title">
+                                <i class="fas fa-box text-warning"></i>
+                                Packages
+                            </h3>
+                        </div>
+                        <p class="text-muted mb-3">Manage yacht rental packages, pricing, and package descriptions.</p>
+                        <div class="text-center">
+                            <button class="btn btn-outline-warning w-100" onclick="window.location.href='edit-packages-page.html'">
+                                <i class="fas fa-edit me-2"></i>Edit Packages
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- <div class="col-md-6 col-lg-4">
+                    <div class="table-card h-100">
+                        <div class="management-header">
+                            <h3 class="management-title">
+                                <i class="fas fa-ship text-primary"></i>
+                                Yacht Details
+                            </h3>
+                        </div>
+                        <p class="text-muted mb-3">Manage individual yacht details, specifications, and images.</p>
+                        <div class="text-center">
+                            <button class="btn btn-outline-primary w-100" onclick="alert('Feature coming soon!')">
+                                <i class="fas fa-edit me-2"></i>Edit Yachts
+                            </button>
+                        </div>
+                    </div>
+                </div> -->
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="table-card h-100">
+                        <div class="management-header">
+                            <h3 class="management-title">
+                                <i class="fas fa-blog text-secondary"></i>
+                                Blog
+                            </h3>
+                        </div>
+                        <p class="text-muted mb-3">Manage blog posts, articles, and news content with SEO optimization.</p>
+                        <div class="text-center">
+                            <button class="btn btn-outline-secondary w-100" onclick="window.location.href='manage-blog.html'">
+                                <i class="fas fa-edit me-2"></i>Manage Blog
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="table-card h-100">
+                        <div class="management-header">
+                            <h3 class="management-title">
+                                <i class="fas fa-envelope text-info"></i>
+                                Contact Page
+                            </h3>
+                        </div>
+                        <p class="text-muted mb-3">Manage contact information, address, and contact form settings.</p>
+                        <div class="text-center">
+                            <button class="btn btn-outline-info w-100" onclick="window.location.href='edit-contact-page.html'">
+                                <i class="fas fa-edit me-2"></i>Edit Contact
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- <div class="col-md-6 col-lg-4">
+                    <div class="table-card h-100">
+                        <div class="management-header">
+                            <h3 class="management-title">
+                                <i class="fas fa-images text-danger"></i>
+                                Media Library
+                            </h3>
+                        </div>
+                        <p class="text-muted mb-3">Manage website images, logos, and media files.</p>
+                        <div class="text-center">
+                            <button class="btn btn-outline-danger w-100" onclick="alert('Feature coming soon!')">
+                                <i class="fas fa-folder-open me-2"></i>Manage Media
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="table-card h-100">
+                        <div class="management-header">
+                            <h3 class="management-title">
+                                <i class="fas fa-palette text-purple"></i>
+                                Site Appearance
+                            </h3>
+                        </div>
+                        <p class="text-muted mb-3">Customize colors, fonts, and overall site appearance.</p>
+                        <div class="text-center">
+                            <button class="btn btn-outline-dark w-100" onclick="alert('Feature coming soon!')">
+                                <i class="fas fa-paint-brush me-2"></i>Customize
+                            </button>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="admin-common.js"></script>
+    <script src="manage-site-page.js"></script>
+</body>
+</html>
+
+

@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yacht Fleet Management - GR Yachts Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="admin-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Quill.js Rich Text Editor -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    <style>
+        .yacht-fleet-container {
+            padding: 30px;
+        }
+        
+        .add-yacht-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+        }
+        
+        .yacht-fleet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .yacht-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .yacht-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 167, 189, 0.2);
+        }
+        
+        .yacht-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .yacht-details {
+            padding: 20px;
+        }
+        
+        .yacht-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--yacht-blue);
+            margin-bottom: 10px;
+        }
+        
+        .yacht-price {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--success-color);
+            margin-bottom: 15px;
+        }
+        
+        .yacht-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .image-preview-container {
+            position: relative;
+            display: inline-block;
+            margin: 10px;
+        }
+        
+        .image-preview {
+            width: 120px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+        }
+        
+        .remove-image {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--danger-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        
+        .image-upload-area {
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .image-upload-area:hover {
+            border-color: var(--yacht-blue);
+            background-color: rgba(0, 167, 189, 0.05);
+        }
+        
+        .image-upload-area.dragover {
+            border-color: var(--yacht-blue);
+            background-color: rgba(0, 167, 189, 0.1);
+        }
+        
+        .secondary-images {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .secondary-image {
+            width: 60px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            display: none;
+        }
+        
+        .loading-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+        }
+        
+        /* Form Card Styles */
+        .card {
+            border: none;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+        }
+        
+        .card-header {
+            border-bottom: none;
+            font-weight: 600;
+        }
+        
+        .card-body {
+            padding: 1.5rem;
+        }
+        
+        /* Tab Styles for Edit Modal */
+        .nav-tabs .nav-link {
+            border: none;
+            color: #6c757d;
+            font-weight: 500;
+        }
+        
+        .nav-tabs .nav-link.active {
+            background-color: var(--yacht-blue);
+            color: white;
+            border-radius: 5px 5px 0 0;
+        }
+        
+        .tab-content {
+            border: 1px solid #dee2e6;
+            border-top: none;
+        }
+        
+        /* Quill Editor Styles */
+        .ql-editor {
+            min-height: 120px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .ql-toolbar {
+            border-top: 1px solid #ccc;
+            border-left: 1px solid #ccc;
+            border-right: 1px solid #ccc;
+            border-radius: 4px 4px 0 0;
+        }
+        
+        .ql-container {
+            border-bottom: 1px solid #ccc;
+            border-left: 1px solid #ccc;
+            border-right: 1px solid #ccc;
+            border-radius: 0 0 4px 4px;
+        }
+        
+        /* Responsive improvements */
+        @media (max-width: 768px) {
+            .yacht-fleet-container {
+                padding: 15px;
+            }
+            
+            .add-yacht-card {
+                padding: 20px;
+            }
+            
+            .card-body {
+                padding: 1rem;
+            }
+            
+            .ql-toolbar {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <img src="../assets/images/logoColoured.png" alt="GR Yachts" class="sidebar-logo">
+            <h3 class="sidebar-title">GR YACHTS</h3>
+            <p class="sidebar-subtitle">Admin Dashboard</p>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <div class="nav-item">
+                <a href="dashboard.html" class="nav-link">
+                    <i class="fas fa-tachometer-alt"></i>
+                    Dashboard
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="contacts.html" class="nav-link">
+                    <i class="fas fa-envelope"></i>
+                    Contact Messages
+                    <span class="nav-badge" id="contactsBadge">0</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="bookings.html" class="nav-link">
+                    <i class="fas fa-anchor"></i>
+                    Yacht Bookings
+                    <span class="nav-badge" id="bookingsBadge">0</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="yacht-fleet.html" class="nav-link active">
+                    <i class="fas fa-ship"></i>
+                    Yacht Fleet
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="manage-site.html" class="nav-link">
+                    <i class="fas fa-edit"></i>
+                    Manage Site
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="settings.html" class="nav-link">
+                    <i class="fas fa-cog"></i>
+                    Settings
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="nav-link" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </a>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Sidebar Overlay for Mobile -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <!-- Top Navbar -->
+        <div class="top-navbar">
+            <div class="navbar-left">
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 class="page-title">Yacht Fleet Management</h1>
+            </div>
+            
+            <div class="navbar-right">
+                <div class="search-box">
+                    <input type="text" class="search-input" placeholder="Search yachts..." id="searchInput">
+                    <button class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                
+                <button class="notification-bell">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge" id="notificationBadge">0</span>
+                </button>
+                
+                <div class="user-dropdown">
+                    <div class="user-info" onclick="toggleUserMenu()">
+                        <div class="user-avatar" id="userAvatar">A</div>
+                        <div class="user-details">
+                            <p class="user-name" id="userName">Admin User</p>
+                            <p class="user-role" id="userRole">Administrator</p>
+                        </div>
+                        <i class="fas fa-chevron-down ms-2"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Yacht Fleet Content -->
+        <div class="yacht-fleet-container">
+            <!-- Add New Yacht Form -->
+            <div class="add-yacht-card">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h3 class="text-primary mb-0">
+                        <i class="fas fa-plus-circle me-2"></i>
+                        Add New Yacht
+                    </h3>
+                    <button class="btn btn-outline-secondary" onclick="toggleAddForm()">
+                        <i class="fas fa-chevron-up" id="toggleIcon"></i>
+                    </button>
+                </div>
+                
+                <div id="addYachtForm">
+                    <form id="yachtForm" enctype="multipart/form-data">
+                        <!-- Basic Information -->
+                        <div class="card mb-4">
+                            <div class="card-header bg-primary text-white">
+                                <h6 class="mb-0"><i class="fas fa-info-circle me-2"></i>Basic Information</h6>
+                            </div>
+                            <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="yachtTitle" class="form-label">Yacht Title *</label>
+                                <input type="text" class="form-control" id="yachtTitle" name="title" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                        <label for="yachtLength" class="form-label">Length (feet) *</label>
+                                        <input type="number" class="form-control" id="yachtLength" name="length" step="0.1" required>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 mb-3">
+                                        <label for="numberOfGuests" class="form-label">Number of Guests *</label>
+                                        <input type="number" class="form-control" id="numberOfGuests" name="number_of_guests" required>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="overnightGuests" class="form-label">Overnight Guests</label>
+                                        <input type="number" class="form-control" id="overnightGuests" name="overnight_guests">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="minCharterLength" class="form-label">Min Charter Length (hours)</label>
+                                        <input type="number" class="form-control" id="minCharterLength" name="min_charter_length" step="0.5">
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="yachtDescription" class="form-label">Description</label>
+                                    <div id="yachtDescriptionEditor" style="height: 150px;"></div>
+                                    <textarea id="yachtDescription" name="description" style="display: none;"></textarea>
+                                    <small class="form-text text-muted">Use the rich text editor to format your yacht description</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pricing Information -->
+                        <div class="card mb-4">
+                            <div class="card-header bg-success text-white">
+                                <h6 class="mb-0"><i class="fas fa-dollar-sign me-2"></i>Pricing Information</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label for="pricePerHour" class="form-label">Price per Hour (AED)</label>
+                                        <input type="number" class="form-control" id="pricePerHour" name="price_per_hour" step="0.01">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="yachtPrice" class="form-label">Half Day Price (AED) *</label>
+                                <input type="number" class="form-control" id="yachtPrice" name="price" step="0.01" required>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="pricePerDay" class="form-label">Price per Day (AED)</label>
+                                        <input type="number" class="form-control" id="pricePerDay" name="price_per_day" step="0.01">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Contact Information -->
+                        <div class="card mb-4">
+                            <div class="card-header bg-info text-white">
+                                <h6 class="mb-0"><i class="fas fa-address-book me-2"></i>Contact Information</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="charterMemberName" class="form-label">Charter Member Name</label>
+                                        <input type="text" class="form-control" id="charterMemberName" name="charter_member_name">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="whatsappLink" class="form-label">WhatsApp Link</label>
+                                        <input type="url" class="form-control" id="whatsappLink" name="whatsapp_link" placeholder="https://wa.me/971xxxxxxxxx">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Facilities -->
+                        <div class="card mb-4">
+                            <div class="card-header bg-warning text-dark">
+                                <h6 class="mb-0"><i class="fas fa-star me-2"></i>Facilities</h6>
+                            </div>
+                            <div class="card-body">
+                        <div class="mb-3">
+                                    <label for="facilities" class="form-label">Facilities (one per line)</label>
+                                    <textarea class="form-control" id="facilities" name="facilities" rows="4" placeholder="Air Conditioning&#10;WiFi&#10;Sound System&#10;Kitchen&#10;Bathroom"></textarea>
+                                    <small class="form-text text-muted">Enter each facility on a new line</small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Experiences -->
+                        <div class="card mb-4">
+                            <div class="card-header bg-secondary text-white">
+                                <h6 class="mb-0"><i class="fas fa-compass me-2"></i>Experiences</h6>
+                            </div>
+                            <div class="card-body">
+                        <div class="mb-3">
+                                    <label for="experiences" class="form-label">Experiences (one per line)</label>
+                                    <textarea class="form-control" id="experiences" name="experiences" rows="4" placeholder="Sunset Cruise&#10;Dubai Marina Tour&#10;Burj Al Arab View&#10;Swimming&#10;Fishing"></textarea>
+                                    <small class="form-text text-muted">Enter each experience on a new line</small>
+                            </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Water Sports -->
+                        <div class="card mb-4">
+                            <div class="card-header bg-danger text-white">
+                                <h6 class="mb-0"><i class="fas fa-swimmer me-2"></i>Water Sports</h6>
+                            </div>
+                            <div class="card-body">
+                        <div class="mb-3">
+                                    <label for="waterSports" class="form-label">Water Sports (one per line)</label>
+                                    <textarea class="form-control" id="waterSports" name="water_sports" rows="4" placeholder="Jet Skiing&#10;Banana Boat&#10;Donut Ride&#10;Kayaking&#10;Snorkeling"></textarea>
+                                    <small class="form-text text-muted">Enter each water sport on a new line</small>
+                            </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Crew Information -->
+                        <div class="card mb-4">
+                            <div class="card-header bg-dark text-white">
+                                <h6 class="mb-0"><i class="fas fa-users me-2"></i>Crew Information</h6>
+                            </div>
+                            <div class="card-body">
+                        <div class="mb-3">
+                                    <label for="crew" class="form-label">Crew Details</label>
+                                    <textarea class="form-control" id="crew" name="crew" rows="3" placeholder="Professional Captain&#10;Experienced Crew&#10;Safety Equipment&#10;First Aid Certified"></textarea>
+                                    <small class="form-text text-muted">Enter crew details, one per line</small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Location -->
+                        <div class="card mb-4">
+                            <div class="card-header" style="background-color: #4285f4; color: white;">
+                                <h6 class="mb-0"><i class="fas fa-map-marker-alt me-2"></i>Location</h6>
+                            </div>
+                            <div class="card-body">
+                        <div class="mb-3">
+                                    <label for="googleMapIframe" class="form-label">Google Map Embed Code</label>
+                                    <textarea class="form-control" id="googleMapIframe" name="google_map_iframe" rows="3" placeholder='<iframe src="https://www.google.com/maps/embed?pb=..." width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>'></textarea>
+                                    <small class="form-text text-muted">Paste the complete iframe embed code from Google Maps</small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Multiple Images Upload -->
+                        <div class="card mb-4">
+                            <div class="card-header" style="background-color: #6f42c1; color: white;">
+                                <h6 class="mb-0"><i class="fas fa-images me-2"></i>Yacht Images</h6>
+                            </div>
+                            <div class="card-body">
+                        <div class="mb-3">
+                                    <label class="form-label">Upload Multiple Images *</label>
+                                    <div class="image-upload-area" onclick="document.getElementById('yachtImages').click()">
+                                        <i class="fas fa-cloud-upload-alt fa-2x text-muted mb-2"></i>
+                                        <p class="text-muted mb-0">Click to upload yacht images</p>
+                                        <small class="text-muted">Select multiple images (Max: 10 images, 5MB each)</small>
+                                    </div>
+                                    <input type="file" id="yachtImages" name="yacht_images[]" accept="image/*" multiple style="display: none;" required>
+                                    <div id="yachtImagesPreview" class="mt-3"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-2"></i>
+                                Add Yacht
+                            </button>
+                            <button type="button" class="btn btn-secondary" onclick="resetForm()">
+                                <i class="fas fa-undo me-2"></i>
+                                Reset
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Yacht Fleet Grid -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3 class="text-primary mb-0">
+                    <i class="fas fa-ship me-2"></i>
+                    Current Fleet (<span id="yachtCount">0</span>)
+                </h3>
+                <div class="d-flex gap-2">
+                    <select class="form-select" id="sortBy" style="width: auto;">
+                        <option value="created_at">Sort by Date</option>
+                        <option value="title">Sort by Title</option>
+                        <option value="price">Sort by Price</option>
+                    </select>
+                    <button class="btn btn-outline-primary" onclick="loadYachts()">
+                        <i class="fas fa-refresh"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="yacht-fleet-grid" id="yachtFleetGrid">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Loading yacht fleet...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <p class="mt-3">Processing...</p>
+        </div>
+    </div>
+    
+    <!-- Edit Yacht Modal -->
+    <div class="modal fade" id="editYachtModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">
+                        <i class="fas fa-edit me-2"></i>
+                        Edit Yacht
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editYachtForm" enctype="multipart/form-data">
+                        <input type="hidden" id="editYachtId" name="yacht_id">
+                        
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" id="editYachtTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="basic-tab" data-bs-toggle="tab" data-bs-target="#basic" type="button" role="tab">Basic Info</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="pricing-tab" data-bs-toggle="tab" data-bs-target="#pricing" type="button" role="tab">Pricing</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="details-tab" data-bs-toggle="tab" data-bs-target="#details" type="button" role="tab">Details</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="images-tab" data-bs-toggle="tab" data-bs-target="#images" type="button" role="tab">Images</button>
+                            </li>
+                        </ul>
+                        
+                        <!-- Tab content -->
+                        <div class="tab-content" id="editYachtTabContent">
+                            <!-- Basic Info Tab -->
+                            <div class="tab-pane fade show active" id="basic" role="tabpanel">
+                                <div class="p-3">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="editYachtTitle" class="form-label">Yacht Title *</label>
+                                <input type="text" class="form-control" id="editYachtTitle" name="title" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                            <label for="editYachtLength" class="form-label">Length (feet) *</label>
+                                            <input type="number" class="form-control" id="editYachtLength" name="length" step="0.1" required>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-3">
+                                            <label for="editNumberOfGuests" class="form-label">Number of Guests *</label>
+                                            <input type="number" class="form-control" id="editNumberOfGuests" name="number_of_guests" required>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="editOvernightGuests" class="form-label">Overnight Guests</label>
+                                            <input type="number" class="form-control" id="editOvernightGuests" name="overnight_guests">
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="editMinCharterLength" class="form-label">Min Charter Length (hours)</label>
+                                            <input type="number" class="form-control" id="editMinCharterLength" name="min_charter_length" step="0.5">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editYachtDescription" class="form-label">Description</label>
+                            <div id="editYachtDescriptionEditor" style="height: 150px;"></div>
+                            <textarea id="editYachtDescription" name="description" style="display: none;"></textarea>
+                            <small class="form-text text-muted">Use the rich text editor to format your yacht description</small>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Pricing Tab -->
+                            <div class="tab-pane fade" id="pricing" role="tabpanel">
+                                <div class="p-3">
+                                    <div class="row">
+                                        <div class="col-md-4 mb-3">
+                                            <label for="editPricePerHour" class="form-label">Price per Hour (AED)</label>
+                                            <input type="number" class="form-control" id="editPricePerHour" name="price_per_hour" step="0.01">
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label for="editYachtPrice" class="form-label">Half Day Price (AED) *</label>
+                                <input type="number" class="form-control" id="editYachtPrice" name="price" step="0.01" required>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label for="editPricePerDay" class="form-label">Price per Day (AED)</label>
+                                            <input type="number" class="form-control" id="editPricePerDay" name="price_per_day" step="0.01">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="editCharterMemberName" class="form-label">Charter Member Name</label>
+                                            <input type="text" class="form-control" id="editCharterMemberName" name="charter_member_name">
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="editWhatsappLink" class="form-label">WhatsApp Link</label>
+                                            <input type="url" class="form-control" id="editWhatsappLink" name="whatsapp_link">
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                        
+                            <!-- Details Tab -->
+                            <div class="tab-pane fade" id="details" role="tabpanel">
+                                <div class="p-3">
+                        <div class="mb-3">
+                                        <label for="editFacilities" class="form-label">Facilities (one per line)</label>
+                                        <textarea class="form-control" id="editFacilities" name="facilities" rows="3"></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="editExperiences" class="form-label">Experiences (one per line)</label>
+                                        <textarea class="form-control" id="editExperiences" name="experiences" rows="3"></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="editWaterSports" class="form-label">Water Sports (one per line)</label>
+                                        <textarea class="form-control" id="editWaterSports" name="water_sports" rows="3"></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="editCrew" class="form-label">Crew Details</label>
+                                        <textarea class="form-control" id="editCrew" name="crew" rows="2"></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="editGoogleMapIframe" class="form-label">Google Map Embed Code</label>
+                                        <textarea class="form-control" id="editGoogleMapIframe" name="google_map_iframe" rows="2"></textarea>
+                                    </div>
+                                </div>
+                        </div>
+                        
+                            <!-- Images Tab -->
+                            <div class="tab-pane fade" id="images" role="tabpanel">
+                                <div class="p-3">
+                        <div class="mb-3">
+                            <label class="form-label">Current Images</label>
+                                        <div id="currentImages" class="row"></div>
+                        </div>
+                        
+                        <div class="mb-3">
+                                        <label class="form-label">Upload New Images</label>
+                                        <input type="file" class="form-control" id="editYachtImages" name="yacht_images[]" accept="image/*" multiple>
+                                        <small class="form-text text-muted">Select multiple images to replace existing ones (Max: 10 images, 5MB each)</small>
+                        </div>
+                        
+                        <div class="mb-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="replaceAllImages" name="replace_all_images">
+                                            <label class="form-check-label" for="replaceAllImages">
+                                                Replace all existing images with new ones
+                                            </label>
+                                        </div>
+                                        <small class="form-text text-muted">If unchecked, new images will be added to existing ones</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="updateYacht()">
+                        <i class="fas fa-save me-2"></i>
+                        Update Yacht
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="admin-common.js"></script>
+    
+    
+    <script>
+        /**
+ * GR Yachts Admin - Yacht Fleet Management
+ * Handles yacht fleet CRUD operations, image uploads, and UI interactions
+ */
+
+class YachtFleetManager extends AdminBase {
+    constructor() {
+        super();
+        this.yachts = [];
+        this.currentEditId = null;
+        this.maxImages = 10;
+        this.maxFileSize = 5 * 1024 * 1024; // 5MB
+        this.yachtDescriptionQuill = null;
+        this.editYachtDescriptionQuill = null;
+        
+        this.initializeEventListeners();
+        this.initializeQuillEditors();
+        this.loadYachts();
+    }
+
+    initializeEventListeners() {
+        // Form submission
+        document.getElementById('yachtForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            this.addYacht();
+        });
+
+        // Image upload handlers
+        document.getElementById('yachtImages').addEventListener('change', (e) => {
+            this.handleYachtImagesPreview(e.target.files);
+        });
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            this.filterYachts(e.target.value);
+        });
+
+        // Sort functionality
+        document.getElementById('sortBy').addEventListener('change', (e) => {
+            this.sortYachts(e.target.value);
+        });
+
+        // Drag and drop for images
+        this.setupDragAndDrop();
+    }
+
+    initializeQuillEditors() {
+        // Initialize main description editor
+        this.yachtDescriptionQuill = new Quill('#yachtDescriptionEditor', {
+            theme: 'snow',
+            modules: {
+                toolbar: [
+                    [{ 'header': [1, 2, 3, false] }],
+                    ['bold', 'italic', 'underline', 'strike'],
+                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                    [{ 'color': [] }, { 'background': [] }],
+                    [{ 'align': [] }],
+                    ['link'],
+                    ['clean']
+                ]
+            },
+            placeholder: 'Enter yacht description...'
+        });
+
+        // Sync Quill content with hidden textarea
+        this.yachtDescriptionQuill.on('text-change', () => {
+            const html = this.yachtDescriptionQuill.root.innerHTML;
+            document.getElementById('yachtDescription').value = html === '<p><br></p>' ? '' : html;
+        });
+
+        // Initialize edit description editor (will be created when modal opens)
+        // We'll initialize this in the editYacht method
+    }
+
+    setupDragAndDrop() {
+        const uploadAreas = document.querySelectorAll('.image-upload-area');
+        
+        uploadAreas.forEach(area => {
+            area.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                area.classList.add('dragover');
+            });
+
+            area.addEventListener('dragleave', () => {
+                area.classList.remove('dragover');
+            });
+
+            area.addEventListener('drop', (e) => {
+                e.preventDefault();
+                area.classList.remove('dragover');
+                
+                const files = e.dataTransfer.files;
+                if (area.onclick.toString().includes('mainImage')) {
+                    if (files.length > 0) {
+                        document.getElementById('mainImage').files = files;
+                        this.handleMainImagePreview(files[0]);
+                    }
+                } else if (area.onclick.toString().includes('secondaryImages')) {
+                    document.getElementById('secondaryImages').files = files;
+                    this.handleSecondaryImagesPreview(files);
+                }
+            });
+        });
+    }
+
+    handleYachtImagesPreview(files) {
+        const previewContainer = document.getElementById('yachtImagesPreview');
+        previewContainer.innerHTML = '';
+
+        if (!files || files.length === 0) return;
+
+        if (files.length > this.maxImages) {
+            this.showError(`Maximum ${this.maxImages} images allowed`);
+            return;
+        }
+
+        Array.from(files).forEach((file, index) => {
+            if (!this.validateImage(file)) return;
+
+            const container = document.createElement('div');
+            container.className = 'image-preview-container';
+
+            const img = document.createElement('img');
+            img.className = 'image-preview';
+            img.src = URL.createObjectURL(file);
+
+            const removeBtn = document.createElement('button');
+            removeBtn.className = 'remove-image';
+            removeBtn.innerHTML = '×';
+            removeBtn.onclick = () => {
+                this.removeYachtImage(index);
+            };
+
+            container.appendChild(img);
+            container.appendChild(removeBtn);
+            previewContainer.appendChild(container);
+        });
+    }
+
+    removeYachtImage(indexToRemove) {
+        const input = document.getElementById('yachtImages');
+        const dt = new DataTransfer();
+        
+        Array.from(input.files).forEach((file, index) => {
+            if (index !== indexToRemove) {
+                dt.items.add(file);
+            }
+        });
+        
+        input.files = dt.files;
+        this.handleYachtImagesPreview(input.files);
+    }
+
+    validateImage(file) {
+        if (!file.type.startsWith('image/')) {
+            this.showError('Please select a valid image file');
+            return false;
+        }
+
+        if (file.size > this.maxFileSize) {
+            this.showError('Image size must be less than 5MB');
+            return false;
+        }
+
+        return true;
+    }
+
+    async addYacht() {
+        const form = document.getElementById('yachtForm');
+        const formData = new FormData(form);
+
+        // Validate required fields
+        if (!formData.get('title') || !formData.get('price')) {
+            this.showError('Please fill in all required fields');
+            return;
+        }
+        
+        // Check if yacht images are selected
+        const yachtImagesInput = document.getElementById('yachtImages');
+        if (!yachtImagesInput.files || yachtImagesInput.files.length === 0) {
+            this.showError('Please select at least one yacht image');
+            return;
+        }
+
+        // Validate price is a valid number
+        const price = parseFloat(formData.get('price'));
+        if (isNaN(price) || price <= 0) {
+            this.showError('Please enter a valid price greater than 0');
+            return;
+        }
+
+        this.showLoading(true);
+
+        try {
+            const response = await fetch('../api/v1/yachtFleetHandler.php?action=add', {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                this.showSuccess('Yacht added successfully!');
+                this.resetForm();
+                this.loadYachts();
+            } else {
+                this.showError(data.message || 'Failed to add yacht');
+            }
+        } catch (error) {
+            console.error('Error adding yacht:', error);
+            this.showError('An error occurred while adding the yacht');
+        } finally {
+            this.showLoading(false);
+        }
+    }
+
+    async loadYachts() {
+        const grid = document.getElementById('yachtFleetGrid');
+        grid.innerHTML = this.getLoadingHTML();
+
+        try {
+            console.log('Loading yachts...');
+            const response = await fetch('../api/v1/yachtFleetHandler.php?action=list');
+            const data = await response.json();
+            console.log('Load yachts response:', data);
+
+            if (data.success) {
+                this.yachts = data.data || [];
+                console.log('Loaded yachts:', this.yachts.length);
+                this.renderYachts();
+                this.updateYachtCount();
+            } else {
+                console.error('Failed to load yachts:', data.message);
+                grid.innerHTML = '<div class="text-center p-4"><p class="text-muted">Failed to load yachts: ' + (data.message || 'Unknown error') + '</p></div>';
+            }
+        } catch (error) {
+            console.error('Error loading yachts:', error);
+            grid.innerHTML = '<div class="text-center p-4"><p class="text-muted">Error loading yachts: ' + error.message + '</p></div>';
+        }
+    }
+
+    renderYachts(yachtsToRender = null) {
+        const grid = document.getElementById('yachtFleetGrid');
+        const yachts = yachtsToRender || this.yachts;
+
+        if (yachts.length === 0) {
+            grid.innerHTML = `
+                <div class="text-center p-5" style="grid-column: 1 / -1;">
+                    <i class="fas fa-ship fa-3x text-muted mb-3"></i>
+                    <h4 class="text-muted">No yachts in fleet</h4>
+                    <p class="text-muted">Add your first yacht using the form above</p>
+                </div>
+            `;
+            return;
+        }
+
+        grid.innerHTML = yachts.map(yacht => this.createYachtCard(yacht)).join('');
+    }
+
+    createYachtCard(yacht) {
+        const yachtImages = yacht.yacht_images ? JSON.parse(yacht.yacht_images) : [];
+        const mainImage = yachtImages.length > 0 ? `../api/uploads/yachtFleet/${yachtImages[0]}` : '../assets/images/yatch1.png';
+        const thumbnailImages = yachtImages.slice(1, 4); // Show up to 3 thumbnail images
+        
+        return `
+            <div class="yacht-card" data-yacht-id="${yacht.id}">
+                <img src="${mainImage}" alt="${yacht.title}" class="yacht-image" onerror="this.src='../assets/images/yatch1.png'">
+                <div class="yacht-details">
+                    <h4 class="yacht-title">${yacht.title}</h4>
+                    <div class="yacht-price">AED ${parseFloat(yacht.price).toLocaleString()}</div>
+                    ${yacht.description ? `<p class="text-muted small mb-3">${yacht.description}</p>` : ''}
+                    
+                    ${thumbnailImages.length > 0 ? `
+                        <div class="secondary-images mb-3">
+                            ${thumbnailImages.map(img => `
+                                <img src="../api/uploads/yachtFleet/${img}" alt="Yacht Image" class="secondary-image" onerror="this.style.display='none'">
+                            `).join('')}
+                            ${yachtImages.length > 4 ? `<span class="text-muted small">+${yachtImages.length - 4} more</span>` : ''}
+                        </div>
+                    ` : ''}
+                    
+                    <div class="yacht-actions">
+                        <button class="btn btn-sm btn-outline-primary" onclick="editYacht(${yacht.id})">
+                            <i class="fas fa-edit"></i> Edit
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger" onclick="deleteYacht(${yacht.id})">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    async editYacht(id) {
+        console.log('Edit yacht called with ID:', id);
+        const yacht = this.yachts.find(y => y.id == id);
+        if (!yacht) {
+            console.error('Yacht not found for edit with ID:', id);
+            this.showError('Yacht not found');
+            return;
+        }
+
+        console.log('Found yacht for edit:', yacht);
+        this.currentEditId = id;
+
+        // Populate edit form - Basic Info
+        document.getElementById('editYachtId').value = yacht.id;
+        document.getElementById('editYachtTitle').value = yacht.title;
+        document.getElementById('editYachtLength').value = yacht.length || '';
+        
+        // Initialize edit Quill editor if not already done
+        if (!this.editYachtDescriptionQuill) {
+            this.editYachtDescriptionQuill = new Quill('#editYachtDescriptionEditor', {
+                theme: 'snow',
+                modules: {
+                    toolbar: [
+                        [{ 'header': [1, 2, 3, false] }],
+                        ['bold', 'italic', 'underline', 'strike'],
+                        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                        [{ 'color': [] }, { 'background': [] }],
+                        [{ 'align': [] }],
+                        ['link'],
+                        ['clean']
+                    ]
+                },
+                placeholder: 'Enter yacht description...'
+            });
+
+            // Sync edit Quill content with hidden textarea
+            this.editYachtDescriptionQuill.on('text-change', () => {
+                const html = this.editYachtDescriptionQuill.root.innerHTML;
+                document.getElementById('editYachtDescription').value = html === '<p><br></p>' ? '' : html;
+            });
+        }
+        
+        // Set description content in Quill editor
+        if (yacht.description) {
+            this.editYachtDescriptionQuill.root.innerHTML = yacht.description;
+        } else {
+            this.editYachtDescriptionQuill.setText('');
+        }
+        document.getElementById('editYachtDescription').value = yacht.description || '';
+        document.getElementById('editNumberOfGuests').value = yacht.number_of_guests || '';
+        document.getElementById('editOvernightGuests').value = yacht.overnight_guests || '';
+        document.getElementById('editMinCharterLength').value = yacht.min_charter_length || '';
+
+        // Populate pricing fields
+        document.getElementById('editYachtPrice').value = yacht.price;
+        document.getElementById('editPricePerHour').value = yacht.price_per_hour || '';
+        document.getElementById('editPricePerDay').value = yacht.price_per_day || '';
+        document.getElementById('editCharterMemberName').value = yacht.charter_member_name || '';
+        document.getElementById('editWhatsappLink').value = yacht.whatsapp_link || '';
+
+        // Populate details fields
+        document.getElementById('editFacilities').value = yacht.facilities || '';
+        document.getElementById('editExperiences').value = yacht.experiences || '';
+        document.getElementById('editWaterSports').value = yacht.watersports || '';
+        document.getElementById('editCrew').value = yacht.crew || '';
+        document.getElementById('editGoogleMapIframe').value = yacht.google_map_iframe || '';
+
+        // Show current images
+        this.showCurrentImages(yacht);
+
+        // Show modal
+        const modal = new bootstrap.Modal(document.getElementById('editYachtModal'));
+        modal.show();
+    }
+
+    showCurrentImages(yacht) {
+        const container = document.getElementById('currentImages');
+        let html = '';
+
+        // Use yacht_images if available, otherwise fall back to main_image and secondary_images
+        let yachtImages = [];
+        if (yacht.yacht_images) {
+            yachtImages = JSON.parse(yacht.yacht_images);
+        } else {
+            // Fallback to old format
+            if (yacht.main_image) yachtImages.push(yacht.main_image);
+            if (yacht.secondary_images) {
+                const secondaryImages = JSON.parse(yacht.secondary_images);
+                yachtImages = yachtImages.concat(secondaryImages);
+            }
+        }
+
+        if (yachtImages.length > 0) {
+            html += `
+                <div class="mb-2">
+                    <strong>Current Images (${yachtImages.length}):</strong><br>
+                    <div class="d-flex gap-2 mt-2 flex-wrap">
+                        ${yachtImages.map((img, index) => `
+                            <div class="position-relative">
+                                <img src="../api/uploads/yachtFleet/${img}" alt="Yacht Image ${index + 1}" 
+                                     style="width: 80px; height: 60px; object-fit: cover; border-radius: 4px;">
+                                ${index === 0 ? '<small class="badge bg-primary position-absolute top-0 start-0">Main</small>' : ''}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        } else {
+            html = '<p class="text-muted">No images uploaded yet</p>';
+        }
+
+        container.innerHTML = html;
+    }
+
+    async updateYacht() {
+        const form = document.getElementById('editYachtForm');
+        const formData = new FormData(form);
+
+        // Explicitly handle checkbox for replace_all_images
+        const replaceAllCheckbox = document.getElementById('replaceAllImages');
+        if (replaceAllCheckbox && replaceAllCheckbox.checked) {
+            formData.set('replace_all_images', '1');
+        }
+
+        console.log('Updating yacht with form data:');
+        for (let [key, value] of formData.entries()) {
+            console.log(key, value);
+        }
+
+        this.showLoading(true);
+
+        try {
+            const response = await fetch('../api/v1/yachtFleetHandler.php?action=update', {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+            console.log('Update response:', data);
+
+            if (data.success) {
+                this.showSuccess('Yacht updated successfully!');
+                bootstrap.Modal.getInstance(document.getElementById('editYachtModal')).hide();
+                this.loadYachts();
+            } else {
+                this.showError(data.message || 'Failed to update yacht');
+            }
+        } catch (error) {
+            console.error('Error updating yacht:', error);
+            this.showError('An error occurred while updating the yacht');
+        } finally {
+            this.showLoading(false);
+        }
+    }
+
+    async deleteYacht(id) {
+        const yacht = this.yachts.find(y => y.id == id);
+        if (!yacht) {
+            console.error('Yacht not found with id:', id);
+            this.showError('Yacht not found');
+            return;
+        }
+
+        if (!confirm(`Are you sure you want to delete "${yacht.title}"? This action cannot be undone.`)) {
+            return;
+        }
+
+        this.showLoading(true);
+
+        try {
+            console.log('Deleting yacht with ID:', id);
+            const response = await fetch('../api/v1/yachtFleetHandler.php?action=delete', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ yacht_id: parseInt(id) })
+            });
+            
+            const data = await response.json();
+
+            console.log('Delete response:', data);
+
+            if (data.success) {
+                this.showSuccess('Yacht deleted successfully!');
+                this.loadYachts();
+            } else {
+                this.showError(data.message || 'Failed to delete yacht');
+            }
+        } catch (error) {
+            console.error('Error deleting yacht:', error);
+            this.showError('An error occurred while deleting the yacht');
+        } finally {
+            this.showLoading(false);
+        }
+    }
+
+    filterYachts(searchTerm) {
+        if (!searchTerm.trim()) {
+            this.renderYachts();
+            return;
+        }
+
+        const filtered = this.yachts.filter(yacht => 
+            yacht.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            (yacht.description && yacht.description.toLowerCase().includes(searchTerm.toLowerCase()))
+        );
+
+        this.renderYachts(filtered);
+    }
+
+    sortYachts(sortBy) {
+        const sorted = [...this.yachts].sort((a, b) => {
+            switch (sortBy) {
+                case 'title':
+                    return a.title.localeCompare(b.title);
+                case 'price':
+                    return parseFloat(b.price) - parseFloat(a.price);
+                case 'created_at':
+                default:
+                    return new Date(b.created_at) - new Date(a.created_at);
+            }
+        });
+
+        this.renderYachts(sorted);
+    }
+
+    updateYachtCount() {
+        document.getElementById('yachtCount').textContent = this.yachts.length;
+    }
+
+    resetForm() {
+        document.getElementById('yachtForm').reset();
+        document.getElementById('yachtImagesPreview').innerHTML = '';
+        
+        // Clear Quill editor
+        if (this.yachtDescriptionQuill) {
+            this.yachtDescriptionQuill.setText('');
+        }
+    }
+
+    toggleAddForm() {
+        const form = document.getElementById('addYachtForm');
+        const icon = document.getElementById('toggleIcon');
+        
+        if (form.style.display === 'none') {
+            form.style.display = 'block';
+            icon.className = 'fas fa-chevron-up';
+        } else {
+            form.style.display = 'none';
+            icon.className = 'fas fa-chevron-down';
+        }
+    }
+
+    showLoading(show) {
+        const overlay = document.getElementById('loadingOverlay');
+        overlay.style.display = show ? 'flex' : 'none';
+    }
+
+    showError(message) {
+        // Use SweetAlert if available, otherwise use alert
+        if (typeof Swal !== 'undefined') {
+            Swal.fire('Error', message, 'error');
+        } else {
+            alert('Error: ' + message);
+        }
+    }
+
+    showSuccess(message) {
+        // Use SweetAlert if available, otherwise use alert
+        if (typeof Swal !== 'undefined') {
+            Swal.fire('Success', message, 'success');
+        } else {
+            alert('Success: ' + message);
+        }
+    }
+
+    getLoadingHTML() {
+        return `
+            <div class="text-center p-4" style="grid-column: 1 / -1;">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="mt-2 text-muted">Loading yacht fleet...</p>
+            </div>
+        `;
+    }
+}
+
+// Global functions for onclick handlers
+function toggleAddForm() {
+    if (yachtFleetManager) {
+        yachtFleetManager.toggleAddForm();
+    }
+}
+
+function resetForm() {
+    if (yachtFleetManager) {
+        yachtFleetManager.resetForm();
+    }
+}
+
+function loadYachts() {
+    if (yachtFleetManager) {
+        yachtFleetManager.loadYachts();
+    }
+}
+
+function editYacht(id) {
+    console.log('Global editYacht called with ID:', id);
+    if (yachtFleetManager) {
+        yachtFleetManager.editYacht(id);
+    } else {
+        console.error('yachtFleetManager not initialized');
+    }
+}
+
+function deleteYacht(id) {
+    console.log('Global deleteYacht called with ID:', id);
+    if (yachtFleetManager) {
+        yachtFleetManager.deleteYacht(id);
+    } else {
+        console.error('yachtFleetManager not initialized');
+    }
+}
+
+function updateYacht() {
+    console.log('Global updateYacht called');
+    if (yachtFleetManager) {
+        yachtFleetManager.updateYacht();
+    } else {
+        console.error('yachtFleetManager not initialized');
+    }
+}
+
+// Initialize yacht fleet manager
+let yachtFleetManager;
+
+document.addEventListener('DOMContentLoaded', () => {
+    yachtFleetManager = new YachtFleetManager();
+});
+
+    </script>
+</body>
+</html>

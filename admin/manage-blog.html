@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Blog - GR Yachts Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="admin-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Quill.js Rich Text Editor -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    <style>
+        .blog-image-preview {
+            max-height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        
+        .blog-card {
+            transition: transform 0.2s;
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-2px);
+        }
+        
+        .status-badge {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+        }
+        
+        .ql-editor {
+            min-height: 200px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .ql-toolbar {
+            border-top: 1px solid #ccc;
+            border-left: 1px solid #ccc;
+            border-right: 1px solid #ccc;
+            border-radius: 4px 4px 0 0;
+        }
+        
+        .ql-container {
+            border-bottom: 1px solid #ccc;
+            border-left: 1px solid #ccc;
+            border-right: 1px solid #ccc;
+            border-radius: 0 0 4px 4px;
+        }
+        
+        .slug-input {
+            font-family: monospace;
+            background-color: #f8f9fa;
+        }
+        
+        @media (max-width: 768px) {
+            .ql-toolbar {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <img src="../assets/images/logoColoured.png" alt="GR Yachts" class="sidebar-logo">
+            <h3 class="sidebar-title">GR YACHTS</h3>
+            <p class="sidebar-subtitle">Admin Dashboard</p>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <div class="nav-item">
+                <a href="dashboard.html" class="nav-link">
+                    <i class="fas fa-tachometer-alt"></i>
+                    Dashboard
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="contacts.html" class="nav-link">
+                    <i class="fas fa-envelope"></i>
+                    Contact Messages
+                    <span class="nav-badge" id="contactsBadge">0</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="bookings.html" class="nav-link">
+                    <i class="fas fa-anchor"></i>
+                    Yacht Bookings
+                    <span class="nav-badge" id="bookingsBadge">0</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="yacht-fleet.html" class="nav-link">
+                    <i class="fas fa-ship"></i>
+                    Yacht Fleet
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="manage-site.html" class="nav-link">
+                    <i class="fas fa-edit"></i>
+                    Manage Site
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="manage-blog.html" class="nav-link active">
+                    <i class="fas fa-blog"></i>
+                    Manage Blog
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="settings.html" class="nav-link">
+                    <i class="fas fa-cog"></i>
+                    Settings
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="nav-link" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </a>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Sidebar Overlay for Mobile -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <!-- Top Navbar -->
+        <div class="top-navbar">
+            <div class="navbar-left">
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 class="page-title">Manage Blog</h1>
+            </div>
+            
+            <div class="navbar-right">
+                <div class="search-box">
+                    <input type="text" class="search-input" placeholder="Search blogs..." id="searchInput">
+                    <button class="search-btn" onclick="searchBlogs()">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                
+                <button class="notification-bell">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge" id="notificationBadge">0</span>
+                </button>
+                
+                <div class="user-dropdown">
+                    <div class="user-info" onclick="toggleUserMenu()">
+                        <div class="user-avatar" id="userAvatar">A</div>
+                        <div class="user-details">
+                            <p class="user-name" id="userName">Admin User</p>
+                            <p class="user-role" id="userRole">Administrator</p>
+                        </div>
+                        <i class="fas fa-chevron-down ms-2"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Blog Management Content -->
+        <div class="dashboard-content">
+            <div class="row">
+                <div class="col-12">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2>Blog Management</h2>
+                        <div>
+                            <button type="button" class="btn btn-primary me-2" onclick="showHeroEditModal()">
+                                <i class="fas fa-image me-2"></i>Edit Hero Section
+                            </button>
+                            <button type="button" class="btn btn-success me-2" onclick="showAddBlogModal()">
+                                <i class="fas fa-plus me-2"></i>Add New Blog
+                            </button>
+                            <div class="btn-group">
+                                <button class="btn btn-outline-primary" onclick="filterBlogs('all')">All</button>
+                                <button class="btn btn-outline-success" onclick="filterBlogs('published')">Published</button>
+                                <button class="btn btn-outline-warning" onclick="filterBlogs('draft')">Drafts</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-info mb-4">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Manage your blog posts with SEO-friendly URLs. Published blogs will appear on your website immediately.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blogs List -->
+            <div class="table-card">
+                <div class="table-header d-flex justify-content-between align-items-center">
+                    <h3 class="table-title mb-0">Blog Posts</h3>
+                    <div id="blogsPagination"></div>
+                </div>
+                <div class="table-responsive">
+                    <div id="blogsTableContainer">
+                        <div class="loading">
+                            <div class="spinner"></div>
+                            <p>Loading blogs...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Blog Modal -->
+    <div class="modal fade" id="blogModal" tabindex="-1" aria-labelledby="blogModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="blogModalLabel">
+                        <i class="fas fa-blog me-2"></i>
+                        <span id="blogModalTitle">Add New Blog</span>
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="blogForm">
+                        <input type="hidden" id="blogId" name="id">
+                        
+                        <div class="row">
+                            <!-- Left Column -->
+                            <div class="col-lg-8">
+                                <div class="mb-3">
+                                    <label for="blogTitle" class="form-label">Blog Title *</label>
+                                    <input type="text" class="form-control" id="blogTitle" name="title" required>
+                                    <div class="form-text">This will be the main heading of your blog post</div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="blogSlug" class="form-label">URL Slug *</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">/blog/</span>
+                                        <input type="text" class="form-control slug-input" id="blogSlug" name="slug" required>
+                                        <button class="btn btn-outline-secondary" type="button" onclick="generateSlugFromTitle()">
+                                            <i class="fas fa-magic"></i> Generate
+                                        </button>
+                                    </div>
+                                    <div class="form-text">SEO-friendly URL for your blog post</div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="blogExcerpt" class="form-label">Excerpt</label>
+                                    <textarea class="form-control" id="blogExcerpt" name="excerpt" rows="3" placeholder="Brief summary of your blog post..."></textarea>
+                                    <div class="form-text">Short description that appears in blog listings and search results</div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="blogContent" class="form-label">Blog Content *</label>
+                                    <div id="blogContentEditor" style="height: 300px;"></div>
+                                    <textarea id="blogContent" name="content" style="display: none;" required></textarea>
+                                    <div class="form-text">Write your full blog post content using the rich text editor</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Right Column -->
+                            <div class="col-lg-4">
+                                <div class="mb-3">
+                                    <label for="blogStatus" class="form-label">Status</label>
+                                    <select class="form-select" id="blogStatus" name="status">
+                                        <option value="draft">Draft</option>
+                                        <option value="published">Published</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="blogAuthor" class="form-label">Author</label>
+                                    <input type="text" class="form-control" id="blogAuthor" name="author" value="GR Yachts">
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="blogFeaturedImage" class="form-label">Featured Image</label>
+                                    <input type="file" class="form-control" id="blogFeaturedImage" name="featured_image" accept="image/*" onchange="previewBlogImage(this)">
+                                    <div class="form-text">Upload a featured image for your blog post</div>
+                                    <div class="mt-2" id="imagePreviewContainer" style="display: none;">
+                                        <img id="imagePreview" class="blog-image-preview img-fluid" alt="Preview">
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="blogTags" class="form-label">Tags</label>
+                                    <input type="text" class="form-control" id="blogTags" name="tags" placeholder="yacht, Dubai, luxury, charter">
+                                    <div class="form-text">Comma-separated tags for categorization</div>
+                                </div>
+                                
+                                <!-- SEO Section -->
+                                <h6 class="text-muted mt-4">SEO Settings</h6>
+                                <div class="mb-3">
+                                    <label for="blogMetaTitle" class="form-label">Meta Title</label>
+                                    <input type="text" class="form-control" id="blogMetaTitle" name="meta_title" maxlength="60">
+                                    <div class="form-text">Title that appears in search results (max 60 chars)</div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="blogMetaDescription" class="form-label">Meta Description</label>
+                                    <textarea class="form-control" id="blogMetaDescription" name="meta_description" rows="3" maxlength="160"></textarea>
+                                    <div class="form-text">Description that appears in search results (max 160 chars)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveBlog()">
+                        <i class="fas fa-save me-2"></i>Save Blog
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section Edit Modal -->
+    <div class="modal fade" id="heroEditModal" tabindex="-1" aria-labelledby="heroEditModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="heroEditModalLabel">
+                        <i class="fas fa-image me-2"></i>Edit Blog Hero Section
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="heroForm">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="mb-3">
+                                    <label for="heroTitle" class="form-label">Hero Title *</label>
+                                    <input type="text" class="form-control" id="heroTitle" name="title" required>
+                                    <div class="form-text">Main heading displayed on the blog page</div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="heroSubtitle" class="form-label">Hero Subtitle</label>
+                                    <input type="text" class="form-control" id="heroSubtitle" name="subtitle">
+                                    <div class="form-text">Optional subtitle or description</div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="heroButtonText" class="form-label">Button Text</label>
+                                            <input type="text" class="form-control" id="heroButtonText" name="button_text">
+                                            <div class="form-text">Text for the call-to-action button</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="heroButtonLink" class="form-label">Button Link</label>
+                                            <input type="text" class="form-control" id="heroButtonLink" name="button_link">
+                                            <div class="form-text">URL or page the button links to</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label for="heroImage" class="form-label">Hero Background Image</label>
+                                    <input type="file" class="form-control" id="heroImage" name="hero_image" accept="image/*" onchange="previewHeroImage(this)">
+                                    <div class="form-text">Upload a background image for the hero section</div>
+                                    <div class="mt-2" id="heroImagePreviewContainer" style="display: none;">
+                                        <img id="heroImagePreview" class="blog-image-preview img-fluid" alt="Hero Preview" style="max-height: 150px;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveHeroContent()">
+                        <i class="fas fa-save me-2"></i>Save Hero Content
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="admin-common.js"></script>
+
+    <script>
+        /**
+         * Blog Management - Content management functionality
+         */
+
+        class BlogManager extends AdminBase {
+            constructor() {
+                super();
+                this.currentPage = 1;
+                this.currentFilter = 'all';
+                this.currentSearch = '';
+                this.blogContentQuill = null;
+                this.loadBlogs();
+                this.initializeQuillEditor();
+            }
+
+            initializeQuillEditor() {
+                this.blogContentQuill = new Quill('#blogContentEditor', {
+                    theme: 'snow',
+                    modules: {
+                        toolbar: [
+                            [{ 'header': [1, 2, 3, false] }],
+                            ['bold', 'italic', 'underline', 'strike'],
+                            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                            [{ 'color': [] }, { 'background': [] }],
+                            [{ 'align': [] }],
+                            ['link', 'image'],
+                            ['blockquote', 'code-block'],
+                            ['clean']
+                        ]
+                    },
+                    placeholder: 'Write your blog content here...'
+                });
+
+                // Sync content with hidden textarea
+                this.blogContentQuill.on('text-change', () => {
+                    const html = this.blogContentQuill.root.innerHTML;
+                    document.getElementById('blogContent').value = html === '<p><br></p>' ? '' : html;
+                });
+            }
+
+            async loadBlogs(page = 1) {
+                this.currentPage = page;
+                await this.fetchBlogs();
+            }
+
+            async fetchBlogs() {
+                try {
+                    const params = new URLSearchParams({
+                        action: 'list',
+                        page: this.currentPage,
+                        limit: 10
+                    });
+
+                    if (this.currentFilter !== 'all') {
+                        params.append('status', this.currentFilter);
+                    }
+
+                    if (this.currentSearch) {
+                        params.append('search', this.currentSearch);
+                    }
+
+                    const response = await fetch(`../api/v1/blogHandler.php?${params}`);
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        this.renderBlogsTable(data.data, data.pagination);
+                    } else {
+                        this.showError('Failed to load blogs: ' + data.message);
+                    }
+                } catch (error) {
+                    console.error('Error fetching blogs:', error);
+                    this.showError('Network error occurred while loading blogs');
+                }
+            }
+
+            renderBlogsTable(blogs, pagination) {
+                const container = document.getElementById('blogsTableContainer');
+                
+                if (!blogs || blogs.length === 0) {
+                    container.innerHTML = '<p class="text-muted text-center p-4">No blogs found</p>';
+                    return;
+                }
+
+                container.innerHTML = `
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Title</th>
+                                <th>Status</th>
+                                <th>Author</th>
+                                <th>Views</th>
+                                <th>Created</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${blogs.map(blog => `
+                                <tr>
+                                    <td>
+                                        ${blog.featured_image ? 
+                                            `<img src="../api/uploads/blog/${blog.featured_image}" class="blog-image-preview" style="width: 60px; height: 40px;">` : 
+                                            '<div class="bg-light d-flex align-items-center justify-content-center" style="width: 60px; height: 40px; border-radius: 4px;"><i class="fas fa-image text-muted"></i></div>'
+                                        }
+                                    </td>
+                                    <td>
+                                        <strong>${blog.title}</strong>
+                                        <br><small class="text-muted">/${blog.slug}</small>
+                                    </td>
+                                    <td>
+                                        <span class="badge status-badge ${blog.status === 'published' ? 'bg-success' : 'bg-warning'}">
+                                            ${blog.status.charAt(0).toUpperCase() + blog.status.slice(1)}
+                                        </span>
+                                    </td>
+                                    <td>${blog.author}</td>
+                                    <td><i class="fas fa-eye text-muted"></i> ${blog.views}</td>
+                                    <td>
+                                        <small>
+                                            ${new Date(blog.created_at).toLocaleDateString()}<br>
+                                            ${new Date(blog.created_at).toLocaleTimeString()}
+                                        </small>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm">
+                                            ${blog.status === 'published' ? 
+                                                `<a href="../blog-detail.php?slug=${blog.slug}" target="_blank" class="btn btn-outline-info" title="View Blog">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>` : ''
+                                            }
+                                            <button class="btn btn-outline-primary" 
+                                                    onclick="blogManager.editBlog(${blog.id})"
+                                                    title="Edit Blog">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-outline-danger" 
+                                                    onclick="blogManager.deleteBlog(${blog.id})"
+                                                    title="Delete Blog">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                `;
+
+                this.renderBlogsPagination(pagination);
+            }
+
+            renderBlogsPagination(pagination) {
+                const container = document.getElementById('blogsPagination');
+                if (!pagination || pagination.total_pages <= 1) {
+                    container.innerHTML = '';
+                    return;
+                }
+
+                const currentPage = pagination.current_page;
+                const totalPages = pagination.total_pages;
+                
+                let paginationHTML = '<nav><ul class="pagination pagination-sm mb-0">';
+                
+                if (pagination.has_prev) {
+                    paginationHTML += `<li class="page-item">
+                        <a class="page-link" href="#" onclick="blogManager.loadBlogs(${currentPage - 1})">Previous</a>
+                    </li>`;
+                }
+                
+                const startPage = Math.max(1, currentPage - 2);
+                const endPage = Math.min(totalPages, currentPage + 2);
+                
+                for (let i = startPage; i <= endPage; i++) {
+                    paginationHTML += `<li class="page-item ${i === currentPage ? 'active' : ''}">
+                        <a class="page-link" href="#" onclick="blogManager.loadBlogs(${i})">${i}</a>
+                    </li>`;
+                }
+                
+                if (pagination.has_next) {
+                    paginationHTML += `<li class="page-item">
+                        <a class="page-link" href="#" onclick="blogManager.loadBlogs(${currentPage + 1})">Next</a>
+                    </li>`;
+                }
+                
+                paginationHTML += '</ul></nav>';
+                container.innerHTML = paginationHTML;
+            }
+
+            showAddBlogModal() {
+                document.getElementById('blogModalTitle').textContent = 'Add New Blog';
+                document.getElementById('blogForm').reset();
+                document.getElementById('blogId').value = '';
+                document.getElementById('imagePreviewContainer').style.display = 'none';
+                
+                // Clear Quill editor
+                if (this.blogContentQuill) {
+                    this.blogContentQuill.setText('');
+                }
+                
+                // Auto-generate slug when title changes
+                document.getElementById('blogTitle').addEventListener('input', () => {
+                    if (!document.getElementById('blogSlug').value) {
+                        this.generateSlugFromTitle();
+                    }
+                });
+                
+                const modal = new bootstrap.Modal(document.getElementById('blogModal'));
+                modal.show();
+            }
+
+            async editBlog(id) {
+                try {
+                    const response = await fetch(`../api/v1/blogHandler.php?action=get&id=${id}`);
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        const blog = data.data;
+                        
+                        document.getElementById('blogModalTitle').textContent = 'Edit Blog';
+                        document.getElementById('blogId').value = blog.id;
+                        document.getElementById('blogTitle').value = blog.title;
+                        document.getElementById('blogSlug').value = blog.slug;
+                        document.getElementById('blogExcerpt').value = blog.excerpt || '';
+                        document.getElementById('blogStatus').value = blog.status;
+                        document.getElementById('blogAuthor').value = blog.author;
+                        document.getElementById('blogTags').value = blog.tags || '';
+                        document.getElementById('blogMetaTitle').value = blog.meta_title || '';
+                        document.getElementById('blogMetaDescription').value = blog.meta_description || '';
+                        
+                        // Set Quill editor content
+                        if (this.blogContentQuill) {
+                            this.blogContentQuill.root.innerHTML = blog.content || '';
+                            document.getElementById('blogContent').value = blog.content || '';
+                        }
+                        
+                        // Show image preview if exists
+                        if (blog.featured_image) {
+                            document.getElementById('imagePreview').src = `../api/uploads/blog/${blog.featured_image}`;
+                            document.getElementById('imagePreviewContainer').style.display = 'block';
+                        } else {
+                            document.getElementById('imagePreviewContainer').style.display = 'none';
+                        }
+                        
+                        const modal = new bootstrap.Modal(document.getElementById('blogModal'));
+                        modal.show();
+                    } else {
+                        this.showError('Failed to load blog: ' + data.message);
+                    }
+                } catch (error) {
+                    console.error('Error loading blog:', error);
+                    this.showError('Network error occurred');
+                }
+            }
+
+            async saveBlog() {
+                const form = document.getElementById('blogForm');
+                const formData = new FormData(form);
+                
+                const blogId = document.getElementById('blogId').value;
+                formData.append('action', blogId ? 'update' : 'add');
+                
+                // Validate required fields
+                if (!formData.get('title') || !formData.get('content')) {
+                    this.showError('Title and content are required');
+                    return;
+                }
+                
+                try {
+                    const response = await fetch('../api/v1/blogHandler.php', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        this.showSuccess(blogId ? 'Blog updated successfully!' : 'Blog created successfully!');
+                        bootstrap.Modal.getInstance(document.getElementById('blogModal')).hide();
+                        this.fetchBlogs();
+                    } else {
+                        this.showError('Failed to save blog: ' + data.message);
+                    }
+                } catch (error) {
+                    console.error('Error saving blog:', error);
+                    this.showError('Network error occurred');
+                }
+            }
+
+            async deleteBlog(id) {
+                const result = await Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, delete it!'
+                });
+
+                if (result.isConfirmed) {
+                    try {
+                        const formData = new FormData();
+                        formData.append('action', 'delete');
+                        formData.append('id', id);
+
+                        const response = await fetch('../api/v1/blogHandler.php', {
+                            method: 'POST',
+                            body: formData
+                        });
+
+                        const data = await response.json();
+
+                        if (data.success) {
+                            this.showSuccess('Blog deleted successfully!');
+                            this.fetchBlogs();
+                        } else {
+                            this.showError('Failed to delete blog: ' + data.message);
+                        }
+                    } catch (error) {
+                        console.error('Error deleting blog:', error);
+                        this.showError('Network error occurred');
+                    }
+                }
+            }
+
+            async generateSlugFromTitle() {
+                const title = document.getElementById('blogTitle').value;
+                if (!title) return;
+                
+                try {
+                    const response = await fetch(`../api/v1/blogHandler.php?action=generateSlug&title=${encodeURIComponent(title)}`);
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        document.getElementById('blogSlug').value = data.slug;
+                    }
+                } catch (error) {
+                    console.error('Error generating slug:', error);
+                }
+            }
+
+            filterBlogs(status) {
+                this.currentFilter = status;
+                this.currentPage = 1;
+                this.fetchBlogs();
+                
+                // Update button states
+                document.querySelectorAll('.btn-group .btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                event.target.classList.add('active');
+            }
+
+            searchBlogs() {
+                this.currentSearch = document.getElementById('searchInput').value;
+                this.currentPage = 1;
+                this.fetchBlogs();
+            }
+
+            async showHeroEditModal() {
+                try {
+                    // Load current hero content
+                    const response = await fetch('../api/v1/blogHandler.php?action=getHeroContent');
+                    const data = await response.json();
+                    
+                    if (data.success && data.data) {
+                        const hero = data.data;
+                        document.getElementById('heroTitle').value = hero.title || '';
+                        document.getElementById('heroSubtitle').value = hero.subtitle || '';
+                        document.getElementById('heroButtonText').value = hero.button_text || '';
+                        document.getElementById('heroButtonLink').value = hero.button_link || '';
+                        
+                        // Show image preview if exists
+                        if (hero.image_path) {
+                            document.getElementById('heroImagePreview').src = `../api/uploads/blog/${hero.image_path}`;
+                            document.getElementById('heroImagePreviewContainer').style.display = 'block';
+                        } else {
+                            document.getElementById('heroImagePreviewContainer').style.display = 'none';
+                        }
+                    }
+                    
+                    const modal = new bootstrap.Modal(document.getElementById('heroEditModal'));
+                    modal.show();
+                } catch (error) {
+                    console.error('Error loading hero content:', error);
+                    this.showError('Failed to load hero content');
+                }
+            }
+
+            async saveHeroContent() {
+                const form = document.getElementById('heroForm');
+                const formData = new FormData(form);
+                formData.append('action', 'updateHeroContent');
+                
+                // Validate required fields
+                if (!formData.get('title')) {
+                    this.showError('Hero title is required');
+                    return;
+                }
+                
+                try {
+                    const response = await fetch('../api/v1/blogHandler.php', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        this.showSuccess('Hero content updated successfully!');
+                        bootstrap.Modal.getInstance(document.getElementById('heroEditModal')).hide();
+                    } else {
+                        this.showError('Failed to save hero content: ' + data.message);
+                    }
+                } catch (error) {
+                    console.error('Error saving hero content:', error);
+                    this.showError('Network error occurred');
+                }
+            }
+        }
+
+        // Global functions
+        function showAddBlogModal() {
+            blogManager.showAddBlogModal();
+        }
+
+        function saveBlog() {
+            blogManager.saveBlog();
+        }
+
+        function generateSlugFromTitle() {
+            blogManager.generateSlugFromTitle();
+        }
+
+        function filterBlogs(status) {
+            blogManager.filterBlogs(status);
+        }
+
+        function searchBlogs() {
+            blogManager.searchBlogs();
+        }
+
+        function showHeroEditModal() {
+            blogManager.showHeroEditModal();
+        }
+
+        function saveHeroContent() {
+            blogManager.saveHeroContent();
+        }
+
+        function previewBlogImage(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('imagePreview').src = e.target.result;
+                    document.getElementById('imagePreviewContainer').style.display = 'block';
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function previewHeroImage(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('heroImagePreview').src = e.target.result;
+                    document.getElementById('heroImagePreviewContainer').style.display = 'block';
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // Initialize blog manager
+        let blogManager;
+        document.addEventListener('DOMContentLoaded', function() {
+            blogManager = new BlogManager();
+        });
+
+        // Search on Enter key
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('searchInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    searchBlogs();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

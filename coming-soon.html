@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GR Yachts Dubai — Coming Soon</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root{
+            --teal-1:#26c6bf;
+            --teal-2:#18a39a;
+            --white: #ffffff;
+        }
+        html,body{
+            height:100%;
+            margin:0;
+            font-family:'Montserrat',system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+            color:var(--white);
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+        }
+        .bg{
+            position:fixed;
+            inset:0;
+            
+            background-image:linear-gradient(180deg, rgba(15,183,175,0.85), rgba(8,160,154,0.85)), url('assets/images/contact/hero.png');
+            background-size:cover;
+            background-position:center center;
+            background-repeat:no-repeat;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+        }
+       
+        .bg::before{
+            content:'';
+            position:absolute;
+            inset:0;
+            background:linear-gradient(180deg, rgba(11,170,164,0.85), rgba(11, 170, 165, 0.637));
+            mix-blend-mode:overlay;
+            pointer-events:none;
+        }
+        .content{
+            position:relative;
+            text-align:center;
+            z-index:2;
+            width:100%;
+            max-width:1100px;
+            padding:48px 24px;
+            box-sizing:border-box;
+        }
+        .logo{
+            display:block;
+            margin:0 auto 36px auto;
+            max-width:320px;
+            height:auto;
+        }
+        .subheading{
+            font-weight:300;
+            letter-spacing:0.04em;
+            margin-bottom:18px;
+            opacity:0.95;
+            font-size:20px;
+        }
+        .coming{
+            font-weight:300;
+            font-size: 85px;
+            
+            margin:0;
+            text-transform:uppercase;
+            white-space:nowrap; 
+            display:inline-block; 
+            max-width:100%;
+        }
+       
+        .subheading, .coming{
+            text-shadow: 0 1px 0 rgba(0,0,0,0.06);
+        }
+        @media (max-width:480px){
+            .logo{max-width:220px;margin-bottom:20px}
+            .subheading{font-size:15px}
+            .coming{letter-spacing:0.06em} 
+        }
+      
+        .bg.fallback{
+            background-image:linear-gradient(180deg,var(--teal-1),var(--teal-2));
+        }
+    </style>
+</head>
+<body>
+    <div class="bg" id="heroBg" aria-hidden="true">
+        <div class="content">
+            
+            <img src="assets/images/logo.png" alt="GR Yachts Dubai" class="logo">
+
+            <div class="subheading">Something great is on the way</div>
+            <h1 class="coming">COMING SOON</h1>
+        </div>
+    </div>
+
+    <script>
+      
+        (function(){
+            var img = new Image();
+           
+            img.src = 'assets/images/contact/hero.png';
+            img.onload = function(){ /* image exists — do nothing */ };
+            img.onerror = function(){ document.getElementById('heroBg').classList.add('fallback'); };
+        })();
+    </script>
+    <script>
+       
+        (function(){
+            var heading = document.querySelector('.coming');
+            var container = document.querySelector('.content');
+            if(!heading || !container) return;
+
+            function fitHeading(){
+                // reset
+                heading.style.fontSize = '';
+                heading.style.transform = '';
+
+                var available = container.clientWidth - 40;
+                var headingWidth = heading.getBoundingClientRect().width;
+
+                if(headingWidth > available){
+                  
+                    var scale = available / headingWidth;
+                   
+                    scale = Math.max(scale, 0.5);
+                    heading.style.transform = 'scale(' + scale + ')';
+                    heading.style.transformOrigin = 'center top';
+                } else {
+                    heading.style.transform = '';
+                }
+            }
+
+           
+            window.addEventListener('load', fitHeading);
+            window.addEventListener('resize', function(){
+                // debounce
+                clearTimeout(window._fitHeadingTimer);
+                window._fitHeadingTimer = setTimeout(fitHeading, 80);
+            });
+        })();
+    </script>
+
+    <script 
+      type="text/javascript"
+      src="https://d3mkw6s8thqya7.cloudfront.net/integration-plugin.js"
+      id="aisensy-wa-widget"
+      widget-id="aaal9n"
+    >
+    </script>
+</body>
+</html>

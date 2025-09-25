@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Home Page - GR Yachts Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="admin-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        .gallery-item {
+            position: relative;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .gallery-item-info {
+            padding: 15px;
+            background: white;
+        }
+        
+        .gallery-item-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .gallery-item-description {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        .gallery-item-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .gallery-item-overlay {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+        }
+        
+        .gallery-image-preview img {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 8px;
+        }
+        
+        .gallery-drag-area {
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-drag-area:hover,
+        .gallery-drag-area.dragover {
+            border-color: var(--yacht-blue);
+            background-color: rgba(0, 167, 189, 0.05);
+        }
+        
+        .gallery-empty {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+        
+        .gallery-empty i {
+            font-size: 48px;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+        
+        .sortable-ghost {
+            opacity: 0.5;
+        }
+        
+        .sortable-chosen {
+            transform: rotate(5deg);
+        }
+        
+        .gallery-item-drag-handle {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px;
+            border-radius: 4px;
+            cursor: move;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <img src="../assets/images/logoColoured.png" alt="GR Yachts" class="sidebar-logo">
+            <h3 class="sidebar-title">GR YACHTS</h3>
+            <p class="sidebar-subtitle">Admin Dashboard</p>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <div class="nav-item">
+                <a href="dashboard.html" class="nav-link">
+                    <i class="fas fa-tachometer-alt"></i>
+                    Dashboard
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="contacts.html" class="nav-link">
+                    <i class="fas fa-envelope"></i>
+                    Contact Messages
+                    <span class="nav-badge" id="contactsBadge">0</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="bookings.html" class="nav-link">
+                    <i class="fas fa-anchor"></i>
+                    Yacht Bookings
+                    <span class="nav-badge" id="bookingsBadge">0</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="yacht-fleet.html" class="nav-link">
+                    <i class="fas fa-ship"></i>
+                    Yacht Fleet
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="manage-site.html" class="nav-link active">
+                    <i class="fas fa-edit"></i>
+                    Manage Site
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="settings.html" class="nav-link">
+                    <i class="fas fa-cog"></i>
+                    Settings
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="nav-link" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </a>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Sidebar Overlay for Mobile -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <!-- Top Navbar -->
+        <div class="top-navbar">
+            <div class="navbar-left">
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 class="page-title">Edit Home Page</h1>
+            </div>
+            
+            <div class="navbar-right">
+                <div class="search-box">
+                    <input type="text" class="search-input" placeholder="Search...">
+                    <button class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                
+                <button class="notification-bell">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge" id="notificationBadge">0</span>
+                </button>
+                
+                <div class="user-dropdown">
+                    <div class="user-info" onclick="toggleUserMenu()">
+                        <div class="user-avatar" id="userAvatar">A</div>
+                        <div class="user-details">
+                            <p class="user-name" id="userName">Admin User</p>
+                            <p class="user-role" id="userRole">Administrator</p>
+                        </div>
+                        <i class="fas fa-chevron-down ms-2"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Home Page Content -->
+        <div class="dashboard-content">
+            <div class="row">
+                <div class="col-12">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2>Edit Home Page Content</h2>
+                        <div>
+                            <button type="button" class="btn btn-secondary me-2" onclick="window.location.href='manage-site.html'">
+                                <i class="fas fa-arrow-left me-2"></i>Back to Manage Site
+                            </button>
+                           
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-info mb-4">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Edit the content that appears on your website's home page. Changes will be reflected immediately after saving.
+                    </div>
+                </div>
+            </div>
+
+            <form id="homePageForm">
+                <!-- Hero Section -->
+                <div class="table-card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">
+                            <i class="fas fa-star me-2"></i>Hero Section
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="heroTitle" class="form-label">Hero Title thin</label>
+                                    <input type="text" class="form-control" id="heroTitle" name="heroTitle" placeholder="Enter hero title" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="heroTitle" class="form-label">Hero Title bold</label>
+                                    <input type="text" class="form-control" id="heroTitlebold" name="heroTitlebold" placeholder="Enter hero title" required>
+                                </div>
+                              
+                                <div class="mb-3">
+                                    <label for="heroButtonText" class="form-label">Button Text</label>
+                                    <input type="text" class="form-control" id="heroButtonText" name="heroButtonText" placeholder="Enter button text" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="heroButtonLink" class="form-label">Button Link</label>
+                                    <input type="text" class="form-control" id="heroButtonLink" name="heroButtonLink" placeholder="Enter button link" required>
+                                </div>
+
+
+                                <div class="mb-3">
+                                    <label for="heroButtonLink" class="form-label">Gallery section title</label>
+                                    <input type="text" class="form-control" id="galleryTitle" name="galleryTitle" placeholder="Enter title" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="heroButtonLink" class="form-label">Gallery section description</label>
+                                    <input type="text" class="form-control" id="galleryDesc" name="galleryDesc" placeholder="Enter description" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="heroButtonLink" class="form-label">yacht section title</label>
+                                    <input type="text" class="form-control" id="yachtTitle" name="yachtTitle" placeholder="Enter title" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="heroButtonLink" class="form-label">yacht section description</label>
+                                    <input type="text" class="form-control" id="yachtDesc" name="yachtDesc" placeholder="Enter description" required>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="heroImage" class="form-label">Hero Background Image</label>
+                                    <input type="file" class="form-control" id="heroImage" name="image" accept="image/*" onchange="previewImage(this)">
+                                    <div class="form-text">Current image: heroSectionbg.jpg</div>
+                                </div>
+                                <div class="hero-preview mt-3">
+                                    <img src="../assets/images/heroSectionbg.jpg" id="imagePreview" alt="Hero Background" class="img-fluid rounded" style="max-height: 200px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Save Button -->
+                <div class="text-center mb-4">
+                    <button type="submit" class="btn btn-success btn-lg">
+                        <i class="fas fa-save me-2"></i>Save All Changes
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-lg ms-3" onclick="resetForm()">
+                        <i class="fas fa-undo me-2"></i>Reset Form
+                    </button>
+                </div>
+            </form>
+
+            <!-- Gallery Section -->
+            <div class="table-card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-images me-2"></i>Gallery Section
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5>Manage Gallery Images</h5>
+                                <button type="button" class="btn btn-primary" onclick="openAddGalleryModal()">
+                                    <i class="fas fa-plus me-2"></i>Add New Image
+                                </button>
+                            </div>
+                            
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle me-2"></i>
+                                Manage images that appear in the gallery section of your homepage. You can add titles and reorder images.
+                            </div>
+
+                            <div id="galleryImagesContainer" class="row">
+                                <!-- Gallery images will be loaded here -->
+                                <div class="col-12 text-center p-4">
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="visually-hidden">Loading gallery...</span>
+                                    </div>
+                                    <p class="mt-2">Loading gallery images...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        
+    </div>
+
+
+    <!-- Loading Modal -->
+    <div class="modal fade" id="loadingModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center p-4">
+                    <div class="spinner-border text-primary mb-3" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mb-0">Saving changes...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Gallery Image Modal -->
+    <div class="modal fade" id="galleryImageModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="galleryModalTitle">
+                        <i class="fas fa-images me-2"></i>Add Gallery Image
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="galleryImageForm" enctype="multipart/form-data">
+                        <input type="hidden" id="galleryImageId" name="image_id">
+                        <input type="hidden" id="galleryAction" name="action" value="addGalleryImage">
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="galleryImageTitle" class="form-label">Image Title *</label>
+                                    <input type="text" class="form-control" id="galleryImageTitle" name="title" required>
+                                    <div class="form-text">This title will be displayed with the image</div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="galleryImageDescription" class="form-label">Description (Optional)</label>
+                                    <textarea class="form-control" id="galleryImageDescription" name="description" rows="3"></textarea>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="galleryImageFile" class="form-label">Image File *</label>
+                                    <input type="file" class="form-control" id="galleryImageFile" name="image" accept="image/*" onchange="previewGalleryImage(this)">
+                                    <div class="form-text">Max size: 5MB. Formats: JPG, PNG, GIF</div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Image Preview</label>
+                                    <div class="gallery-image-preview" id="galleryImagePreview">
+                                        <div class="text-center p-4 border rounded">
+                                            <i class="fas fa-image fa-3x text-muted mb-2"></i>
+                                            <p class="text-muted">No image selected</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveGalleryImage()">
+                        <i class="fas fa-save me-2"></i>Save Image
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+      
+        <script src="admin-common.js"></script>
+
+        <script>
+        /**
+ * Manage Site Page - Content management functionality
+ */
+
+class ManageSitePage extends AdminBase {
+    constructor() {
+        super();
+        this.loadManageSite();
+    }
+
+    loadManageSite() {
+        // Site management functionality is already in the HTML
+        // This page is mostly static for now with placeholder functions
+        console.log('Manage Site page loaded');
+        
+        // You can add dynamic content loading here in the future
+        this.setupContentManagement();
+    }
+
+    setupContentManagement() {
+        // Future: Add event listeners for content management features
+        // For now, all buttons show "Feature coming soon!" alerts
+        
+        // Example of how you might handle content editing in the future:
+        /*
+        const editButtons = document.querySelectorAll('[onclick*="alert"]');
+        editButtons.forEach(button => {
+            const section = this.getSectionFromButton(button);
+            button.onclick = () => this.editSection(section);
+        });
+        */
+    }
+
+}
+
+//handle hero section form submission to api/v1/homePageHandler.php
+function saveHeroSectionContent(event) {
+    event.preventDefault();
+    
+    const form = document.getElementById('homePageForm');
+    const formData = new FormData(form);
+    formData.append('action', 'updateHeroSection');
+    
+    Swal.fire({
+        title: 'Saving changes...',
+        didOpen: () => {
+            Swal.showLoading();
+        },
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        showConfirmButton: false
+    });
+    
+    fetch('/api/v1/homePageHandler.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: 'Hero section updated successfully!',
+                timer: 2000,
+                showConfirmButton: false
+            }).then(() => {
+                // Optionally, refresh the page or update the UI
+                fetchHeroSectionData(); // Refresh data
+            });
+        } else {
+            throw new Error(data.message || 'Unknown error occurred');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'An error occurred while updating the hero section',
+            confirmButtonColor: '#3085d6'
+        });
+    });
+}
+
+function previewImage(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('imagePreview').src = e.target.result;
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+document.getElementById('homePageForm').addEventListener('submit', function(event) {
+    saveHeroSectionContent(event);
+});
+
+function resetForm() {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "This will reset all your changes!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, reset it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById('homePageForm').reset();
+            document.getElementById('imagePreview').src = '../assets/images/heroSectionbg.jpg';
+            Swal.fire({
+                icon: 'success',
+                title: 'Reset Complete!',
+                text: 'The form has been reset to default values.',
+                timer: 1500,
+                showConfirmButton: false
+            });
+        }
+    });
+}
+
+//fetch existing hero section data from api/v1/homePageHandler.php
+function fetchHeroSectionData() {
+    fetch('/api/v1/homePageHandler.php?action=getHeroSection')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success && data.data.homePageContent) {
+            const content = data.data.homePageContent;
+            document.getElementById('heroTitle').value = content.title || '';
+            document.getElementById('heroTitlebold').value = content.titlebold || '';
+            document.getElementById('heroButtonText').value = content.buttonText || '';
+            document.getElementById('heroButtonLink').value = content.buttonLink || '';
+            document.getElementById('galleryTitle').value = content.galleryTitle || '';
+            document.getElementById('galleryDesc').value = content.galleryDescription || '';
+            document.getElementById('yachtTitle').value = content.yachtTitle || '';
+            document.getElementById('yachtDesc').value = content.yachtDescription || '';
+            
+            // Update image preview if imageUrl exists
+            if (content.imageUrl) {
+                document.getElementById('imagePreview').src = '/' + content.imageUrl;
+                document.querySelector('#heroImage').nextElementSibling.textContent = 'Current image: ' + content.imageUrl.split('/').pop();
+            }
+        } else {
+            throw new Error(data.message || 'Unknown error occurred');
+        }
+    })
+    .catch(error => {
+        console.error('Error fetching hero section data:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'An error occurred while fetching the hero section data',
+            confirmButtonColor: '#3085d6'
+        });
+    });
+}
+
+// Load existing hero section data on page load
+document.addEventListener('DOMContentLoaded', function() {
+    fetchHeroSectionData();
+    new ManageSitePage();
+    loadGalleryImages();
+}); 
+
+// Gallery Management Functions
+let galleryImages = [];
+let currentEditingImageId = null;
+
+function loadGalleryImages() {
+    const container = document.getElementById('galleryImagesContainer');
+    
+    fetch('../api/v1/homePageHandler.php?action=getGalleryImages')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                galleryImages = data.data || [];
+                renderGalleryImages();
+            } else {
+                container.innerHTML = `
+                    <div class="col-12 gallery-empty">
+                        <i class="fas fa-images"></i>
+                        <h5>No gallery images yet</h5>
+                        <p>Click "Add New Image" to get started</p>
+                    </div>
+                `;
+            }
+        })
+        .catch(error => {
+            console.error('Error loading gallery images:', error);
+            container.innerHTML = `
+                <div class="col-12 text-center p-4">
+                    <i class="fas fa-exclamation-triangle text-warning fa-2x mb-2"></i>
+                    <p class="text-muted">Error loading gallery images</p>
+                </div>
+            `;
+        });
+}
+
+function renderGalleryImages() {
+    const container = document.getElementById('galleryImagesContainer');
+    
+    if (galleryImages.length === 0) {
+        container.innerHTML = `
+            <div class="col-12 gallery-empty">
+                <i class="fas fa-images"></i>
+                <h5>No gallery images yet</h5>
+                <p>Click "Add New Image" to get started</p>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = galleryImages.map((image, index) => `
+        <div class="col-lg-4 col-md-6 mb-3">
+            <div class="gallery-item" data-image-id="${image.id}">
+                <div class="gallery-item-drag-handle">
+                    <i class="fas fa-grip-vertical"></i>
+                </div>
+                <div class="gallery-item-overlay">#${index + 1}</div>
+                <img src="../api/uploads/eventGallery/${image.filename}" alt="${image.title}" onerror="this.src='../assets/images/placeholder.jpg'">
+                <div class="gallery-item-info">
+                    <div class="gallery-item-title">${image.title}</div>
+                    ${image.description ? `<div class="gallery-item-description">${image.description}</div>` : ''}
+                    <div class="gallery-item-actions">
+                        <button type="button" class="btn btn-sm btn-outline-primary" onclick="editGalleryImage(${image.id})">
+                            <i class="fas fa-edit"></i> Edit
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-danger" onclick="deleteGalleryImage(${image.id})">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function openAddGalleryModal() {
+    currentEditingImageId = null;
+    document.getElementById('galleryModalTitle').innerHTML = '<i class="fas fa-images me-2"></i>Add Gallery Image';
+    document.getElementById('galleryAction').value = 'addGalleryImage';
+    document.getElementById('galleryImageForm').reset();
+    document.getElementById('galleryImagePreview').innerHTML = `
+        <div class="text-center p-4 border rounded">
+            <i class="fas fa-image fa-3x text-muted mb-2"></i>
+            <p class="text-muted">No image selected</p>
+        </div>
+    `;
+    
+    const modal = new bootstrap.Modal(document.getElementById('galleryImageModal'));
+    modal.show();
+}
+
+function editGalleryImage(imageId) {
+    const image = galleryImages.find(img => img.id == imageId);
+    if (!image) return;
+
+    currentEditingImageId = imageId;
+    document.getElementById('galleryModalTitle').innerHTML = '<i class="fas fa-edit me-2"></i>Edit Gallery Image';
+    document.getElementById('galleryAction').value = 'updateGalleryImage';
+    document.getElementById('galleryImageId').value = imageId;
+    document.getElementById('galleryImageTitle').value = image.title;
+    document.getElementById('galleryImageDescription').value = image.description || '';
+    
+    // Clear the file input for editing
+    document.getElementById('galleryImageFile').value = '';
+    
+    // Show current image
+    document.getElementById('galleryImagePreview').innerHTML = `
+        <img src="../api/uploads/eventGallery/${image.filename}" alt="${image.title}" class="img-fluid rounded">
+    `;
+    
+    const modal = new bootstrap.Modal(document.getElementById('galleryImageModal'));
+    modal.show();
+}
+
+function previewGalleryImage(input) {
+    const preview = document.getElementById('galleryImagePreview');
+    
+    if (input.files && input.files[0]) {
+        const file = input.files[0];
+        
+        // Validate file size (5MB)
+        if (file.size > 5 * 1024 * 1024) {
+            Swal.fire('Error', 'Image size must be less than 5MB', 'error');
+            input.value = '';
+            return;
+        }
+        
+        // Validate file type
+        const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+        if (!allowedTypes.includes(file.type)) {
+            Swal.fire('Error', 'Please select a valid image file (JPG, PNG, GIF)', 'error');
+            input.value = '';
+            return;
+        }
+        
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            preview.innerHTML = `<img src="${e.target.result}" class="img-fluid rounded" alt="Preview">`;
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+function saveGalleryImage() {
+    const form = document.getElementById('galleryImageForm');
+    const formData = new FormData(form);
+    
+    // Validate required fields
+    const title = document.getElementById('galleryImageTitle').value.trim();
+    const imageFile = document.getElementById('galleryImageFile').files[0];
+    const action = document.getElementById('galleryAction').value;
+    
+    if (!title) {
+        Swal.fire('Error', 'Please enter an image title', 'error');
+        return;
+    }
+    
+    if (action === 'addGalleryImage' && !imageFile) {
+        Swal.fire('Error', 'Please select an image file', 'error');
+        return;
+    }
+    
+    // Show loading
+    Swal.fire({
+        title: 'Saving...',
+        text: 'Please wait while we save your image',
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+    
+    fetch('../api/v1/homePageHandler.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            Swal.fire('Success', data.message, 'success');
+            bootstrap.Modal.getInstance(document.getElementById('galleryImageModal')).hide();
+            loadGalleryImages();
+        } else {
+            Swal.fire('Error', data.message || 'Failed to save image', 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Error saving gallery image:', error);
+        Swal.fire('Error', 'An error occurred while saving the image', 'error');
+    });
+}
+
+function deleteGalleryImage(imageId) {
+    const image = galleryImages.find(img => img.id == imageId);
+    if (!image) return;
+
+    Swal.fire({
+        title: 'Delete Image?',
+        text: `Are you sure you want to delete "${image.title}"? This action cannot be undone.`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#dc3545',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const formData = new FormData();
+            formData.append('action', 'deleteGalleryImage');
+            formData.append('image_id', imageId);
+            
+            Swal.fire({
+                title: 'Deleting...',
+                text: 'Please wait',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+            
+            fetch('../api/v1/homePageHandler.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire('Deleted!', 'The image has been deleted.', 'success');
+                    loadGalleryImages();
+                } else {
+                    Swal.fire('Error', data.message || 'Failed to delete image', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error deleting gallery image:', error);
+                Swal.fire('Error', 'An error occurred while deleting the image', 'error');
+            });
+        }
+    });
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+# Enable URL Rewriting
+RewriteEngine On
+
+# Redirect blog-detail.html to blog-detail.php for better social media sharing
+RewriteCond %{REQUEST_URI} ^/blog-detail\.html$
+RewriteCond %{QUERY_STRING} slug=(.+)
+RewriteRule ^blog-detail\.html$ /blog-detail.php?slug=%1 [R=301,L]
+
+# Handle blog-detail URLs without extension
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^blog/([^/]+)/?$ /blog-detail.php?slug=$1 [L,QSA]
+
+# Optional: Redirect old .html blog links to new .php format
+# RewriteRule ^blog-detail\.html$ /blog-detail.php [R=301,L]

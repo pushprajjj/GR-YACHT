@@ -107,7 +107,7 @@ body {
 
 .custom-navbar .container-fluid {
     align-items: flex-start !important;
-    margin-top: 50px;
+    margin-top: 30px;
 }
 
 /* Left menu container */
@@ -180,7 +180,7 @@ body {
 }
 
 .custom-navbar .navbar-logo img {
-    height: 170px;
+    height: 150px;
 }
 
 .custom-navbar .rounded-button {
@@ -311,9 +311,9 @@ body {
     width: 100%;
     height: 100%;
     background: linear-gradient(to bottom, 
-        rgba(57, 184, 193, 0.85) 0%,
-        rgba(57, 184, 193, 0.8) 15%,
-        rgba(57, 184, 193, 0.7) 30%,
+        rgb(57, 184, 193) 0%,
+        rgb(57, 184, 193) 15%,
+        rgba(57, 184, 193, 0.932) 30%,
         rgba(57, 184, 193, 0.4) 60%,
         rgba(57, 184, 193, 0) 100%
     );
@@ -407,7 +407,7 @@ body {
     border-radius: 20px;
 }
 
-.yacht-fleet h2 {
+.subheading {
     color: #39b8c1;
     font-family: 'Poppins', sans-serif;
     font-size: 25px;
@@ -419,20 +419,32 @@ body {
     -moz-osx-font-smoothing: grayscale;
     position: relative;
     z-index: 2;
+     text-align: center;
 }
 
-.yacht-fleet h3 {
+.heading {
     color: #39b8c1;
     font-family: 'Gilroy', sans-serif;
     font-size: 40px;
     font-weight: 300;
-    margin-bottom: 40px;
+    margin-bottom: 5rem;
     letter-spacing: 0.5px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     position: relative;
     z-index: 2;
+     text-align: center;
 }
+
+ @media (max-width: 576px) {
+            .subheading {
+                font-size: 1.8rem;
+            }
+            
+            .heading {
+                font-size: 1rem;
+            }
+        }
 
 .yacht-fleet .row {
     position: relative;
@@ -446,8 +458,9 @@ body {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
     position: relative;
     transition: all 0.3s ease;
-    margin: 20px;
+    margin:0 20px;
     z-index: 2;
+    border: 3px solid white;
 }
 
 .card1, .card2, .card3 {
@@ -564,7 +577,7 @@ body {
 
 .btn-book {
     background: transparent;
-    color: #000000;
+    color: #464545;
     border: none;
     padding: 12px 20px;
     margin: 8px 15px;
@@ -602,28 +615,33 @@ body {
     padding: 100px 0;
     max-width: 100%;
     overflow: hidden;
-    margin: 0 150px;
+    margin:0 60px;
 }
 
-.events h2 {
+/* .events h2 {
     color: #000000;
-    font-family: 'Gilroy', sans-serif;
-    font-size: 18px;
-    font-weight: 100;
+    font-family: 'Poppins', sans-serif;
+    font-size: 25px;
+    font-weight: 400;
+    text-transform: uppercase;
     letter-spacing: 0.5px;
+    margin-bottom: 10px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    position: relative;
+    z-index: 2;
 }
 .events h3 {
-    color: #000000;
+     color: #39b8c1;
     font-family: 'Gilroy', sans-serif;
     font-size: 51px;
     font-weight: 300;
-    margin-bottom: 40px;
+    margin-bottom: 6rem;
     letter-spacing: 0.5px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-}
+    z-index: 1;
+} */
 
 .event-card {
     position: relative;
@@ -639,6 +657,17 @@ body {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
+.event-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(#06c1f500, rgb(0, 133, 148));
+  /* z-index: -1; */
+}
+
 .event-card img {
     width: 100%;
     height: 100%;
@@ -646,13 +675,14 @@ body {
 }
 
 .event-overlay {
-    position: absolute;
-    bottom: 0;
+        position: absolute;
+    bottom: 5rem;
     left: 0;
     right: 0;
     padding: 20px;
     background: linear-gradient(transparent, rgba(0, 0, 0, 0));
     color: var(--white);
+    z-index: 1;
 }
 
 .event-overlay h3 {
@@ -660,7 +690,7 @@ body {
     font-family: 'Gilroy', sans-serif;
     color: #fff;
     right: 100px;
-    bottom: 0;
+    bottom: -50px;
     font-size: 35px;
 }
 
@@ -763,7 +793,7 @@ body {
 
 .footer-about p {
     font-family: 'Poppins', sans-serif;
-    font-size: 20px;
+    font-size: 18px;
     line-height: 2;
     color: rgba(255, 255, 255, 0.8);
 }
@@ -787,7 +817,7 @@ body {
 
 .footer-heading {
     font-family: 'Gilroy', sans-serif;
-    font-size: 28px;
+    font-size: 26px;
     font-weight: 600;
     color: #40E0D0;
     margin-bottom: 20px;
@@ -799,7 +829,7 @@ body {
 
 .contact-info, .quick-links {
     font-family: 'Poppins', sans-serif;
-    font-size: 20px;
+   font-size: 16px;
     color: white;
     line-height: 2;
 }
@@ -820,8 +850,8 @@ body {
 }
 
 .social-icon {
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     background: rgba(243, 239, 239, 0.959);
     border-radius: 50%;
     display: flex;

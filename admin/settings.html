@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - GR Yachts Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="admin-styles.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <img src="../assets/images/logoColoured.png" alt="GR Yachts" class="sidebar-logo">
+            <h3 class="sidebar-title">GR YACHTS</h3>
+            <p class="sidebar-subtitle">Admin Dashboard</p>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <div class="nav-item">
+                <a href="dashboard.html" class="nav-link">
+                    <i class="fas fa-tachometer-alt"></i>
+                    Dashboard
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="contacts.html" class="nav-link">
+                    <i class="fas fa-envelope"></i>
+                    Contact Messages
+                    <span class="nav-badge" id="contactsBadge">0</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="bookings.html" class="nav-link">
+                    <i class="fas fa-anchor"></i>
+                    Yacht Bookings
+                    <span class="nav-badge" id="bookingsBadge">0</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="yacht-fleet.html" class="nav-link">
+                    <i class="fas fa-ship"></i>
+                    Yacht Fleet
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="manage-site.html" class="nav-link">
+                    <i class="fas fa-edit"></i>
+                    Manage Site
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="settings.html" class="nav-link active">
+                    <i class="fas fa-cog"></i>
+                    Settings
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="nav-link" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </a>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Sidebar Overlay for Mobile -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <!-- Top Navbar -->
+        <div class="top-navbar">
+            <div class="navbar-left">
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 class="page-title">Settings</h1>
+            </div>
+            
+            <div class="navbar-right">
+                <div class="search-box">
+                    <input type="text" class="search-input" placeholder="Search...">
+                    <button class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                
+                <button class="notification-bell">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge" id="notificationBadge">0</span>
+                </button>
+                
+                <div class="user-dropdown">
+                    <div class="user-info" onclick="toggleUserMenu()">
+                        <div class="user-avatar" id="userAvatar">A</div>
+                        <div class="user-details">
+                            <p class="user-name" id="userName">Admin User</p>
+                            <p class="user-role" id="userRole">Administrator</p>
+                        </div>
+                        <i class="fas fa-chevron-down ms-2"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Content -->
+        <div class="dashboard-content">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="mb-4">Settings</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="table-card">
+                        <h3 class="table-title">Profile Settings</h3>
+                        <form id="profileForm">
+                            <div class="mb-3">
+                                <label class="form-label">Full Name</label>
+                                <input type="text" class="form-control" id="fullName" name="full_name">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Role</label>
+                                <input type="text" class="form-control" id="role" name="role" readonly>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Update Profile</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="table-card">
+                        <h3 class="table-title">Change Password</h3>
+                        <form id="changePasswordForm">
+                            <div class="mb-3">
+                                <label class="form-label">Current Password</label>
+                                <input type="password" class="form-control" name="current_password" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">New Password</label>
+                                <input type="password" class="form-control" name="new_password" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Confirm New Password</label>
+                                <input type="password" class="form-control" name="confirm_password" required>
+                            </div>
+                            <button type="submit" class="btn btn-warning">Change Password</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Additional Settings Sections -->
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="table-card">
+                        <h3 class="table-title">System Information</h3>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold text-muted">Admin Panel Version</label>
+                            <p class="mb-0">v1.0.0</p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold text-muted">Last Login</label>
+                            <p class="mb-0" id="lastLogin">Loading...</p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold text-muted">Session Expires</label>
+                            <p class="mb-0" id="sessionExpiry">Loading...</p>
+                        </div>
+                        <div class="mb-0">
+                            <label class="form-label fw-bold text-muted">IP Address</label>
+                            <p class="mb-0" id="ipAddress">Loading...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="table-card">
+                        <h3 class="table-title">Security Settings</h3>
+                        <div class="mb-3">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="twoFactorAuth">
+                                <label class="form-check-label" for="twoFactorAuth">
+                                    Enable Two-Factor Authentication
+                                </label>
+                            </div>
+                            <small class="text-muted">Add an extra layer of security to your account</small>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="loginNotifications" checked>
+                                <label class="form-check-label" for="loginNotifications">
+                                    Email Login Notifications
+                                </label>
+                            </div>
+                            <small class="text-muted">Get notified when someone logs into your account</small>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Session Timeout (minutes)</label>
+                            <select class="form-select" id="sessionTimeout">
+                                <option value="30">30 minutes</option>
+                                <option value="60">1 hour</option>
+                                <option value="120">2 hours</option>
+                                <option value="240" selected>4 hours</option>
+                                <option value="480">8 hours</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-outline-primary" onclick="saveSecuritySettings()">
+                            Save Security Settings
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Danger Zone -->
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="table-card border-danger">
+                        <h3 class="table-title text-danger">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            Danger Zone
+                        </h3>
+                        <div class="alert alert-danger">
+                            <strong>Warning:</strong> These actions are irreversible. Please proceed with caution.
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5>Clear All Sessions</h5>
+                                <p class="text-muted">Log out from all devices and invalidate all active sessions.</p>
+                                <button class="btn btn-outline-danger" onclick="clearAllSessions()">
+                                    <i class="fas fa-sign-out-alt me-2"></i>
+                                    Clear All Sessions
+                                </button>
+                            </div>
+                            <div class="col-md-6">
+                                <h5>Reset Admin Data</h5>
+                                <p class="text-muted">Reset all admin preferences and settings to default values.</p>
+                                <button class="btn btn-outline-danger" onclick="resetAdminData()">
+                                    <i class="fas fa-undo me-2"></i>
+                                    Reset to Defaults
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="admin-common.js"></script>
+    <script src="settings-page.js"></script>
+</body>
+</html>
+

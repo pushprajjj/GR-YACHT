@@ -11,78 +11,695 @@
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+
+    <!-- Mobile Responsive Styles -->
+    <style>
+        /* Mobile Hero Section */
+        @media (max-width: 1399px) {
+            .hero {
+                min-height: 70vh;
+                padding: 2rem 0;
+            }
+            
+            .hero .container {
+                padding: 0 1rem;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem !important;
+                line-height: 1.2;
+                margin-bottom: 1rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem !important;
+                margin: 1rem 0 !important;
+            }
+            
+            .hero .btn-primary {
+                padding: 0.75rem 2rem;
+                font-size: 1rem;
+                margin-top: 1.5rem !important;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero {
+                min-height: 60vh;
+            }
+            
+            .hero-title {
+                font-size: 2rem !important;
+            }
+            
+            .hero .btn-primary {
+                padding: 0.6rem 1.5rem;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero {
+                min-height: 50vh;
+            }
+            
+            .hero-title {
+                font-size: 1.8rem !important;
+            }
+        }
+        
+        /* Yacht Fleet Responsive Styles - Working with Bootstrap Grid */
+        @media (max-width: 1399px) {
+            .yacht-fleet {
+                padding: 3rem 0;
+            }
+            
+            .yacht-fleet h2 {
+                font-size: 2.5rem;
+                margin-bottom: 1rem;
+            }
+            
+            .yacht-fleet h3 {
+                font-size: 1.3rem;
+                margin-bottom: 2rem;
+            }
+            
+            .yacht-fleet .container-fluid {
+                padding: 0 1rem;
+                max-width: 100%;
+                overflow-x: hidden;
+            }
+            
+            .yacht-fleet .row {
+                margin: 0;
+                padding: 0;
+            }
+            
+            /* Yacht card styling */
+            .yacht-card {
+                border-radius: 15px;
+                overflow: hidden;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+                background: white;
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                max-width: 100%;
+            }
+            
+            .yacht-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            }
+            
+            .yacht-image {
+                width: 100%;
+                height: 250px;
+                object-fit: cover;
+                display: block;
+            }
+            
+            .yacht-info {
+                padding: 1rem;
+                flex-grow: 1;
+            }
+            
+            .yacht-title {
+                font-size: 1.2rem;
+                margin-bottom: 0.5rem;
+                color: #333;
+                font-weight: 600;
+            }
+            
+            .description {
+                color: #666;
+                margin-bottom: 0;
+                font-size: 0.9rem;
+            }
+            
+            .rating {
+                color: #f39c12;
+            }
+            
+            .yacht-footer {
+                /* padding: 1rem; */
+                background: #f8f9fa;
+                margin-top: auto;
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                box-sizing: border-box;
+                /* align-items: center;
+                text-align: center; */
+            }
+            
+            .price-info {
+                margin-bottom: 1rem;
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+                width: 100%;
+            }
+            
+            .price-info img {
+                width: 30px;
+                height: 30px;
+                flex-shrink: 0;
+            }
+            
+            .price-text {
+                display: flex;
+                flex-direction: column;
+                flex-grow: 1;
+            }
+            
+            .price-label {
+                font-size: 0.8rem;
+                color: #666;
+                margin-bottom: 0.2rem;
+            }
+            
+            .price-value {
+                font-size: 0.9rem;
+                font-weight: 600;
+                color: #333;
+            }
+            
+            .btn-book {
+                width: 100%;
+                max-width: 100%;
+                padding: 0.9rem 1rem;
+                font-size: 0.9rem;
+                border-radius: 10px;
+                border: none;
+                /* background: linear-gradient(135deg, #39b8c1, #40E0D0); */
+                color: rgb(68, 67, 67);
+                font-weight: 700;
+                transition: all 0.3s ease;
+                cursor: pointer;
+                box-sizing: border-box;
+                margin: 0 auto;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.6rem;
+                min-height: 50px;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                /* box-shadow: 0 4px 15px rgba(57, 184, 193, 0.25); */
+                position: relative;
+                overflow: hidden;
+                text-align: center;
+            }
+            .yacht-footer{
+                margin: 0;
+            }
+            .btn-book::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+                transition: left 0.5s;
+            }
+            
+            .btn-book:hover::before {
+                left: 100%;
+            }
+            
+            .btn-book i {
+                font-size: 1.2rem;
+                color: #fff;
+                transition: transform 0.3s ease;
+            }
+            
+            .btn-book:hover i {
+                transform: scale(1.1);
+            }
+            
+            .btn-book:hover {
+                background: linear-gradient(135deg, #40E0D0, #39b8c1);
+                transform: translateY(-2px);
+            }
+            
+            .price-tag {
+                position: absolute;
+                /* top: 1rem;
+                right: 1rem; */
+                background: rgba(57, 184, 193, 0.9);
+                color: white;
+                padding: 0.5rem 0.75rem;
+                border-radius: 6px;
+                font-size: 0.8rem;
+                font-weight: 600;
+                z-index: 10;
+            }
+        }
+        
+        /* Mobile adjustments */
+        @media (max-width: 768px) {
+            .yacht-fleet h2 {
+                font-size: 2rem;
+            }
+            
+            .yacht-fleet h3 {
+                font-size: 1.1rem;
+            }
+            
+            .yacht-image {
+                height: 220px;
+            }
+            
+            .yacht-title {
+                font-size: 1.1rem;
+            }
+            
+            .price-tag {
+                font-size: 0.75rem;
+                padding: 0.4rem 0.6rem;
+            }
+            
+            .btn-book {
+                padding: 0.85rem 0.8rem;
+                font-size: 0.85rem;
+                min-height: 48px;
+                border-radius: 10px;
+                font-weight: 700;
+                letter-spacing: 0.3px;
+                box-shadow: 0 3px 12px rgba(57, 184, 193, 0.3);
+                margin: 0 auto;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+            }
+            
+            .btn-book i {
+                font-size: 1.1rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .yacht-fleet h2 {
+                font-size: 1.8rem;
+            }
+            
+            .yacht-fleet h3 {
+                font-size: 1rem;
+            }
+            
+            .yacht-fleet .container-fluid {
+                padding: 0 0.75rem;
+                margin: 0;
+            }
+            
+            .yacht-fleet .row {
+                margin: 0 -0.5rem;
+            }
+            
+            .yacht-fleet [class*="col-"] {
+                padding: 0 0.5rem;
+            }
+            
+            .yacht-image {
+                height: 200px;
+            }
+            
+            .yacht-title {
+                font-size: 1rem;
+            }
+            
+            .yacht-info {
+                padding: 0.75rem;
+            }
+            
+            .yacht-footer {
+                padding: 0.75rem;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            
+            .btn-book {
+                font-size: 0.85rem;
+                padding: 0.8rem 0.5rem;
+                width: 100%;
+                max-width: 100%;
+                box-sizing: border-box;
+                border-radius: 10px;
+                font-weight: 700;
+                letter-spacing: 0.5px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+                min-height: 45px;
+                text-transform: uppercase;
+                box-shadow: 0 4px 15px rgba(57, 184, 193, 0.3);
+                margin: 0 auto;
+                text-align: center;
+            }
+            
+            .btn-book i {
+                font-size: 1.1rem;
+                color: #fff;
+            }
+            
+            .btn-book:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 6px 20px rgba(57, 184, 193, 0.4);
+            }
+        }
+        
+        /* Mobile Events Section */
+        @media (max-width: 1399px) {
+            .events {
+                padding: 3rem 0;
+            }
+            
+            .events h2 {
+                font-size: 2.5rem;
+                margin-bottom: 1rem;
+            }
+            
+            .events h3 {
+                font-size: 1.3rem;
+                margin-bottom: 2rem;
+            }
+            
+            .events .container-fluid {
+                padding: 0 1rem;
+            }
+            
+            .events .row {
+                margin: 0;
+            }
+            
+            /* Override Bootstrap column widths for mobile */
+            .events .col-md-6 {
+                width: 100%;
+                max-width: 100%;
+                flex: 0 0 100%;
+                padding: 0 0.75rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .event-card {
+                position: relative;
+                border-radius: 15px;
+                overflow: hidden;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+                transition: transform 0.3s ease;
+                width: 100%;
+            }
+            
+            .event-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            }
+            
+            .event-card img {
+                width: 100%;
+                height: 250px;
+                object-fit: cover;
+                display: block;
+            }
+            
+            .event-overlay {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: linear-gradient(transparent, rgba(0,0,0,0.8));
+                padding: 2rem 1.5rem 1.5rem;
+                color: white;
+            }
+            
+            .event-overlay h3 {
+                font-size: 1.3rem;
+                margin: 0;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                font-weight: 600;
+                margin: 0 0px 70px 0;
+            }
+            
+            .navigation-controls {
+                margin-top: 2rem !important;
+            }
+            
+            .nav-arrow {
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                border: 2px solid #39b8c1;
+                background: transparent;
+                color: #39b8c1;
+                font-size: 1.2rem !important;
+                padding: 0 !important;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.3s ease;
+                cursor: pointer;
+            }
+            
+            .nav-arrow:hover {
+                background: #39b8c1;
+                color: white;
+                transform: scale(1.1);
+            }
+        }
+        
+        /* Tablet responsive - 2 columns for events */
+        @media (max-width: 1399px) and (min-width: 769px) {
+            .events .col-md-6 {
+                width: 50%;
+                max-width: 50%;
+                flex: 0 0 50%;
+            }
+
+            .events {
+                margin: 50;
+            }
+
+            .event-card {
+                height: 250px;
+            }
+        }
+        
+        /* Mobile responsive - 1 column for events */
+        @media (max-width: 768px) {
+            .events h2 {
+                font-size: 2rem;
+            }
+            
+            .events h3 {
+                font-size: 1.1rem;
+            }
+            
+            .events .col-md-6 {
+                width: 100%;
+                max-width: 100%;
+                flex: 0 0 100%;
+                margin-bottom: 1rem;
+            }
+            
+            .event-card img {
+                height: 200px;
+            }
+            
+            .event-overlay {
+                padding: 1.5rem 1rem 1rem;
+            }
+            
+            .event-overlay h3 {
+                font-size: 1.1rem;
+            }
+            
+            .nav-arrow {
+                width: 50px;
+                height: 50px;
+                font-size: 1rem !important;
+            }
+             .events {
+                margin: 25px;
+            }
+            .event-card {
+                height: 200px;
+                margin: 0;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .events h2 {
+                font-size: 1.8rem;
+            }
+            
+            .events h3 {
+                font-size: 1rem;
+            }
+            
+            .events .container-fluid {
+                padding: 0 0.5rem;
+            }
+            
+            .events .col-md-6 {
+                padding: 0 0.5rem;
+                margin-bottom: 1rem;
+            }
+            
+            .event-card img {
+                height: 180px;
+            }
+            
+            .event-overlay {
+                padding: 1rem 0.75rem 0.75rem;
+            }
+            
+            .event-overlay h3 {
+                font-size: 1rem;
+            }
+            
+            .navigation-controls .gap-5 {
+                gap: 2rem !important;
+            }
+            
+            .nav-arrow {
+                width: 45px;
+                height: 45px;
+                font-size: 0.9rem !important;
+            }
+             .events {
+                margin: 0;
+            }
+            .event-card {
+                height: 100%;
+            }
+
+             .events {
+                margin: 0;
+            }
+            .event-card {
+                height: 160px;
+            }
+        }
+        
+        /* Mobile Loading States */
+        @media (max-width: 1399px) {
+            .loadingFleet {
+                padding: 3rem 0;
+            }
+            
+            .loadingFleet .spinner-border {
+                width: 3rem;
+                height: 3rem;
+                margin-bottom: 1rem;
+            }
+            
+            #heroLoading, #yachtsLoading {
+                padding: 2rem 0;
+            }
+            
+            #heroLoading .spinner-border,
+            #yachtsLoading .spinner-border {
+                width: 2.5rem;
+                height: 2.5rem;
+            }
+        }
+        
+        /* Mobile Utility Classes */
+        @media (max-width: 1399px) {
+            .text-center {
+                text-align: center !important;
+            }
+            
+            .mb-4 {
+                margin-bottom: 1.5rem !important;
+            }
+            
+            .mt-5 {
+                margin-top: 2rem !important;
+            }
+            
+            .py-5 {
+                padding-top: 2rem !important;
+                padding-bottom: 2rem !important;
+            }
+        }
+        
+        /* Desktop preservation - ensure desktop styles stay intact */
+        @media (min-width: 1400px) {
+            /* Keep all desktop styles as they are */
+            .hero {
+                /* Original desktop hero styles preserved */
+            }
+            
+            .yacht-fleet {
+                /* Original desktop yacht fleet styles preserved */
+            }
+            
+            .events {
+                /* Original desktop events styles preserved */
+            }
+        }
+    </style>
 </head>
 
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg custom-navbar w-100 py-3">
-        <div class="container-fluid d-flex align-items-center justify-content-between">
-            <!-- Left: Menu Links -->
-            <div class="d-flex align-items-center justify-content-start flex-grow-1 flex-shrink-1 flex-basis-0" style="flex: 1 1 0%;">
-                <ul class="navbar-nav flex-row">
-                    <li class="nav-item"><a class="nav-link active" href="/">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">About us</a></li>
-                    <li class="nav-item"><a class="nav-link " href="/service.html">Services</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Package</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Blog</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/contact.html">Contact us</a></li>
-                </ul>
-            </div>
-            <!-- Center: Logo -->
-            <div class="navbar-logo" style="flex: 0 0 auto; margin: 0 auto;">
-                <img src="assets/images/logo.png" alt="GR Yachts Dubai" height="160">
-            </div>
-            <!-- Right: Contact and Selectors -->
-            <div class="d-flex align-items-center justify-content-end flex-grow-1 flex-shrink-1 flex-basis-0 gap-5 pe-5" style="flex: 1 1 0%;">
-                <div class="d-flex align-items-center gap-3">
-                    <i class="fab fa-whatsapp text-light" style="font-size: 1.2rem;"></i>
-                    <span class="contact-number">+971 50 554 3873</span>
-                </div>
-                <div class="dropdown">
-                    <button class="btn rounded-button dropdown-toggle selected" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="selected-value">AED</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item active" href="#" data-value="AED">AED</a></li>
-                        <li><a class="dropdown-item" href="#" data-value="USD">USD</a></li>
-                    </ul>
-                </div>
-                <div class="dropdown">
-                    <button class="btn rounded-button dropdown-toggle selected" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="selected-value">EN</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item active" href="#" data-value="EN">EN</a></li>
-                        <li><a class="dropdown-item" href="#" data-value="IN">IN</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </nav>
+   <div id="header"></div>
 
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero" id="heroSection">
         <div class="container h-100">
             <div class="row h-100 align-items-center" style="margin-top: -40px;">
                 <div class="col-12 text-center text-white">
-                    <h1 class="hero-title">Experience Luxury on the <span class="bold-text">Waters of Dubai</span></h1>
-                    <button class="btn btn-primary mt-3">BOOK A YACHT</button>
+                    <h1 class="hero-title" id="heroTitle" style="display: none;"></h1>
+                    <!-- <p class="hero-subtitle" id="heroSubtitle" style="display: none; font-size: 1.2rem; margin: 20px 0;"></p> -->
+                    <button class="btn btn-primary mt-3" id="heroButton" style="display: none;"></button>
+                </div>
+            </div>
+        </div>
+        <!-- Loading placeholder -->
+        <div id="heroLoading" class="d-none">
+            <div class="container h-100">
+                <div class="row h-100 align-items-center">
+                    <div class="col-12 text-center text-white">
+                        <div class="spinner-border text-light mb-3" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p>Loading content...</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Our Yacht Fleet Section -->
-    <section class="yacht-fleet">
-        <div class="container-fluid px-4">
-            <h2 class="text-center">OUR YACHT</h2>
-            <h3 class="text-center">Our Premium VIP Yacht Fleet</h3>
+     <section class="yacht-fleet">
+        <div class="container-fluid">
+            <h2 class="text-center subheading" id="fleetTitle">OUR YACHT</h2>
+            <h3 class="text-center heading" id="fleetSubtitle">Our Premium VIP Yacht Fleet</h3>
             
-            <div class="row g-4 px-3">
+            <div class="row g-4">
+
+                <!-- //loading  animation -->
+                    <div class="loadingFleet d-flex justify-content-center align-items-center flex-column w-100">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p>Loading yachts...</p>
+                    </div>
+
+
                 <!-- Yacht Card 1 -->
-                <div class="col-md-4 ">
+                <!-- <div class="col-md-4 " onclick="window.location.href='/yacht-details.html'">
                     <div class="yacht-card card1">
                         <div class="price-tag">AED 6500 | hr</div>
                         <img class="yacht-image" src="assets/images/yatch1.png" alt="GR-BLACK PEARL 95">
@@ -112,7 +729,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- Yacht Card 2 -->
+
                 <div class="col-md-4 ">
                     <div class="yacht-card card2">
                         <div class="price-tag">AED 6500 | hr</div>
@@ -144,7 +761,6 @@
                     </div>
                 </div>
                 
-                <!-- Yacht Card 3 -->
                 <div class="col-md-4 ">
                     <div class="yacht-card card3">
                         <div class="price-tag">AED 6500 | hr</div>
@@ -175,7 +791,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- Yacht Card 4 -->
+
                 <div class="col-md-4 ">
                     <div class="yacht-card card4">
                         <div class="price-tag">AED 6500 | hr</div>
@@ -206,7 +822,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- Yacht Card 5 -->
+
                 <div class="col-md-4 ">
                     <div class="yacht-card card5">
                         <div class="price-tag">AED 6500 | hr</div>
@@ -237,7 +853,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- Yacht Card 6 -->
+                 
                 <div class="col-md-4 ">
                     <div class="yacht-card card6">
                         <div class="price-tag">AED 6500 | hr</div>
@@ -267,6 +883,19 @@
                             </button>
                         </div>
                     </div>
+                </div> -->
+            </div>
+        </div>
+
+        <div id="yachtsLoading" class="d-none">
+            <div class="container h-100">
+                <div class="row h-100 align-items-center">
+                    <div class="col-12 text-center text-white">
+                        <div class="spinner-border text-light mb-3" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p>Loading content...</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -276,8 +905,8 @@
     <section class="events py-5">
         <div class="container-fluid px-4">
            
-                  <h2 class="text-center">Events Gallery</h2>
-            <h3 class="text-center">Latest Events Picture</h3>
+                  <h2 class="text-center subheading" id="eventGalTitle">Events Gallery</h2>
+            <h3 class="text-center heading" id="eventGalleryDescription">Latest Events Picture</h3>
             <div class="row g-4">
                 <div class="col-md-6">
                     <div class="event-card">
@@ -313,7 +942,7 @@
                 </div>
             </div>
 
-            <div class="navigation-controls text-center mt-5">
+            <!-- <div class="navigation-controls text-center mt-5">
                 <div class="d-flex justify-content-center align-items-center gap-5">
                     <button class="nav-arrow prev" style="font-size: 34px; padding: 35px 35px;">
                        <i class="fa-solid fa-arrow-left fa-sm"></i>
@@ -323,66 +952,249 @@
                        <i class="fa-solid fa-arrow-right"></i>
                     </button>
                 </div>
-            </div>
+            </div> -->
             
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="custom-footer">
-        <div class="footer-container">
-            <div class="footer-top-section">
-                <div class="footer-logo">
-                    <img src="assets/images/logoColoured.png" alt="GR Yachts Dubai">
-                </div>
-                <div class="top-line"></div>
-            </div>
-            <div class="footer-main-content">
-                <div class="footer-about">
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries</p>
-                </div>
-                <div class="footer-links-section">
-                    <div class="vertical-line"></div>
-                    <div class="footer-column">
-                        <h5 class="footer-heading">Contact Us</h5>
-                        <ul class="list-unstyled contact-info">
-                            <li>Dubai Harbour Marina <br> Club</li>
-                            <li class="phone">+971 9818020096</li>
-                            <li class="email">info@gryachts.com</li>
-                            <li class="website">www.gryachts.com</li>
-                        </ul>
-                    </div>
-                    <div class="vertical-line"></div>
-                    <div class="footer-column">
-                        <h5 class="footer-heading">Quick Links</h5>
-                        <ul class="list-unstyled quick-links">
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Contact Us</a></li>
-                            <li><a href="#">FAQ's</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
-                        </ul>
-                    </div>
-                    <div class="vertical-line"></div>
-                    <div class="footer-column">
-                        <h5 class="footer-heading">Follow Us</h5>
-                        <div class="social-icons">
-                            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
-                            <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
-                            <a href="#" class="social-icon"><i class="fab fa-whatsapp"></i></a>
-                            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom-section">
-                <div class="bottom-line"></div>
-            </div>
-        </div>
-    </footer>
+     <div id="footer"></div>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Custom JS -->
     <script src="assets/js/main.js"></script>
+    <!-- Homepage API Integration -->
+
+     <script>
+         async function loadComponent(id, file) {
+      const response = await fetch(file);
+      const html = await response.text();
+      document.getElementById(id).innerHTML = html;
+    }
+    loadComponent("header", "_partials/header.html");
+    loadComponent("footer", "_partials/footer.html?v=44");
+  
+
+
+    //fetch and display hero image, title, button, button link
+    async function loadHeroSection() {
+        const heroLoading = document.getElementById('heroLoading');
+        const yachtsLoading = document.getElementById('yachtsLoading');
+        
+        // Show loading states
+        heroLoading.classList.remove('d-none');
+        yachtsLoading.classList.remove('d-none');
+
+        try {
+            const response = await fetch('api/v1/homePageHandler.php?action=getHeroSection');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const { success, data } = await response.json();
+            if (!success || !data?.homePageContent) {
+                throw new Error('Invalid data received from server');
+            }
+
+            const content = data.homePageContent;
+            
+            // Update hero section
+            updateHeroSection(content);
+            
+            // Update fleet section
+            updateFleetSection(content);
+            
+            // Update gallery section
+            updateGallerySection(content);
+
+        } catch (error) {
+            console.error('Error fetching content:', error);
+            showErrorMessage('Failed to load content. Please try again later.');
+        } finally {
+            // Hide loading states
+            heroLoading.classList.add('d-none');
+            yachtsLoading.classList.add('d-none');
+        }
+    }
+
+    function updateHeroSection(content) {
+        const heroSection = document.getElementById('heroSection');
+        const heroTitle = document.getElementById('heroTitle');
+        const heroButton = document.getElementById('heroButton');
+
+        heroSection.style.backgroundImage = `url('${content.imageUrl}')`;
+        heroTitle.innerHTML = `${content.title}<strong>${content.titlebold}</strong>`;
+        heroButton.innerText = content.buttonText;
+        heroButton.onclick = () => window.location.href = content.buttonLink;
+
+        heroTitle.style.display = 'block';
+        heroButton.style.display = 'inline-block';
+    }
+
+    function updateFleetSection(content) {
+        const fleetTitle = document.getElementById('fleetTitle');
+        const fleetSubtitle = document.getElementById('fleetSubtitle');
+
+        fleetTitle.textContent = content.yachtTitle;
+        fleetSubtitle.textContent = content.yachtDescription;
+
+        fleetTitle.style.display = 'block';
+        fleetSubtitle.style.display = 'block';
+    }
+
+    function updateGallerySection(content) {
+        const eventGalTitle = document.getElementById('eventGalTitle');
+        const eventGalleryDescription = document.getElementById('eventGalleryDescription');
+
+        eventGalTitle.textContent = content.galleryTitle;
+        eventGalleryDescription.textContent = content.galleryDescription;
+
+        eventGalTitle.style.display = 'block';
+        eventGalleryDescription.style.display = 'block';
+    }
+
+    function showErrorMessage(message) {
+        // You can implement this based on your UI requirements
+        alert(message);
+    }
+
+    loadHeroSection();  
+    
+ //fetch and display yachts from api/v1/yachtHandler.php?action=list and make real code not placeholder
+    async function loadYachts() {
+            const yachtsLoading = document.getElementById('yachtsLoading'); 
+            // Show loading state
+            yachtsLoading.classList.remove('d-none');   
+
+        try {
+
+            const response = await fetch('api/v1/yachtFleetHandler.php?action=list');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const { success, data } = await response.json();
+
+            if (!success || !Array.isArray(data)) {
+                throw new Error('Invalid data received from server');
+            }
+
+            displayYachts(data);
+            // Hide loading state
+            yachtsLoading.classList.add('d-none');
+            
+        } catch (error) {
+            console.error('Error fetching yachts:', error);
+            showErrorMessage('Failed to load yachts. Please try again later.');
+        }
+    }   
+
+    // Create slug from yacht title
+    function createSlug(title) {
+        return title.toLowerCase()
+            .replace(/[^a-z0-9 -]/g, '') // Remove invalid chars
+            .replace(/\s+/g, '-') // Replace spaces with -
+            .replace(/-+/g, '-') // Replace multiple - with single -
+            .trim('-'); // Trim - from start and end
+    }
+
+    function displayYachts(yachts) {
+
+        const yachtFleetContainer = document.querySelector('.yacht-fleet .row');
+        yachtFleetContainer.innerHTML = '';
+
+            yachts.forEach(yacht => {
+            const yachtCard = document.createElement('div');
+            yachtCard.className = 'col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-4';
+            
+            // Create slug for yacht
+            const slug = createSlug(yacht.title);
+            
+            yachtCard.innerHTML = `
+                <div class="yacht-card h-100" onclick="navigateToYachtDetails('${slug}', ${yacht.id})" style="cursor: pointer;">
+                    <div class="price-tag">AED ${yacht.price_per_hour || yacht.price} | hr</div>
+                    <img class="yacht-image" src="api/uploads/yachtFleet/${yacht.main_image}" alt="${yacht.title}">
+                    <div class="yacht-info">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5 class="yacht-title">${yacht.title}</h5>
+                                <p class="description">Capacity Up to ${yacht.number_of_guests} Person</p>
+                            </div>
+                            <div class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <span>5.0 (179)</span>
+                                </div>
+                        </div>
+                    </div>
+                    <div class="yacht-footer mt-auto">
+                        <div class="price-info">
+                            <img src="assets/images/coin_1.png" alt="Price">
+                            <div class="price-text">
+                                <span class="price-label">Price</span>
+                                <span class="price-value">Half Day: ${yacht.price} AED</span>
+                            </div>
+                        </div>
+                         <button class="btn-book" onclick="event.stopPropagation(); window.open('${yacht.whatsapp_link || 'https://wa.me/971505540073'}', '_blank')">
+                                BOOK YACHT BY <i class="fab fa-whatsapp"></i>
+                            </button>
+                    </div>
+                </div>
+            `;
+            yachtFleetContainer.appendChild(yachtCard);
+        });
+    }
+
+    // Navigate to yacht details with slug
+    function navigateToYachtDetails(slug, yachtId) {
+        window.location.href = `yacht-details.html?slug=${slug}&id=${yachtId}`;
+    }
+    loadYachts();   
+
+
+    //fetch and update event gallery section fro api /api/v1/homePageHandler.php?action=getGalleryImages 
+    async function loadGalleryImages() {
+        try {
+            const response = await fetch('api/v1/homePageHandler.php?action=getGalleryImages');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const { success, data } = await response.json();
+            if (!success || !Array.isArray(data)) {
+                throw new Error('Invalid data received from server');
+            }
+
+            displayGalleryImages(data);
+        } catch (error) {
+            console.error('Error fetching gallery images:', error);
+            showErrorMessage('Failed to load gallery images. Please try again later.');
+        }
+    }   
+    function displayGalleryImages(images) {
+        const galleryContainer = document.querySelector('.events .row.g-4');
+        galleryContainer.innerHTML = '';
+
+        images.forEach(image => {
+            const eventCard = document.createElement('div');
+            eventCard.className = 'col-md-6';
+            eventCard.innerHTML = `
+                <div class="event-card">
+                    <img src="api/uploads/eventGallery/${image.filename}" alt="${image.title}">
+                    <div class="event-overlay">
+                        <h3>${image.title} <i class="fa-regular fa-circle-right fa-sm" style="color: #ffffff;"></i></h3>
+                    </div>
+                </div>
+            `;
+            galleryContainer.appendChild(eventCard);
+        });
+    }
+    loadGalleryImages();
+    
+ 
+ 
+
+
+    </script>
+
 </body>
 </html>

@@ -1,0 +1,13 @@
+{
+    "homePageContent": {
+        "title": "Experience Luxury on the",
+        "titlebold": " Waters of Dubai",
+        "buttonText": "BOOK A YACHT",
+        "buttonLink": "https:\/\/api.whatsapp.com\/send?phone=971581862811&text=Hi",
+        "imageUrl": "api\/uploads\/home\/hero.jpg",
+        "galleryTitle": "Events Gallery",
+        "galleryDescription": "Latest Events Picture",
+        "yachtTitle": "OUR YACHT",
+        "yachtDescription": "Our Premium VIP Yacht Fleet"
+    }
+}
