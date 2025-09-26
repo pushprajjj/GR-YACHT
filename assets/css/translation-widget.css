@@ -11,9 +11,9 @@
 .translate-dropdown {
     background: rgba(57, 184, 193, 0.9);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
+    border-radius: 15px;
     color: white;
-    padding: 0.5rem 1rem;
+    padding: 0 1rem;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -215,5 +215,8 @@ body {
 }
 
 .goog-te-combo {
+    display: none !important;
+}
+.skiptranslate {
     display: none !important;
 }
