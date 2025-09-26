@@ -50,10 +50,12 @@ if ($slug) {
 // If no blog found, we'll show the not found state via JavaScript
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" translate="yes">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google" content="notranslate">
+    <meta name="google-translate-customization" content="enabled">
     <title><?php echo htmlspecialchars($pageTitle); ?></title>
     <meta name="description" content="<?php echo htmlspecialchars($metaDescription); ?>">
     
@@ -84,8 +86,23 @@ if ($slug) {
     <!-- Custom CSS -->
     <link href="assets/css/style.css?v=5" rel="stylesheet">
     <link href="assets/css/blog.css?v=5" rel="stylesheet">
+    <link href="assets/css/translation-widget.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Translate Script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,ar,ru,fr,es,zh-CN,hi,ur,de,it,pt,ja,ko,th,tr,nl,pl,sv,da,no,fi,he,fa',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false,
+                multilanguagePage: true
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     
     <style>
         

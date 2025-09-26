@@ -32,15 +32,75 @@
                     <li><a class="dropdown-item" href="#" data-value="USD">USD</a></li>
                 </ul>
             </div>
-            <div class="dropdown">
-                <button class="btn rounded-button dropdown-toggle selected" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <span class="selected-value">EN</span>
+            <!-- Custom Translation Widget -->
+            <div class="translate-widget">
+                <div class="translate-dropdown" onclick="toggleTranslateMenu()">
+                    <i class="fas fa-language"></i>
+                    <span class="current-language">EN</span>
                     <i class="fas fa-chevron-down"></i>
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item active" href="#" data-value="EN">EN</a></li>
-                    <li><a class="dropdown-item" href="#" data-value="IN">IN</a></li>
-                </ul>
+                </div>
+                <div class="translate-menu" id="translateMenu">
+                    <div class="translate-option active" onclick="changeLanguage('en', 'EN', '🇺🇸')">
+                        <span class="flag">🇺🇸</span>
+                        <span class="language-name">English</span>
+                    </div>
+                    <div class="translate-option" onclick="changeLanguage('ar', 'AR', '🇸🇦')">
+                        <span class="flag">🇸🇦</span>
+                        <span class="language-name">العربية</span>
+                    </div>
+                    <div class="translate-option" onclick="changeLanguage('ru', 'RU', '🇷🇺')">
+                        <span class="flag">🇷🇺</span>
+                        <span class="language-name">Русский</span>
+                    </div>
+                    <div class="translate-option" onclick="changeLanguage('fr', 'FR', '🇫🇷')">
+                        <span class="flag">🇫🇷</span>
+                        <span class="language-name">Français</span>
+                    </div>
+                    <div class="translate-option" onclick="changeLanguage('es', 'ES', '🇪🇸')">
+                        <span class="flag">🇪🇸</span>
+                        <span class="language-name">Español</span>
+                    </div>
+                    <div class="translate-option" onclick="changeLanguage('zh-CN', 'CN', '🇨🇳')">
+                        <span class="flag">🇨🇳</span>
+                        <span class="language-name">中文</span>
+                    </div>
+                    <div class="translate-option" onclick="changeLanguage('hi', 'HI', '🇮🇳')">
+                        <span class="flag">🇮🇳</span>
+                        <span class="language-name">हिन्दी</span>
+                    </div>
+                    <div class="translate-option" onclick="changeLanguage('ur', 'UR', '🇵🇰')">
+                        <span class="flag">🇵🇰</span>
+                        <span class="language-name">اردو</span>
+                    </div>
+                    <div class="translate-option" onclick="changeLanguage('de', 'DE', '🇩🇪')">
+                        <span class="flag">🇩🇪</span>
+                        <span class="language-name">Deutsch</span>
+                    </div>
+                    <div class="translate-option" onclick="changeLanguage('it', 'IT', '🇮🇹')">
+                        <span class="flag">🇮🇹</span>
+                        <span class="language-name">Italiano</span>
+                    </div>
+                    <div class="translate-option" onclick="changeLanguage('pt', 'PT', '🇵🇹')">
+                        <span class="flag">🇵🇹</span>
+                        <span class="language-name">Português</span>
+                    </div>
+                    <div class="translate-option" onclick="changeLanguage('ja', 'JP', '🇯🇵')">
+                        <span class="flag">🇯🇵</span>
+                        <span class="language-name">日本語</span>
+                    </div>
+                    <div class="translate-option" onclick="changeLanguage('ko', 'KR', '🇰🇷')">
+                        <span class="flag">🇰🇷</span>
+                        <span class="language-name">한국어</span>
+                    </div>
+                    <div class="translate-option" onclick="changeLanguage('th', 'TH', '🇹🇭')">
+                        <span class="flag">🇹🇭</span>
+                        <span class="language-name">ไทย</span>
+                    </div>
+                    <div class="translate-option" onclick="changeLanguage('tr', 'TR', '🇹🇷')">
+                        <span class="flag">🇹🇷</span>
+                        <span class="language-name">Türkçe</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -122,15 +182,74 @@
                     </div>
                     <div class="col-6">
                         <label class="text-white-50 small mb-2">Language</label>
-                        <div class="dropdown w-100">
-                            <button class="btn rounded-button dropdown-toggle selected mobile-menu-dropdown w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <span class="selected-value">EN</span>
+                        <div class="mobile-translate-widget">
+                            <div class="mobile-translate-dropdown translate-dropdown" onclick="toggleMobileTranslateMenu()">
+                                <i class="fas fa-language"></i>
+                                <span class="current-language">EN</span>
                                 <i class="fas fa-chevron-down"></i>
-                            </button>
-                            <ul class="dropdown-menu w-100">
-                                <li><a class="dropdown-item active" href="#" data-value="EN">EN</a></li>
-                                <li><a class="dropdown-item" href="#" data-value="IN">IN</a></li>
-                            </ul>
+                            </div>
+                            <div class="mobile-translate-menu translate-menu" id="mobileTranslateMenu">
+                                <div class="translate-option active" onclick="changeLanguage('en', 'EN', '🇺🇸')">
+                                    <span class="flag">🇺🇸</span>
+                                    <span class="language-name">English</span>
+                                </div>
+                                <div class="translate-option" onclick="changeLanguage('ar', 'AR', '🇸🇦')">
+                                    <span class="flag">🇸🇦</span>
+                                    <span class="language-name">العربية</span>
+                                </div>
+                                <div class="translate-option" onclick="changeLanguage('ru', 'RU', '🇷🇺')">
+                                    <span class="flag">🇷🇺</span>
+                                    <span class="language-name">Русский</span>
+                                </div>
+                                <div class="translate-option" onclick="changeLanguage('fr', 'FR', '🇫🇷')">
+                                    <span class="flag">🇫🇷</span>
+                                    <span class="language-name">Français</span>
+                                </div>
+                                <div class="translate-option" onclick="changeLanguage('es', 'ES', '🇪🇸')">
+                                    <span class="flag">🇪🇸</span>
+                                    <span class="language-name">Español</span>
+                                </div>
+                                <div class="translate-option" onclick="changeLanguage('zh-CN', 'CN', '🇨🇳')">
+                                    <span class="flag">🇨🇳</span>
+                                    <span class="language-name">中文</span>
+                                </div>
+                                <div class="translate-option" onclick="changeLanguage('hi', 'HI', '🇮🇳')">
+                                    <span class="flag">🇮🇳</span>
+                                    <span class="language-name">हिन्दी</span>
+                                </div>
+                                <div class="translate-option" onclick="changeLanguage('ur', 'UR', '🇵🇰')">
+                                    <span class="flag">🇵🇰</span>
+                                    <span class="language-name">اردو</span>
+                                </div>
+                                <div class="translate-option" onclick="changeLanguage('de', 'DE', '🇩🇪')">
+                                    <span class="flag">🇩🇪</span>
+                                    <span class="language-name">Deutsch</span>
+                                </div>
+                                <div class="translate-option" onclick="changeLanguage('it', 'IT', '🇮🇹')">
+                                    <span class="flag">🇮🇹</span>
+                                    <span class="language-name">Italiano</span>
+                                </div>
+                                <div class="translate-option" onclick="changeLanguage('pt', 'PT', '🇵🇹')">
+                                    <span class="flag">🇵🇹</span>
+                                    <span class="language-name">Português</span>
+                                </div>
+                                <div class="translate-option" onclick="changeLanguage('ja', 'JP', '🇯🇵')">
+                                    <span class="flag">🇯🇵</span>
+                                    <span class="language-name">日本語</span>
+                                </div>
+                                <div class="translate-option" onclick="changeLanguage('ko', 'KR', '🇰🇷')">
+                                    <span class="flag">🇰🇷</span>
+                                    <span class="language-name">한국어</span>
+                                </div>
+                                <div class="translate-option" onclick="changeLanguage('th', 'TH', '🇹🇭')">
+                                    <span class="flag">🇹🇭</span>
+                                    <span class="language-name">ไทย</span>
+                                </div>
+                                <div class="translate-option" onclick="changeLanguage('tr', 'TR', '🇹🇷')">
+                                    <span class="flag">🇹🇷</span>
+                                    <span class="language-name">Türkçe</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -149,6 +268,9 @@
         </div>
     </div>
 </nav>
+
+<!-- Hidden Google Translate Element -->
+<div id="google_translate_element" style="display: none;"></div>
 
 <style>
 /* Mobile Navbar Styles */

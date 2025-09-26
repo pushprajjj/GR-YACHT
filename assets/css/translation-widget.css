@@ -1,0 +1,219 @@
+/* Google Translate Widget Styles */
+#google_translate_element {
+    display: none;
+}
+
+.translate-widget {
+    position: relative;
+    display: inline-block;
+}
+
+.translate-dropdown {
+    background: rgba(57, 184, 193, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: white;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    min-width: 80px;
+}
+
+.translate-dropdown:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.translate-dropdown i {
+    font-size: 1rem;
+}
+
+.translate-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: rgba(57, 184, 193, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    min-width: 200px;
+    max-height: 300px;
+    overflow-y: auto;
+    display: none;
+    margin-top: 5px;
+}
+
+.translate-menu.show {
+    display: block;
+}
+
+.translate-option {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.translate-option:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateX(3px);
+}
+
+.translate-option:last-child {
+    border-bottom: none;
+}
+
+.translate-option .flag {
+    font-size: 1.2rem;
+    width: 20px;
+    text-align: center;
+}
+
+.translate-option .language-name {
+    flex: 1;
+    font-weight: 500;
+}
+
+.translate-option.active {
+    background: rgba(255, 255, 255, 0.3);
+    font-weight: 600;
+}
+
+/* Mobile translate widget styles */
+.mobile-translate-widget {
+    width: 100%;
+}
+
+.mobile-translate-dropdown {
+    background: rgba(57, 184, 193, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    width: 100%;
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.mobile-translate-dropdown:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.mobile-translate-menu {
+    position: relative;
+    width: 100%;
+    background: rgba(57, 184, 193, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    margin-top: 5px;
+    display: none !important;
+    max-height: 250px;
+    overflow-y: auto;
+    z-index: 1060;
+}
+
+.mobile-translate-menu.show {
+    display: block !important;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Mobile-specific translate option styles */
+.mobile-translate-menu .translate-option {
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mobile-translate-menu .translate-option:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: none; /* Remove transform for mobile */
+}
+
+.mobile-translate-menu .translate-option:last-child {
+    border-bottom: none;
+}
+
+/* Force visibility for mobile translate menu - override any conflicting styles */
+.mobile-translate-widget .mobile-translate-menu.show {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    height: auto !important;
+    max-height: 250px !important;
+    overflow-y: auto !important;
+}
+
+/* Even more specific selectors to override Bootstrap/other frameworks */
+.mobile-navbar .mobile-translate-widget .mobile-translate-menu.show,
+.navbar .mobile-translate-widget .mobile-translate-menu.show,
+div.mobile-translate-widget div.mobile-translate-menu.show {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    height: auto !important;
+    max-height: 250px !important;
+    overflow-y: auto !important;
+    position: relative !important;
+    z-index: 1070 !important;
+}
+
+/* Target the specific ID as well */
+#mobileTranslateMenu.show {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Additional mobile menu debugging styles */
+.mobile-translate-menu.show * {
+    visibility: visible !important;
+}
+
+/* Ensure mobile navbar doesn't hide the menu */
+.mobile-navbar .mobile-translate-menu.show {
+    position: relative !important;
+    z-index: 1070 !important;
+}
+
+/* Hide Google Translate bar */
+.goog-te-banner-frame.skiptranslate {
+    display: none !important;
+}
+
+body {
+    top: 0px !important;
+}
+
+/* Style the Google Translate dropdown when it appears */
+.goog-te-gadget {
+    display: none !important;
+}
+
+.goog-te-combo {
+    display: none !important;
+}

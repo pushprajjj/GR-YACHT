@@ -5,11 +5,11 @@
 
 // Database connection settings
 //define('DB_HOST', 'localhost');
-define('DB_HOST', 'srv1492.hstgr.io');
+define('DB_HOST', '193.203.184.95');
 
-define('DB_NAME', 'u508105042_grYacht');
-define('DB_USERNAME', 'u508105042_grYacht');
-define('DB_PASSWORD', '7$r2qY1@Ux');
+define('DB_NAME', 'u508105042_ff');
+define('DB_USERNAME', 'u508105042_ff');
+define('DB_PASSWORD', '80LVd1phyoS+');
 define('DB_CHARSET', 'utf8mb4');
 
 // Database connection function
