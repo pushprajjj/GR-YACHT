@@ -1068,6 +1068,12 @@
 }
 
 /* General Responsive Utilities and Layout Adjustments */
+@media (max-width: 1586px) {
+
+ .yacht-card{
+    min-width: 450px;
+  }
+}
 @media (max-width: 1367px) {
   .container-fluid {
     padding-left: 25px;
@@ -1114,6 +1120,10 @@
   
   .detailsMenu li {
     font-size: 18px;
+  }
+
+  .yacht-card{
+    min-width: 450px;
   }
 }
 
@@ -1527,7 +1537,7 @@
 
 @media (max-width: 480px) {
   .yacht-card {
-    max-width: 260px;
+    /* max-width: 260px; */
     margin: 0 auto 12px auto;
     border-radius: 8px;
   }
