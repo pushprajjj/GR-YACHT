@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Close translation menus when clicking outside
     document.addEventListener('click', function(e) {
         if (!e.target.closest('.translate-widget')) {
-            closeAllTranslateMenus();
+            // closeAllTranslateMenus();
         }
     });
 });
@@ -80,56 +80,35 @@ function toggleTranslateMenu() {
     
     if (!isVisible) {
         menu.classList.add('show');
+    }else{
+        closeAllTranslateMenus();
     }
 }
 
 function toggleMobileTranslateMenu() {
     const menu = document.getElementById('mobileTranslateMenu');
-    if (!menu) {
-        // Try to find it with a more general selector
-        const allMenus = document.querySelectorAll('.mobile-translate-menu');
-        if (allMenus.length > 0) {
-            const firstMenu = allMenus[0];
-            const isVisible = firstMenu.classList.contains('show');
-            closeAllTranslateMenus();
-            if (!isVisible) {
-                firstMenu.classList.add('show');
-                
-                // Force inline styles for fallback menu too
-                firstMenu.style.display = 'block';
-                firstMenu.style.visibility = 'visible';
-                firstMenu.style.opacity = '1';
-                firstMenu.style.maxHeight = '250px';
-                firstMenu.style.overflowY = 'auto';
-                firstMenu.style.zIndex = '1070';
-            }
-        }
-        return;
-    }
-    
     const isVisible = menu.classList.contains('show');
+    if (!menu) return console.warn('Menu not found');
+
+    // Close all other menus
     closeAllTranslateMenus();
-    
+
     if (!isVisible) {
         menu.classList.add('show');
-        
-        // Force inline styles as backup for CSS specificity issues
-        menu.style.display = 'block';
-        menu.style.visibility = 'visible';
-        menu.style.opacity = '1';
-        menu.style.maxHeight = '250px';
-        menu.style.overflowY = 'auto';
-        menu.style.zIndex = '1070';
-        
-        // Force a style recalculation
-        menu.offsetHeight;
+    }else{
+        closeAllTranslateMenus();
     }
+
+    console.log('Menu now visible:', menu.classList.contains('show'));
 }
 
 function closeAllTranslateMenus() {
     const menus = document.querySelectorAll('.translate-menu');
     menus.forEach(menu => {
+        // Multiple attempts to remove the class
         menu.classList.remove('show');
+        menu.className = menu.className.replace(/\bshow\b/g, '').trim(); // Fallback method
+        
         // Clear inline styles
         if (menu.classList.contains('mobile-translate-menu')) {
             menu.style.display = '';
@@ -147,7 +126,7 @@ function changeLanguage(langCode, displayCode, flag) {
     updateLanguageDisplay(displayCode, displayCode, flag);
     
     // Close menus
-    closeAllTranslateMenus();
+    // closeAllTranslateMenus();
     
     // Save preference
     localStorage.setItem('selectedLanguage', langCode);
@@ -353,6 +332,55 @@ window.debugMobileMenu = function() {
     console.log('=== End Debug ===');
 };
 
+// Force show mobile menu function for testing
+window.forceShowMobileMenu = function() {
+    console.log('=== Force Show Mobile Menu ===');
+    const menu = document.getElementById('mobileTranslateMenu');
+    if (menu) {
+        console.log('Before - Menu classes:', menu.className);
+        console.log('Before - Has show class:', menu.classList.contains('show'));
+        
+        // Force add show class multiple ways
+        menu.classList.add('show');
+        if (!menu.className.includes('show')) {
+            menu.className += ' show';
+        }
+        
+        // Force inline styles
+        menu.style.display = 'block';
+        menu.style.visibility = 'visible';
+        menu.style.opacity = '1';
+        menu.style.maxHeight = '250px';
+        menu.style.overflowY = 'auto';
+        menu.style.zIndex = '1070';
+        
+        console.log('After - Menu classes:', menu.className);
+        console.log('After - Has show class:', menu.classList.contains('show'));
+        console.log('After - Computed display:', window.getComputedStyle(menu).display);
+        console.log('Menu should now be visible!');
+    } else {
+        console.log('Menu not found!');
+    }
+};
+
+// Test if onclick handler is attached
+window.testMobileClick = function() {
+    console.log('=== Testing Mobile Click Handler ===');
+    const dropdown = document.querySelector('.mobile-translate-dropdown');
+    console.log('Mobile dropdown found:', dropdown);
+    
+    if (dropdown) {
+        console.log('Dropdown onclick:', dropdown.onclick);
+        console.log('Dropdown getAttribute onclick:', dropdown.getAttribute('onclick'));
+        
+        // Try to trigger the click programmatically
+        console.log('Triggering click...');
+        dropdown.click();
+    } else {
+        console.log('Mobile translate dropdown not found!');
+    }
+};
+
 // Initialize mobile translation functionality after header loads
 function initializeMobileTranslation() {
     // Wait for header to be loaded
@@ -389,4 +417,3 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-   
