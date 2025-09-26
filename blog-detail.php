@@ -213,7 +213,7 @@ if ($slug) {
 
 <body>
     <!-- Navigation -->
-    <div id="header"></div>
+    <?php include '_partials/header.php'; ?>
 
     <!-- Loading State -->
     <div id="blogLoading" class="text-center py-5" style="min-height: 50vh; display: flex; align-items: center; justify-content: center;">
@@ -396,7 +396,7 @@ if ($slug) {
     </div>
 
     <!-- Footer -->
-    <div id="footer"></div>
+   <?php include '_partials/footer.php'; ?>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

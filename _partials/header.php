@@ -5,11 +5,11 @@
         <div class="d-flex align-items-center justify-content-start flex-grow-1 flex-shrink-1 flex-basis-0" style="flex: 1 1 0%;">
             <ul class="navbar-nav flex-row">
                 <li class="nav-item"><a class="nav-link active" href="/">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="/about-us.html">About us</a></li>
-                <li class="nav-item"><a class="nav-link " href="/service.html">Services</a></li>
-                <li class="nav-item"><a class="nav-link" href="/all-packages.html">Package</a></li>
-                <li class="nav-item"><a class="nav-link" href="/blog.html">Blog</a></li>
-                <li class="nav-item"><a class="nav-link" href="/contact.html">Contact us</a></li>
+                <li class="nav-item"><a class="nav-link" href="/about-us.php">About us</a></li>
+                <li class="nav-item"><a class="nav-link " href="/service.php">Services</a></li>
+                <li class="nav-item"><a class="nav-link" href="/all-packages.php">Package</a></li>
+                <li class="nav-item"><a class="nav-link" href="/blog.php">Blog</a></li>
+                <li class="nav-item"><a class="nav-link" href="/contact.php">Contact us</a></li>
             </ul>
         </div>
         <!-- Center: Logo -->
@@ -23,15 +23,19 @@
                 <span class="contact-number">+971 50 554 3873</span>
             </div>
             <div class="dropdown">
-                <button class="btn rounded-button dropdown-toggle selected" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <!-- <button class="btn rounded-button dropdown-toggle selected" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <span class="selected-value">AED</span>
                     <i class="fas fa-chevron-down"></i>
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item active" href="#" data-value="AED">AED</a></li>
-                    <li><a class="dropdown-item" href="#" data-value="USD">USD</a></li>
-                </ul>
+                </button> -->
+                <form action="" id="currencyForm" class="btn rounded-button dropdown-toggle selected">
+                    <select name="currencyConvert" style="background: #39b8c1; color: white; border: none; appearance: none; -webkit-appearance: none; -moz-appearance: none;">
+                        <option value="AED">AED</option>
+                        <option value="EURO">EURO</option>
+                        <option value="GBP">GBP</option>
+                    </select>
+                </form>
             </div>
+
             <!-- Custom Translation Widget -->
             <div class="translate-widget">
                 <div class="translate-dropdown" onclick="toggleTranslateMenu()">
@@ -113,22 +117,22 @@
         <div class="d-flex align-items-center justify-content-between w-100 mb-2">
             <!-- Left Side: Hamburger Menu Button -->
             <div class="d-flex align-items-center">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mobileNavMenu" 
-                        aria-controls="mobileNavMenu" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mobileNavMenu"
+                    aria-controls="mobileNavMenu" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
             </div>
-            
+
             <!-- Center: Logo -->
             <div class="mobile-logo position-absolute" style="left: 50%;top: 10px;transform: translateX(-50%);">
                 <img src="assets/images/logo.png" alt="GR Yachts Dubai" height="80">
             </div>
-            
+
             <!-- Right Side: Empty (dropdowns moved to menu) -->
             <div class="d-flex align-items-center">
             </div>
         </div>
-        
+
         <!-- Collapsible Mobile Menu -->
         <div class="collapse navbar-collapse" id="mobileNavMenu">
             <ul class="navbar-nav w-100 mobile-nav-menu">
@@ -138,46 +142,45 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link mobile-nav-link" href="/about-us.html">
+                    <a class="nav-link mobile-nav-link" href="/about-us.php">
                         <i class="fas fa-users me-3"></i>About us
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link mobile-nav-link" href="/service.html">
+                    <a class="nav-link mobile-nav-link" href="/service.php">
                         <i class="fas fa-cogs me-3"></i>Services
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link mobile-nav-link" href="/all-packages.html">
+                    <a class="nav-link mobile-nav-link" href="/all-packages.php">
                         <i class="fas fa-box me-3"></i>Package
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link mobile-nav-link" href="/blog.html">
+                    <a class="nav-link mobile-nav-link" href="/blog.php">
                         <i class="fas fa-blog me-3"></i>Blog
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link mobile-nav-link" href="/contact.html">
+                    <a class="nav-link mobile-nav-link" href="/contact.php">
                         <i class="fas fa-envelope me-3"></i>Contact us
                     </a>
                 </li>
             </ul>
-            
+
             <!-- Currency and Language Selectors -->
             <div class="mobile-selectors mt-3 pt-3 border-top">
                 <div class="row">
                     <div class="col-6">
                         <label class="text-white-50 small mb-2">Currency</label>
                         <div class="dropdown w-100">
-                            <button class="btn rounded-button dropdown-toggle selected mobile-menu-dropdown w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <span class="selected-value">AED</span>
-                                <i class="fas fa-chevron-down"></i>
-                            </button>
-                            <ul class="dropdown-menu w-100">
-                                <li><a class="dropdown-item active" href="#" data-value="AED">AED</a></li>
-                                <li><a class="dropdown-item" href="#" data-value="USD">USD</a></li>
-                            </ul>
+                            <form action="" id="mobileCurrencyForm" class="btn rounded-button dropdown-toggle selected">
+                                <select name="currencyConvert" style="background: #39b8c1; color: white; border: none; appearance: none; -webkit-appearance: none; -moz-appearance: none;">
+                                    <option value="AED">AED</option>
+                        <option value="EURO">EURO</option>
+                        <option value="GBP">GBP</option>
+                                </select>
+                            </form>
                         </div>
                     </div>
                     <div class="col-6">
@@ -254,7 +257,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Mobile Contact Info -->
             <div class="mobile-contact-info mt-3 pt-3 border-top">
                 <div class="d-flex align-items-center justify-content-center gap-3">
@@ -269,255 +272,322 @@
     </div>
 </nav>
 
+
+<script>
+    function handleCurrencyChange(currency) {
+        console.log('Selected currency:', currency);
+        let currencyDetails = {
+            currency: 'AED',
+            rate: 1.0  // Base rate for AED
+        };
+
+        switch(currency) {
+            case 'EURO':
+                currencyDetails = {
+                    currency: 'EURO',
+                    rate: 0.23
+                };
+                break;
+            case 'GBP':
+                currencyDetails = {
+                    currency: 'GBP',
+                    rate: 0.20
+                };
+                break;
+            case 'AED':
+            default:
+                currencyDetails = {
+                    currency: 'AED',
+                    rate: 1.0
+                };
+                break;
+        }
+
+        // Store both currency and rate in localStorage
+        localStorage.setItem('selectedCurrency', currency);
+        localStorage.setItem('currencyRate', currencyDetails.rate);
+
+        // Dispatch event with complete currency details
+        const currencyChangeEvent = new CustomEvent('currencyChanged', {
+            detail: {
+                ...currencyDetails,
+                timestamp: new Date().getTime()
+            }
+        });
+        document.dispatchEvent(currencyChangeEvent);
+
+        // Reload the page to apply changes
+        location.reload();
+    }
+
+    // Desktop currency form
+    document.getElementById('currencyForm').addEventListener('change', function(event) {
+        handleCurrencyChange(event.target.value);
+    });
+
+    // Mobile currency form
+    document.getElementById('mobileCurrencyForm').addEventListener('change', function(event) {
+        handleCurrencyChange(event.target.value);
+    });
+
+    // On page load, set both dropdowns to the saved currency
+    document.addEventListener('DOMContentLoaded', function() {
+        const savedCurrency = localStorage.getItem('selectedCurrency') || 'AED';
+        document.querySelector('#currencyForm select').value = savedCurrency;
+        document.querySelector('#mobileCurrencyForm select').value = savedCurrency;
+    });
+</script>
+
 <!-- Hidden Google Translate Element -->
 <div id="google_translate_element" style="display: none;"></div>
 
 <style>
-/* Mobile Navbar Styles */
-.mobile-navbar {
-    background: rgba(57, 184, 193, 0.9);
-    backdrop-filter: blur(10px);
-    position: relative;
-    z-index: 1040;
-    height: 100px;
-}
+    /* Mobile Navbar Styles */
+    .mobile-navbar {
+        background: rgba(57, 184, 193, 0.9);
+        backdrop-filter: blur(10px);
+        position: relative;
+        z-index: 1040;
+        height: 100px;
+    }
 
-/* Ensure mobile navbar header doesn't break at any screen size */
-.mobile-navbar .container-fluid {
-    padding: 0 1rem;
-}
+    /* Ensure mobile navbar header doesn't break at any screen size */
+    .mobile-navbar .container-fluid {
+        padding: 0 1rem;
+    }
 
-.mobile-navbar .d-flex {
-    flex-wrap: nowrap !important;
-}
-
-/* Prevent navbar collapse issues */
-.mobile-navbar .navbar-collapse {
-    flex-basis: 100%;
-    flex-grow: 1;
-    align-items: center;
-    background: rgb(57, 184, 193);
-    border-radius: 12px;
-        padding: 1rem;
-}
-
-.mobile-logo img {
-    transition: all 0.3s ease;
-}
-
-.mobile-dropdown {
-    padding: 0.25rem 0.75rem !important;
-    font-size: 0.9rem;
-    min-width: 60px;
-}
-
-/* Fix dropdown z-index issues */
-.mobile-navbar .dropdown {
-    position: relative;
-    z-index: 1050;
-}
-
-.mobile-navbar .dropdown-menu {
-    z-index: 1051 !important;
-    position: absolute !important;
-    background: rgba(57, 184, 193, 0.9);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2) !important;
-    border-radius: 8px !important;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
-    right: 0 !important;
-    left: auto !important;
-    min-width: 80px !important;
-    max-width: 100px !important;
-    transform: none !important;
-}
-
-.mobile-navbar .dropdown-item {
-    color: #fff !important;
-    transition: all 0.3s ease;
-    border-radius: 6px;
-    margin: 2px 4px;
-}
-
-.mobile-navbar .dropdown-item:hover,
-.mobile-navbar .dropdown-item.active {
-    background: rgba(57, 184, 193, 0.9);
-    color: #fff !important;
-    transform: translateX(3px);
-}
-
-.mobile-navbar .dropdown-item.active {
-    background: rgba(255, 255, 255, 0.3) !important;
-    font-weight: 600;
-}
-
-/* Mobile menu dropdown styles */
-.mobile-selectors {
-    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
-}
-
-.mobile-menu-dropdown {
-   background: rgba(57, 184, 193, 0.9);
-    border: 1px solid rgba(255, 255, 255, 0.2) !important;
-    color: #fff !important;
-    font-size: 0.9rem;
-    padding: 0.5rem 1rem !important;
-}
-
-.mobile-menu-dropdown:hover,
-.mobile-menu-dropdown:focus {
-    background: rgba(255, 255, 255, 0.2) !important;
-    border-color: rgba(255, 255, 255, 0.3) !important;
-    color: #fff !important;
-    box-shadow: none !important;
-}
-
-.mobile-selectors .dropdown-menu {
-   background: rgba(57, 184, 193, 0.9);
-    border: 1px solid rgba(255, 255, 255, 0.2) !important;
-    border-radius: 8px !important;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
-    width: 100% !important;
-}
-
-.mobile-selectors .dropdown-item {
-    color: #fff !important;
-    padding: 0.5rem 1rem;
-    transition: all 0.3s ease;
-}
-
-.mobile-selectors .dropdown-item:hover,
-.mobile-selectors .dropdown-item.active {
-    background: rgba(255, 255, 255, 0.2) !important;
-    color: #fff !important;
-}
-
-.navbar-toggler {
-     background: rgba(0, 231, 220, 0.95);
-    padding: 0.5rem;
-    border-radius: 8px;
-}
-
-.navbar-toggler:focus {
-    box-shadow: none;
-    border-color: #40E0D0;
-}
-
-.navbar-toggler-icon {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='m4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
-}
-
-.mobile-nav-menu {
-   background: rgba(57, 184, 193, 0.9);
-    border-radius: 12px;
-    padding: 1rem;
-    margin-top: 1rem;
-}
-
-.mobile-nav-link {
-    color: #fff !important;
-    padding: 1rem 1.5rem !important;
-    border-radius: 8px;
-    margin-bottom: 0.5rem;
-    transition: all 0.3s ease;
-    border-left: 3px solid transparent;
-    display: flex;
-    align-items: center;
-}
-
-.mobile-nav-link:hover,
-.mobile-nav-link.active {
-   background: rgba(57, 184, 193, 0.9);
-    border-left-color: #fff;
-    transform: translateX(5px);
-}
-
-.mobile-nav-link i {
-    color: #40E0D0;
-    width: 20px;
-}
-
-.mobile-nav-link:hover i,
-.mobile-nav-link.active i {
-    color: #fff;
-}
-
-
-.mobile-contact-info {
-    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
-}
-
-.contact-number-large {
-    color: #40E0D0;
-    font-size: 1.1rem;
-    font-weight: 600;
-}
-
-/* Responsive adjustments */
-@media (max-width: 992px) {
-    /* Ensure layout doesn't break at Bootstrap's lg breakpoint */
     .mobile-navbar .d-flex {
-        align-items: center !important;
+        flex-wrap: nowrap !important;
     }
-    
-    .mobile-navbar .gap-3 {
-        gap: 0.75rem !important;
-    }
-}
 
-@media (max-width: 768px) {
-    .mobile-logo img {
-        height: 60px;
+    /* Prevent navbar collapse issues */
+    .mobile-navbar .navbar-collapse {
+        flex-basis: 100%;
+        flex-grow: 1;
+        align-items: center;
+        background: rgb(57, 184, 193);
+        border-radius: 12px;
+        padding: 1rem;
     }
-    
+
+    .mobile-logo img {
+        transition: all 0.3s ease;
+    }
+
     .mobile-dropdown {
-        padding: 0.2rem 0.5rem !important;
-        font-size: 0.8rem;
-        min-width: 50px;
+        padding: 0.25rem 0.75rem !important;
+        font-size: 0.9rem;
+        min-width: 60px;
     }
-    
-    .mobile-nav-link {
-        padding: 0.8rem 1rem !important;
-        font-size: 0.95rem;
-    }
-}
 
-@media (max-width: 576px) {
-    .mobile-logo img {
-        height: 50px;
+    /* Fix dropdown z-index issues */
+    .mobile-navbar .dropdown {
+        position: relative;
+        z-index: 1050;
     }
-    
-    .mobile-dropdown .selected-value {
-        font-size: 0.75rem;
-    }
-    
-    /* Prevent dropdown overflow on small screens */
+
     .mobile-navbar .dropdown-menu {
-        min-width: 70px !important;
-        max-width: 80px !important;
-        font-size: 0.8rem;
+        z-index: 1051 !important;
+        position: absolute !important;
+        background: rgba(57, 184, 193, 0.9);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        border-radius: 8px !important;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+        right: 0 !important;
+        left: auto !important;
+        min-width: 80px !important;
+        max-width: 100px !important;
+        transform: none !important;
     }
-}
 
-/* Desktop navbar - show only at 1400px and above */
-.desktop-navbar {
-    display: none !important;
-}
+    .mobile-navbar .dropdown-item {
+        color: #fff !important;
+        transition: all 0.3s ease;
+        border-radius: 6px;
+        margin: 2px 4px;
+    }
 
-@media (min-width: 1400px) {
+    .mobile-navbar .dropdown-item:hover,
+    .mobile-navbar .dropdown-item.active {
+        background: rgba(57, 184, 193, 0.9);
+        color: #fff !important;
+        transform: translateX(3px);
+    }
+
+    .mobile-navbar .dropdown-item.active {
+        background: rgba(255, 255, 255, 0.3) !important;
+        font-weight: 600;
+    }
+
+    /* Mobile menu dropdown styles */
+    .mobile-selectors {
+        border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+    }
+
+    .mobile-menu-dropdown {
+        background: rgba(57, 184, 193, 0.9);
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        color: #fff !important;
+        font-size: 0.9rem;
+        padding: 0.5rem 1rem !important;
+    }
+
+    .mobile-menu-dropdown:hover,
+    .mobile-menu-dropdown:focus {
+        background: rgba(255, 255, 255, 0.2) !important;
+        border-color: rgba(255, 255, 255, 0.3) !important;
+        color: #fff !important;
+        box-shadow: none !important;
+    }
+
+    .mobile-selectors .dropdown-menu {
+        background: rgba(57, 184, 193, 0.9);
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        border-radius: 8px !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+        width: 100% !important;
+    }
+
+    .mobile-selectors .dropdown-item {
+        color: #fff !important;
+        padding: 0.5rem 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .mobile-selectors .dropdown-item:hover,
+    .mobile-selectors .dropdown-item.active {
+        background: rgba(255, 255, 255, 0.2) !important;
+        color: #fff !important;
+    }
+
+    .navbar-toggler {
+        background: rgba(0, 231, 220, 0.95);
+        padding: 0.5rem;
+        border-radius: 8px;
+    }
+
+    .navbar-toggler:focus {
+        box-shadow: none;
+        border-color: #40E0D0;
+    }
+
+    .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='m4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    }
+
+    .mobile-nav-menu {
+        background: rgba(57, 184, 193, 0.9);
+        border-radius: 12px;
+        padding: 1rem;
+        margin-top: 1rem;
+    }
+
+    .mobile-nav-link {
+        color: #fff !important;
+        padding: 1rem 1.5rem !important;
+        border-radius: 8px;
+        margin-bottom: 0.5rem;
+        transition: all 0.3s ease;
+        border-left: 3px solid transparent;
+        display: flex;
+        align-items: center;
+    }
+
+    .mobile-nav-link:hover,
+    .mobile-nav-link.active {
+        background: rgba(57, 184, 193, 0.9);
+        border-left-color: #fff;
+        transform: translateX(5px);
+    }
+
+    .mobile-nav-link i {
+        color: #40E0D0;
+        width: 20px;
+    }
+
+    .mobile-nav-link:hover i,
+    .mobile-nav-link.active i {
+        color: #fff;
+    }
+
+
+    .mobile-contact-info {
+        border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+    }
+
+    .contact-number-large {
+        color: #40E0D0;
+        font-size: 1.1rem;
+        font-weight: 600;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 992px) {
+
+        /* Ensure layout doesn't break at Bootstrap's lg breakpoint */
+        .mobile-navbar .d-flex {
+            align-items: center !important;
+        }
+
+        .mobile-navbar .gap-3 {
+            gap: 0.75rem !important;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .mobile-logo img {
+            height: 60px;
+        }
+
+        .mobile-dropdown {
+            padding: 0.2rem 0.5rem !important;
+            font-size: 0.8rem;
+            min-width: 50px;
+        }
+
+        .mobile-nav-link {
+            padding: 0.8rem 1rem !important;
+            font-size: 0.95rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .mobile-logo img {
+            height: 50px;
+        }
+
+        .mobile-dropdown .selected-value {
+            font-size: 0.75rem;
+        }
+
+        /* Prevent dropdown overflow on small screens */
+        .mobile-navbar .dropdown-menu {
+            min-width: 70px !important;
+            max-width: 80px !important;
+            font-size: 0.8rem;
+        }
+    }
+
+    /* Desktop navbar - show only at 1400px and above */
     .desktop-navbar {
-        display: block !important;
-    }
-}
-
-/* Mobile navbar - show below 1400px */
-.mobile-navbar-show {
-    display: block !important;
-}
-
-@media (min-width: 1400px) {
-    .mobile-navbar-show {
         display: none !important;
     }
-}
+
+    @media (min-width: 1400px) {
+        .desktop-navbar {
+            display: block !important;
+        }
+    }
+
+    /* Mobile navbar - show below 1400px */
+    .mobile-navbar-show {
+        display: block !important;
+    }
+
+    @media (min-width: 1400px) {
+        .mobile-navbar-show {
+            display: none !important;
+        }
+    }
 </style>

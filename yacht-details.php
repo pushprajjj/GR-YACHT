@@ -44,7 +44,7 @@
 
   <body>
     <!-- Navigation -->
-    <div id="header"></div>
+    <?php include '_partials/header.php'; ?>
     <!-- Hero Section with Image Grid -->
     <section class="images" id="yachtImageSection">
       <div class="col-12 imageSection">
@@ -506,7 +506,7 @@
     </div>
 
     <!-- Footer -->
-   <div id="footer"></div>
+  <?php include '_partials/footer.php'; ?>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- IntlTelInput JS -->
@@ -673,14 +673,7 @@
     <script src="assets/js/main.js"></script>
 
       <script>
-         async function loadComponent(id, file) {
-      const response = await fetch(file);
-      const html = await response.text();
-      document.getElementById(id).innerHTML = html;
-    }
-    loadComponent("header", "_partials/header.html");
-    loadComponent("footer", "_partials/footer.html");
-
+     
     // Load yacht details from URL parameters
     async function loadYachtDetails() {
         try {
@@ -844,11 +837,15 @@
     }
 
     function updateYachtInfo(yacht) {
+
+         const currency = localStorage.getItem('selectedCurrency') || 'AED';    
+            const rate = localStorage.getItem('currencyRate') || 1;
+
         // Update main title and details
         document.getElementById('yachtTitle').textContent = yacht.title;
         document.getElementById('yachtLength').textContent = yacht.length || '--';
-        document.getElementById('pricePerHour').textContent = `AED ${yacht.price_per_hour || '--'}`;
-        document.getElementById('pricePerDay').textContent = `AED ${yacht.price_per_day || '--'}+VAT`;
+        document.getElementById('pricePerHour').textContent = currency + ' ' + (yacht.price_per_hour * rate);
+        document.getElementById('pricePerDay').textContent = currency + ' ' + (yacht.price_per_day * rate) + '+VAT';
         document.getElementById('numberOfGuests').textContent = yacht.number_of_guests || '--';
         document.getElementById('overnightGuests').textContent = yacht.overnight_guests || '--';
         document.getElementById('minCharterLength').textContent = yacht.min_charter_length ? `${yacht.min_charter_length} Hours` : '-- Hours';
@@ -1202,11 +1199,14 @@
     }
 
     function createYachtCardHTML(yacht) {
+       const currency = localStorage.getItem('selectedCurrency') || 'AED';    
+            const rate = localStorage.getItem('currencyRate') || 1;
+
         const slug = createSlug(yacht.title);
         return `
             <div class="col-lg-4 col-md-6 col-sm-12">
                 <div class="yacht-card" onclick="navigateToYachtDetails('${slug}', ${yacht.id})" style="cursor: pointer;">
-                    <div class="price-tag">AED ${yacht.price_per_hour || yacht.price} | hr</div>
+                     <div class="price-tag">${currency} ${Math.round(yacht.price_per_hour * (rate || 1))} | hr</div>
                     <img class="yacht-image" src="api/uploads/yachtFleet/${yacht.main_image}" alt="${yacht.title}" loading="lazy">
                     <div class="yacht-info">
                         <div class="d-flex justify-content-between align-items-center">
@@ -1225,7 +1225,8 @@
                             <img src="assets/images/coin_1.png" alt="Price" style="width: 20px; height: 20px;">
                             <div class="price-text">
                                 <span class="price-label">Price</span>
-                                <span class="price-value">Half Day: ${yacht.price || yacht.price_per_hour || 'Call'} AED</span>
+                                <span class="price-value" price-value data-base-price="${yacht.price}">Half Day: ${Math.round((yacht.price) * (rate || 1))} ${currency}</span>
+
                             </div>
                         </div>
                         <button class="btn-book" onclick="event.stopPropagation(); window.open('${yacht.whatsapp_link || 'https://wa.me/971505540073'}', '_blank')">
@@ -1248,7 +1249,7 @@
 
     // Navigate to yacht details with slug (reused from index.html)
     function navigateToYachtDetails(slug, yachtId) {
-        window.location.href = `yacht-details.html?slug=${slug}&id=${yachtId}`;
+        window.location.href = `yacht-details.php?slug=${slug}&id=${yachtId}`;
     }
 
     // Lightbox functionality

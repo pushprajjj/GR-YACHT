@@ -669,7 +669,8 @@
 
 <body>
     <!-- Navigation -->
-   <div id="header"></div>
+   <!-- <div id="header"></div> -->
+     <?php include '_partials/header.php'; ?>
 
     <!-- Hero Section -->
     <section class="hero" id="heroSection">
@@ -974,7 +975,8 @@
     </section>
 
     <!-- Footer -->
-     <div id="footer"></div>
+     <!-- <div id="footer"></div> -->
+      <?php include '_partials/footer.php'; ?>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Custom JS -->
@@ -982,13 +984,13 @@
     <!-- Homepage API Integration -->
 
      <script>
-         async function loadComponent(id, file) {
-      const response = await fetch(file);
-      const html = await response.text();
-      document.getElementById(id).innerHTML = html;
-    }
-    loadComponent("header", "_partials/header.html");
-    loadComponent("footer", "_partials/footer.html?v=44");
+    //      async function loadComponent(id, file) {
+    //   const response = await fetch(file);
+    //   const html = await response.text();
+    //   document.getElementById(id).innerHTML = html;
+    // }
+    // loadComponent("header", "_partials/header.html");
+    // loadComponent("footer", "_partials/footer.html?v=44");
   
 
 
@@ -1115,7 +1117,9 @@
     }
 
     function displayYachts(yachts) {
-
+        const currency = localStorage.getItem('selectedCurrency') || 'AED';
+        const rate = parseFloat(localStorage.getItem('currencyRate')) || 1;
+        console.log(' Currency:', currency);
         const yachtFleetContainer = document.querySelector('.yacht-fleet .row');
         yachtFleetContainer.innerHTML = '';
 
@@ -1128,7 +1132,7 @@
             
             yachtCard.innerHTML = `
                 <div class="yacht-card h-100" onclick="navigateToYachtDetails('${slug}', ${yacht.id})" style="cursor: pointer;">
-                    <div class="price-tag">AED ${yacht.price_per_hour || yacht.price} | hr</div>
+                    <div class="price-tag">${currency} ${Math.round(yacht.price_per_hour * (rate || 1))} | hr</div>
                     <img class="yacht-image" src="api/uploads/yachtFleet/${yacht.main_image}" alt="${yacht.title}">
                     <div class="yacht-info">
                         <div class="d-flex justify-content-between align-items-center">
@@ -1147,7 +1151,7 @@
                             <img src="assets/images/coin_1.png" alt="Price">
                             <div class="price-text">
                                 <span class="price-label">Price</span>
-                                <span class="price-value">Half Day: ${yacht.price} AED</span>
+                                <span class="price-value" price-value data-base-price="${yacht.price}">Half Day: ${Math.round((yacht.price) * (rate || 1))} ${currency}</span>
                             </div>
                         </div>
                          <button class="btn-book" onclick="event.stopPropagation(); window.open('${yacht.whatsapp_link || 'https://wa.me/971505540073'}', '_blank')">
@@ -1162,7 +1166,7 @@
 
     // Navigate to yacht details with slug
     function navigateToYachtDetails(slug, yachtId) {
-        window.location.href = `yacht-details.html?slug=${slug}&id=${yachtId}`;
+        window.location.href = `yacht-details.php?slug=${slug}&id=${yachtId}`;
     }
     loadYachts();   
 
@@ -1208,6 +1212,7 @@
     
  
  
+    
 
 
     </script>

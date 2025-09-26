@@ -26,11 +26,11 @@
                 <div class="footer-column">
                     <h5 class="footer-heading">Quick Links</h5>
                     <ul class="list-unstyled quick-links">
-                        <li><a href="/about-us.html">About Us</a></li>
-                        <li><a href="/contact.html">Contact Us</a></li>
-                        <li><a href="/service.html">Services</a></li>
-                        <li><a href="/all-packages.html">Package</a></li>
-                        <li><a href="/blog.html">Blog</a></li>
+                        <li><a href="/about-us">About Us</a></li>
+                        <li><a href="/contact">Contact Us</a></li>
+                        <li><a href="/service">Services</a></li>
+                        <li><a href="/all-packages">Package</a></li>
+                        <li><a href="/blog">Blog</a></li>
 
                        
                     </ul>
@@ -53,6 +53,8 @@
         </div>
     </div>
 </footer>
+
+
 
 <!-- Mobile Footer (below 1400px) -->
 <footer class="mobile-footer">
@@ -114,23 +116,23 @@
                     <i class="fas fa-home"></i>
                     <span>Home</span>
                 </a>
-                <a href="/about-us.html" class="quick-link-item">
+                <a href="/about-us" class="quick-link-item">
                     <i class="fas fa-users"></i>
                     <span>About Us</span>
                 </a>
-                <a href="/service.html" class="quick-link-item">
+                <a href="/service" class="quick-link-item">
                     <i class="fas fa-cogs"></i>
                     <span>Services</span>
                 </a>
-                <a href="/contact.html" class="quick-link-item">
+                <a href="/contact" class="quick-link-item">
                     <i class="fas fa-envelope"></i>
                     <span>Contact</span>
                 </a>
-                <a href="/blog.html" class="quick-link-item">
+                <a href="/blog" class="quick-link-item">
                     <i class="fas fa-blog"></i>
                     <span>Blog</span>
                 </a>
-                <a href="/admin/login.html" class="quick-link-item">
+                <a href="/admin/login" class="quick-link-item">
                     <i class="fas fa-sign-in-alt"></i>
                     <span>Login</span>
                 </a>

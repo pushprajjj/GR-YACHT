@@ -34,7 +34,7 @@
 
 <body>
     <!-- Navigation -->
-   <div id="header"></div>
+   <?php include '_partials/header.php'; ?>
 
     <!-- Hero Section -->
     <section class="hero" id="heroSection">
@@ -132,7 +132,7 @@
 
 
     <!-- Footer -->
-    <div id="footer"></div>
+    <?php include '_partials/footer.php'; ?>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Custom JS -->
@@ -141,14 +141,7 @@
         // Global variables
         let allPackages = [];
         
-        // Load header and footer components
-        async function loadComponent(id, file) {
-            const response = await fetch(file);
-            const html = await response.text();
-            document.getElementById(id).innerHTML = html;
-        }
-        loadComponent("header", "_partials/header.html");
-        loadComponent("footer", "_partials/footer.html");
+  
 
         // Load packages data from API
         async function loadPackagesContent() {
@@ -267,9 +260,12 @@
             
             // Update featured package content
             document.getElementById('featuredTitle').textContent = pkg.title;
-            
+            // Update price
+            const currency = localStorage.getItem('selectedCurrency') || 'AED';    
+            const rate = localStorage.getItem('currencyRate') || 1;
+
             if (pkg.price) {
-                document.getElementById('featuredPrice').textContent = pkg.price;
+                document.getElementById('featuredPrice').textContent ='For '+ currency + ' '+ pkg.price*rate;
                 document.getElementById('featuredPrice').style.display = 'block';
             } else {
                 document.getElementById('featuredPrice').style.display = 'none';
